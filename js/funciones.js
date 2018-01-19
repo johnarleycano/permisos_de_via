@@ -186,6 +186,17 @@ function redireccionar(url, tipo = null){
 }
 
 /**
+ * Pone un valor por defecto a un select
+ * @param  {string} elemento Nombre del select
+ * @param  {string} valor    Valor del option
+ */
+function select_por_defecto(elemento, valor)
+{
+    // Se pone el valor por defecto al elemento seleccionado
+    $('#' + elemento + ' option[value="' + valor + '"]').attr("selected", true);
+}
+
+/**
  * Recorre los campos y obligatorios buscando
  * que todos estén diligenciados
  * 
@@ -211,7 +222,6 @@ function validar_campos_obligatorios(campos)
         cerrar_notificaciones();
 
         for (var i = 0; i < campos_vacios.length; i++){
-            imprimir($("#" + campos_vacios[i]).attr("id"))
 			imprimir_notificacion("El valor de " + $("#" + campos_vacios[i]).attr("title")  + " no puede estar vacío", "warning");
 		}
 	}
