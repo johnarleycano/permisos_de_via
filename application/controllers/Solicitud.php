@@ -24,8 +24,58 @@ class Solicitud extends CI_Controller {
         $this->load->model(array('configuracion_model', 'solicitud_model'));
     }
     
-	/**
+    /**
      * Interfaz inicial
+     * 
+     * @return [void]
+     */
+    function index()
+    {
+        $this->data['titulo'] = 'Solicitudes';
+        $this->data['contenido_principal'] = 'solicitudes/index.php';
+        $this->load->view('core/template', $this->data);
+    }
+    
+    /**
+     * Carga de interfaces vía Ajax
+     * 
+     * @return [void]
+     */
+    function cargar_interfaz()
+    {
+        //Se valida que la peticion venga mediante ajax y no mediante el navegador
+        if($this->input->is_ajax_request()){
+            $tipo = $this->input->post("tipo");
+
+            switch ($tipo) {
+                case "solicitudes_lista":
+                    $this->load->view("solicitudes/listar");
+                break;
+
+                case "solicitudes_lista_documentos":
+                    $this->load->view("solicitudes/documentos");
+                break;
+
+                case "solicitudes_lista_general":
+                    $this->load->view("solicitudes/general");
+                break;
+
+                case "solicitudes_lista_participantes":
+                    $this->load->view("solicitudes/participantes");
+                break;
+
+                case "solicitudes_lista_via":
+                    $this->load->view("solicitudes/via");
+                break;
+            }
+        } else {
+            // Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
+            redirect('');
+        }
+    }
+
+	/**
+     * Interfaz de creación de la solicitud
      * 
      * @return [void]
      */
