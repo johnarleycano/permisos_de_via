@@ -1,3 +1,6 @@
+<!-- Id de la solicitud (cuando se cree el registro) -->
+<input type="hidden" id="id_solicitud">
+
 <form class="uk-form-horizontal uk-margin-large">
 	<div class="uk-margin-medium-top">
 		<ul class="uk-flex-center" data-uk-tab="{connect:'#my-id'}" uk-tab>
@@ -9,14 +12,11 @@
 		<ul id="my-id" class="uk-switcher uk-margin">
 			<li>
 				<!-- <a href="#" id="autoplayer" data-uk-switcher-item="next"></a> -->
-				
 				<div id="cont_general"></div>
 			</li>
 			
 			<li>
-				<div class="uk-column-1-2@m uk-column-divider">
-					<div id="cont_participantes"></div>
-				</div>
+				<div id="cont_participantes"></div>
 			</li>
 
 			<li>
@@ -79,10 +79,15 @@
 	    }
 	    // imprimir(datos);
 
-	    ajax("<?php echo site_url('solicitud/insertar'); ?>", {"tipo": "solicitud", "datos": datos}, 'HTML');
+	    id = ajax("<?php echo site_url('solicitud/insertar'); ?>", {"tipo": "solicitud", "datos": datos}, 'HTML');
+
+	    // Se pone el id en un campo para validar la demás información que se la asocie
+	    $("#id_solicitud").val(id);
 
         cerrar_notificaciones();
 		imprimir_notificacion("Los datos han sido guardados exitosamente", "success");
+
+		return false;
 	}
 	
 	/**
@@ -95,7 +100,7 @@
 	 */
 	function listar(tipo)
 	{
-        cargar_interfaz(`cont_${tipo}`, "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": `solicitudes_lista_${tipo}`});
+        cargar_interfaz(`cont_${tipo}`, "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": tipo});
 	}
 
 	$(document).ready(function(){

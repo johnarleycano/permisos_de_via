@@ -108,20 +108,16 @@
     </div>
 </div>
 
-<input class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom" type="submit" value="Guardar">
-<button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom">Regresar</button>
+<p>
+	<input class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom" type="button" onCLick="javascript:guardar();" value="Guardar">
+	<button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom">Regresar</button>
+</p>
 
 <script type="text/javascript">
 	$(document).ready(function(){
 		// Se ponen algunos valores por defecto
 		select_por_defecto("select_proyecto", 1);
 		$("#input_fecha").val("<?php echo date('Y-m-d'); ?>");
-
-		$("form").on("submit", function(){
-			guardar();
-
-			return false;
-		});
 
 		// Cuando se elija el municipio, se cargan los sectores de ese municipio
 		$("#select_municipio").on("change", function(){

@@ -24,6 +24,22 @@ Class Configuracion_model extends CI_Model{
     function obtener($tipo, $id = null)
     {
         switch ($tipo) {
+            case "funcionarios":
+                $this->db
+                    ->select(array(
+                        'f.Pk_Id',
+                        'CONCAT(u.Nombres, " ", u.Apellidos) Nombre',
+                        'c.Nombre Cargo'
+                        ))
+                    ->from('funcionarios f')
+                    ->join('configuracion.usuarios u', 'f.Fk_Id_Usuario = u.Pk_Id')
+                    ->join('configuracion.cargos c', 'u.Fk_Id_Cargo = c.Pk_Id')
+                    ->order_by('Nombre');
+                
+                // return $this->db->get_compiled_select(); // string de la consulta
+                return $this->db->get()->result();
+            break;
+
             case "municipios":
                 return $this->db_configuracion->order_by("Nombre")->get("municipios")->result();
             break;

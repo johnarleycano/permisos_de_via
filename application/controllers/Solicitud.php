@@ -48,24 +48,34 @@ class Solicitud extends CI_Controller {
             $tipo = $this->input->post("tipo");
 
             switch ($tipo) {
-                case "solicitudes_lista":
+
+                case "documentos":
+                    $this->load->view("solicitudes/documentos/crear");
+                break;
+
+                case "general":
+                    $this->load->view("solicitudes/general/crear");
+                break;
+
+                case "lista":
                     $this->load->view("solicitudes/listar");
                 break;
 
-                case "solicitudes_lista_documentos":
-                    $this->load->view("solicitudes/documentos");
+                case "participantes":
+                    $this->load->view("solicitudes/participantes/index");
                 break;
 
-                case "solicitudes_lista_general":
-                    $this->load->view("solicitudes/general");
+                case "participantes_creacion":
+                    $this->load->view("solicitudes/participantes/crear");
                 break;
 
-                case "solicitudes_lista_participantes":
-                    $this->load->view("solicitudes/participantes");
+                case "participantes_listado":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/participantes/listar", $this->data);
                 break;
 
-                case "solicitudes_lista_via":
-                    $this->load->view("solicitudes/via");
+                case "via":
+                    $this->load->view("solicitudes/vias/crear");
                 break;
             }
         } else {
@@ -82,7 +92,7 @@ class Solicitud extends CI_Controller {
 	function crear()
 	{
         $this->data['titulo'] = 'Crear solicitud';
-        $this->data['contenido_principal'] = 'solicitudes/crear';
+        $this->data['contenido_principal'] = 'solicitudes/general/index';
         $this->load->view('core/template', $this->data);
 	}
 
@@ -100,6 +110,13 @@ class Solicitud extends CI_Controller {
             $tipo = $this->input->post('tipo');
 
             switch ($tipo) {
+                case "participante":
+                    // Se inserta el registro y log en base de datos
+                    if ($this->solicitud_model->insertar($tipo, $datos)) {
+                        echo $id = $this->db->insert_id();
+                    }
+                break;
+
                 case "solicitud":
                     // Se inserta el registro y log en base de datos
                     if ($this->solicitud_model->insertar($tipo, $datos)) {
@@ -111,6 +128,30 @@ class Solicitud extends CI_Controller {
             //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
             redirect('');
         } // if
+    }
+
+    /**
+     * Obtiene registros de base de datos
+     * y los retorna a las vistas
+     * 
+     * @return [vois]
+     */
+    function obtener()
+    {
+        //Se valida que la peticion venga mediante ajax y no mediante el navegador
+        if($this->input->is_ajax_request()){
+            $tipo = $this->input->post("tipo");
+            $id = $this->input->post("id");
+
+            switch ($tipo) {
+                case "participante":
+                    print json_encode($this->solicitud_model->obtener($tipo, array("Fk_Id_Solicitud" => $this->input->post("id_solicitud"), "Fk_Id_Funcionario" => $this->input->post("id_funcionario"))));
+                break;
+            }
+        } else {
+            // Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
+            redirect('');
+        }
     }
 }
 /* Fin del archivo Solicitudes.php */

@@ -1,7 +1,5 @@
-<div class="uk-section">
-    <div class="uk-container">
-    	<div id="cont_solicitudes"></div>
-    </div>
+<div class="uk-container">
+	<div id="cont_solicitudes"></div>
 </div>
 
 <script type="text/javascript">
@@ -12,7 +10,7 @@
 	 */
 	function listar()
 	{
-		cargar_interfaz("cont_solicitudes", "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": "solicitudes_lista"});
+		cargar_interfaz("cont_solicitudes", "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": "lista"});
 	}
 
 	$(document).ready(function(){

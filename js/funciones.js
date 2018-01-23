@@ -148,8 +148,8 @@ function imprimir_notificacion(mensaje, tipo = null)
 		datos.status = tipo;
 	}
 
-	// Si la notificación es una un mensaje de éxito
-	if(tipo == "success"){
+	// Si la notificación es una un mensaje de éxito o advertencia
+	if(tipo == "success" || tipo == "warning"){
 		datos.timeout = 5000;
 	}
 
