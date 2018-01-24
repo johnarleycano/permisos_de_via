@@ -13,6 +13,23 @@ Class Solicitud_model extends CI_Model{
     }
 
     /**
+     * Actualiza los registros en base de datos
+     * 
+     * @param  [string]     $tipo       [tipo de actualización]
+     * @param  [typeint]    $id         [Id del registro actualizar]
+     * @param  [string]     $datos      [Arreglo con datos a actualizar]
+     * 
+     * @return [boolear]        [true, false]
+     */
+    function actualizar($tipo, $id, $datos){
+        switch ($tipo) {
+            case 'solicitud':
+                return $this->db->where("Pk_Id", $id)->update('solicitudes', $datos);
+            break;
+        }
+    }
+
+    /**
      * Permite la inserción de datos en la base de datos 
      * 
      * @param  [string] $tipo  Tipo de inserción
@@ -68,7 +85,19 @@ Class Solicitud_model extends CI_Model{
             break;
 
             case "solicitud":
-                return $this->db->where("Pk_Id", $id)->get("solicitudes")->row();
+                $this->db
+                    ->select(array(
+                        "s.*",
+                        "se.Nombre Sector",
+                        "se.Fk_Id_Municipio",
+                    ))
+                    ->from('solicitudes s')
+                    ->join('configuracion.sectores_municipios se', 's.Fk_Id_Sector = se.Pk_Id')
+                    ->where('s.Pk_Id', $id)
+                ;
+
+                // return $this->db->get_compiled_select(); // string de la consulta
+                return $this->db->get()->row();
             break;
 
             case "solicitudes":

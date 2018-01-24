@@ -1,5 +1,8 @@
+<!-- Se consulta el id de la solicitud, en caso de ser edición -->
+<?php $id_solicitud = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0 ; ?>
+
 <!-- Id de la solicitud (cuando se cree el registro) -->
-<input type="hidden" id="id_solicitud">
+<input type="hidden" id="id_solicitud" value="<?php echo $id_solicitud; ?>">
 
 <form class="uk-form-horizontal uk-margin-large">
 	<div class="uk-margin-medium-top">
@@ -78,11 +81,16 @@
 	    	// "Fk_Id_Usuario": "<?php // echo $this->session->userdata('Pk_Id_Usuario'); ?>",
 	    }
 	    // imprimir(datos);
+	    
+	    // Se verifica si guarda o actualiza el registro
+	    if ($("#id_solicitud").val() == "0") {
+		    id = ajax("<?php echo site_url('solicitud/insertar'); ?>", {"tipo": "solicitud", "datos": datos}, 'HTML');
 
-	    id = ajax("<?php echo site_url('solicitud/insertar'); ?>", {"tipo": "solicitud", "datos": datos}, 'HTML');
-
-	    // Se pone el id en un campo para validar la demás información que se la asocie
-	    $("#id_solicitud").val(id);
+		    // Se pone el id en un campo para validar la demás información que se la asocie
+	    	$("#id_solicitud").val(id);
+		} else {
+		    ajax("<?php echo site_url('solicitud/actualizar'); ?>", {"tipo": "solicitud", "datos": datos, "id_solicitud": $("#id_solicitud").val()}, 'HTML');
+		} 
 
         cerrar_notificaciones();
 		imprimir_notificacion("Los datos han sido guardados exitosamente", "success");
@@ -100,7 +108,7 @@
 	 */
 	function listar(tipo)
 	{
-        cargar_interfaz(`cont_${tipo}`, "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": tipo});
+        cargar_interfaz(`cont_${tipo}`, "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": tipo, "id_solicitud": <?php echo $id_solicitud;; ?>});
 	}
 
 	$(document).ready(function(){

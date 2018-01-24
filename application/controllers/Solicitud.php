@@ -35,6 +35,29 @@ class Solicitud extends CI_Controller {
         $this->data['contenido_principal'] = 'solicitudes/index.php';
         $this->load->view('core/template', $this->data);
     }
+
+    /**
+     * Actualización de registros en base de datos
+     * 
+     * @return [void]
+     */
+    function actualizar()
+    {
+        //Se valida que la peticion venga mediante ajax y no mediante el navegador
+        if($this->input->is_ajax_request()){
+            $datos = $this->input->post('datos');
+            $tipo = $this->input->post('tipo');
+
+            switch ($tipo) {
+                case 'solicitud':
+                   echo $this->solicitud_model->actualizar($tipo, $this->input->post('id_solicitud'), $datos);
+                break;
+            }
+        }else{
+            //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
+            redirect('');
+        }
+    }
     
     /**
      * Carga de interfaces vía Ajax
@@ -54,7 +77,8 @@ class Solicitud extends CI_Controller {
                 break;
 
                 case "general":
-                    $this->load->view("solicitudes/general/crear");
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/general/crear", $this->data);
                 break;
 
                 case "lista":
