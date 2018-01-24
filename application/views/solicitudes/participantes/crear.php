@@ -1,5 +1,5 @@
 <form class="uk-form-horizontal uk-margin-large" id="cont_participante">
-    <h2 class="uk-modal-title">Participante</h2>
+    <!-- <h2 class="uk-modal-title">Participante</h2> -->
 	<div class="uk-margin">
         <label class="uk-form-label" for="select_funcionario">Funcionario *</label>
         <div class="uk-form-controls">
@@ -13,7 +13,7 @@
     </div>
 
     <button class="uk-button uk-button-default uk-modal-close" type="button" onClick="javsacript:cerrar()">Cancelar</button>
-    <input class="uk-button uk-button-primary" type="button" value="Agregar" onClick="javascript:guardar_participante();" />
+    <input class="uk-button uk-button-primary" type="button" value="Agregar" onClick="javascript:guardar();" />
 </form>
 
 <script type="text/javascript">
@@ -23,7 +23,7 @@
 	 * 
 	 * @return {int}
 	 */
-	function guardar_participante()
+	function guardar()
 	{
 		cerrar_notificaciones();
 		imprimir_notificacion("<div uk-spinner></div> Agregando el participante...");
@@ -57,15 +57,9 @@
 	    // imprimir(datos);
 	    
 	    ajax("<?php echo site_url('solicitud/insertar'); ?>", {"tipo": "participante", "datos": datos}, 'HTML');
-        // UIkit.modal("#modal_participante").hide();
-
-        // $('#modal_participante').on('hidden', function() {
-		    // imprimir("cerrado")
-		    // $(this).find('form')[0].reset();
-		  // });
-		 $("#cont_participante").hide();
+        
+		$("#cont_participante").hide();
 		 
-
 	    cerrar_notificaciones();
 		imprimir_notificacion(`Se ha agregado como participante correctamente.`, `success`);
 
@@ -74,15 +68,6 @@
 
 	function cerrar()
 	{
-		 $("#cont_participante").hide();
+		$("#cont_participante").hide();
 	}
-
-	$(document).ready(function(){
-		// UIkit.modal("#modal_participante").show();
-		// $("form").on("submit", function(){
-		// 	guardar_participante();
-
-		// 	return false;
-		// });
-	});
 </script>
