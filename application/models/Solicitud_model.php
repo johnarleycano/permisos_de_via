@@ -66,6 +66,14 @@ Class Solicitud_model extends CI_Model{
                 // return $this->db->get_compiled_select(); // string de la consulta
                 return $this->db->get()->result();
             break;
+
+            case "solicitud":
+                return $this->db->where("Pk_Id", $id)->get("solicitudes")->row();
+            break;
+
+            case "solicitudes":
+                return $this->db->order_by("Fecha_Solicitud", "DESC")->get("solicitudes")->result();
+            break;
         }
     }
 }
