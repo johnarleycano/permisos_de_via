@@ -11,6 +11,6 @@ if(count($participantes) == 0){
 
 <ul class="uk-list uk-list-divider">
 	<?php foreach ($participantes as $participante) { ?>
-    	<li><?php echo $participante->Pk_Id; ?></li>
+    	<li><?php echo $participante->Nombre; ?></li>
 	<?php } ?>
 </ul>

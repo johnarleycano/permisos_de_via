@@ -50,7 +50,21 @@ Class Solicitud_model extends CI_Model{
             break;
 
             case "participantes":
-                return $this->db->where("Fk_Id_Solicitud", $id)->get("participantes")->result();
+                $this->db
+                    ->select(array(
+                            "p.Pk_Id",
+                            "p.Fk_Id_Solicitud",
+                            "CONCAT(u.Nombres, ' ',u.Apellidos) Nombre",
+                        ))
+                    ->from('participantes p')
+                    ->join('funcionarios f', 'p.Fk_Id_Funcionario = f.Pk_Id')
+                    ->join('configuracion.usuarios u', 'f.Fk_Id_Usuario = u.Pk_Id')
+                    ->where('p.Fk_Id_Solicitud', $id)
+                    ->order_by('Nombre')
+                ;
+
+                // return $this->db->get_compiled_select(); // string de la consulta
+                return $this->db->get()->result();
             break;
         }
     }
