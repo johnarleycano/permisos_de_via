@@ -8,3 +8,9 @@ if(count($vias) == 0){
 	exit();
 }
 ?>
+
+<ul class="uk-list uk-list-divider">
+	<?php foreach ($vias as $via) { ?>
+    	<li><?php echo "($via->Abscisa_Inicial - $via->Abscisa_Final): $via->Sector | $via->Via | $via->Costado"; ?></li>
+	<?php } ?>
+</ul>

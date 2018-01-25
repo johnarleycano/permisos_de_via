@@ -113,7 +113,6 @@
 
     <p>
     	<button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom" type="submit" id="guardar" >Guardar</button>
-    	<button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom">Regresar</button>
     </p>
 </form>
 

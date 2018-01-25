@@ -47,6 +47,10 @@ Class Solicitud_model extends CI_Model{
             case "solicitud":
                 return $this->db->insert('solicitudes', $datos);
             break;
+            
+            case "via":
+                return $this->db->insert('vias', $datos);
+            break;
         }
     }
 
@@ -107,14 +111,18 @@ Class Solicitud_model extends CI_Model{
             case 'vias':
                 $this->db
                     ->select(array(
-                            "*",
-                            // "p.Fk_Id_Solicitud",
-                            // "CONCAT(u.Nombres, ' ',u.Apellidos) Nombre",
+                            "s.Codigo Sector",
+                            "cv.Nombre Via",
+                            "tc.Nombre Costado",
+                            "sv.Abscisa_Inicial",
+                            "sv.Abscisa_Final" 
                         ))
-                    ->from('vias v')
-                    // ->join('funcionarios f', 'p.Fk_Id_Funcionario = f.Pk_Id')
-                    // ->join('configuracion.usuarios u', 'f.Fk_Id_Usuario = u.Pk_Id')
-                    ->where('v.Fk_Id_Solicitud', $id)
+                    ->from('vias sv')
+                    ->join('configuracion.costados c', 'sv.Fk_Id_Costado = c.Pk_Id')
+                    ->join('configuracion.vias cv', 'c.Fk_Id_Via = cv.Pk_Id')
+                    ->join('configuracion.sectores s', 'cv.Fk_Id_Sector = s.Pk_Id')
+                    ->join('configuracion.tipos_costados tc', 'c.Fk_Id_Tipo_Costado = tc.Pk_Id')
+                    ->where('sv.Fk_Id_Solicitud', $id)
                     // ->order_by('Nombre')
                 ;
 

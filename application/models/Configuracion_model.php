@@ -24,6 +24,23 @@ Class Configuracion_model extends CI_Model{
     function obtener($tipo, $id = null)
     {
         switch ($tipo) {
+            case "costados":
+                $this->db_configuracion
+                    ->select(array(
+                        'c.Pk_Id',
+                        'tc.Codigo',
+                        'tc.Nombre',
+                        ))
+                    ->from('costados c')
+                    ->join('tipos_costados tc', 'c.Fk_Id_Tipo_Costado = tc.Pk_Id')
+                    ->where('c.Fk_Id_Via', $id)
+                    ->order_by('Orden')
+                ;
+                
+                // return $this->db_configuracion->get_compiled_select(); // string de la consulta
+                return $this->db_configuracion->get()->result();
+            break;
+            
             case 'formato_fecha':
                 $fecha = $id;
 
@@ -99,8 +116,22 @@ Class Configuracion_model extends CI_Model{
                 return $this->db_configuracion->order_by("Nombre")->get("proyectos")->result();
             break;
 
+            case "sectores":
+                return $this->db_configuracion
+                    ->order_by("Codigo")
+                    ->get("sectores")->result();
+            break;
+
             case "sectores_municipios":
                 return $this->db_configuracion->order_by("Nombre")->where("Fk_Id_Municipio", $id)->get("sectores_municipios")->result();
+            break;
+
+            case "vias":
+                return $this->db_configuracion
+                    ->where("Fk_Id_Sector", $id)
+                    ->order_by("Abscisa_Inicial")
+                    ->get("vias")
+                    ->result();
             break;
         }
     }

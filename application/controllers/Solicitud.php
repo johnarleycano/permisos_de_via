@@ -101,6 +101,10 @@ class Solicitud extends CI_Controller {
                     $this->load->view("solicitudes/vias/index");
                 break;
 
+                case "vias_creacion":
+                    $this->load->view("solicitudes/vias/crear");
+                break;
+
                 case "vias_listado":
                     $this->data["id_solicitud"] = $this->input->post("id_solicitud");
                     $this->load->view("solicitudes/vias/listar", $this->data);
@@ -146,6 +150,13 @@ class Solicitud extends CI_Controller {
                 break;
 
                 case "solicitud":
+                    // Se inserta el registro y log en base de datos
+                    if ($this->solicitud_model->insertar($tipo, $datos)) {
+                        echo $id = $this->db->insert_id();
+                    }
+                break;
+                
+                case "via":
                     // Se inserta el registro y log en base de datos
                     if ($this->solicitud_model->insertar($tipo, $datos)) {
                         echo $id = $this->db->insert_id();
