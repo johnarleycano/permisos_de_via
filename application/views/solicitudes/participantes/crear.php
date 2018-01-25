@@ -63,7 +63,7 @@
 	    cerrar_notificaciones();
 		imprimir_notificacion(`Se ha agregado como participante correctamente.`, `success`);
 
-		listar($("#id_solicitud").val());
+		listar_participantes();
 	}
 
 	function cerrar()

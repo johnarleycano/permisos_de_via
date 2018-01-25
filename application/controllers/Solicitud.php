@@ -71,7 +71,6 @@ class Solicitud extends CI_Controller {
             $tipo = $this->input->post("tipo");
 
             switch ($tipo) {
-
                 case "documentos":
                     $this->load->view("solicitudes/documentos/crear");
                 break;
@@ -98,8 +97,13 @@ class Solicitud extends CI_Controller {
                     $this->load->view("solicitudes/participantes/listar", $this->data);
                 break;
 
-                case "via":
-                    $this->load->view("solicitudes/vias/crear");
+                case "vias":
+                    $this->load->view("solicitudes/vias/index");
+                break;
+
+                case "vias_listado":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/vias/listar", $this->data);
                 break;
             }
         } else {

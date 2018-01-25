@@ -8,9 +8,9 @@
 	<div class="uk-margin-medium-top">
 		<ul class="uk-flex-center" data-uk-tab="{connect:'#my-id'}" uk-tab>
 			<li class="uk-active"><a href="#info_general">General</a></li>
-	        <li><a onCLick="javascript:listar('participantes')">Participantes</a></li>
-	        <li><a onCLick="javascript:listar('via')">Vía</a></li>
-	        <li><a onCLick="javascript:listar('documentos')">Documentación</a></li>
+	        <li><a onClick="javascript:listar('participantes');">Participantes</a></li>
+	        <li><a onClick="javascript:listar('vias');">Vías</a></li>
+	        <li><a onClick="javascript:listar('documentos');">Documentación</a></li>
 		</ul>
 		<ul id="my-id" class="uk-switcher uk-margin">
 			<li>
@@ -23,15 +23,11 @@
 			</li>
 
 			<li>
-				<div class="uk-column-1-2@m uk-column-divider">
-					<div id="cont_via"></div>
-				</div>
+				<div id="cont_vias"></div>
 			</li>
 
 			<li>
-				<div class="uk-column-1-2@m uk-column-divider">
-					<div id="cont_documentos"></div>
-				</div>
+				<div id="cont_documentos"></div>
 			</li>
 		</ul>
 	</div>
@@ -108,7 +104,7 @@
 	 */
 	function listar(tipo)
 	{
-        cargar_interfaz(`cont_${tipo}`, "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": tipo, "id_solicitud": <?php echo $id_solicitud;; ?>});
+        cargar_interfaz(`cont_${tipo}`, "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": tipo, "id_solicitud": <?php echo $id_solicitud; ?>});
 	}
 
 	$(document).ready(function(){

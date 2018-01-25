@@ -103,6 +103,24 @@ Class Solicitud_model extends CI_Model{
             case "solicitudes":
                 return $this->db->order_by("Fecha_Solicitud", "DESC")->get("solicitudes")->result();
             break;
+
+            case 'vias':
+                $this->db
+                    ->select(array(
+                            "*",
+                            // "p.Fk_Id_Solicitud",
+                            // "CONCAT(u.Nombres, ' ',u.Apellidos) Nombre",
+                        ))
+                    ->from('vias v')
+                    // ->join('funcionarios f', 'p.Fk_Id_Funcionario = f.Pk_Id')
+                    // ->join('configuracion.usuarios u', 'f.Fk_Id_Usuario = u.Pk_Id')
+                    ->where('v.Fk_Id_Solicitud', $id)
+                    // ->order_by('Nombre')
+                ;
+
+                // return $this->db->get_compiled_select(); // string de la consulta
+                return $this->db->get()->result();
+            break;
         }
     }
 }
