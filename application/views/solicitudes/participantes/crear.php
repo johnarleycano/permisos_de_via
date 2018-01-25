@@ -12,20 +12,16 @@
         </div>
     </div>
 
-    <button class="uk-button uk-button-default uk-modal-close" type="button" id="cancelar">Cancelar</button>
+    <button class="uk-button uk-button-default uk-modal-close" type="button" onClick="javascript:cerrar_participante()">Cancelar</button>
     <input class="uk-button uk-button-primary" type="submit" value="Agregar"/>
 </form>
 
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("form").on("submit", function(){
-			guardar();
+			guardar_participante();
 
 			return false;
-		});
-
-		$("#cancelar").on("click", function(){
-			cerrar();
 		});
 	});
 </script>

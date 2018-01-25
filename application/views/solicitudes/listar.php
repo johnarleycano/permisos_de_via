@@ -1,6 +1,4 @@
-<?php
-$solicitudes = $this->solicitud_model->obtener("solicitudes");
-?>
+<?php $solicitudes = $this->solicitud_model->obtener("solicitudes"); ?>
 
 <?php foreach ($solicitudes as $solicitud) { ?>
 	<article class="uk-comment" onCLick="javascript:editar(<?php echo $solicitud->Pk_Id; ?>);">

@@ -11,7 +11,7 @@
 	 * 
 	 * @return {void}
 	 */
-	function cerrar()
+	function cerrar_via()
 	{
 		$("input[type='button']").show();
 		$("#cont_via").hide();
@@ -24,8 +24,6 @@
 	 */
 	function crear()
 	{
-		$("input[type='button']").hide();
-
 		// Si no se ha guardado la solicitud, no puede guardar el participante
 		if ($("#id_solicitud").val() == "0") {
 			cerrar_notificaciones();
@@ -33,6 +31,8 @@
 
 			return false;
 		}
+		
+		$("input[type='button']").hide();
 		
         cargar_interfaz("cont_crear_via", "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": "vias_creacion"});
 	}
@@ -43,7 +43,7 @@
 	 * 
 	 * @return {int}
 	 */
-	function guardar()
+	function guardar_via()
 	{
 		cerrar_notificaciones();
 		imprimir_notificacion("<div uk-spinner></div> Agregando la vía...");
@@ -67,12 +67,12 @@
 	    	"Fecha": "<?php echo date("Y-m-d h:i:s"); ?>",
 	    	// "Fk_Id_Usuario": "<?php // echo $this->session->userdata('Pk_Id_Usuario'); ?>",
 	    }
-	    imprimir(datos);
+	    // imprimir(datos);
 	    
 	    // Inserción en base de datos vía Ajax
 	    ajax("<?php echo site_url('solicitud/insertar'); ?>", {"tipo": "via", "datos": datos}, 'HTML');
 
-		cerrar();
+		cerrar_via();
 
 		cerrar_notificaciones();
 		imprimir_notificacion(`El costado ${$("#select_costado option:selected").text()} de la vía ${$("#select_via option:selected").text()} se ha agregado correctamente.`, `success`);
@@ -89,7 +89,6 @@
 	 */
 	function listar_vias()
 	{
-		imprimir("Entrando a listado")
         cargar_interfaz("cont_lista_vias", "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": "vias_listado", "id_solicitud": $("#id_solicitud").val()});
 	}
 

@@ -39,7 +39,7 @@
 	 * 
 	 * @return {void}
 	 */
-	function guardar()
+	function guardar_general()
 	{
 		cerrar_notificaciones();
 		imprimir_notificacion("<div uk-spinner></div> Guardando la solicitud...");

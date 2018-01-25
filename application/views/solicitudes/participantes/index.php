@@ -11,8 +11,9 @@
 	 * 
 	 * @return {void}
 	 */
-	function cerrar()
+	function cerrar_participante()
 	{
+		imprimir("cerrando participante")
 		$("input[type='button']").show();
 		$("#cont_participante").hide();
 	}
@@ -24,8 +25,6 @@
 	 */
 	function crear()
 	{
-		$("input[type='button']").hide();
-
 		// Si no se ha guardado la solicitud, no puede guardar el participante
 		if ($("#id_solicitud").val() == "0") {
 			cerrar_notificaciones();
@@ -33,6 +32,8 @@
 
 			return false;
 		}
+		
+		$("input[type='button']").hide();
 		
         cargar_interfaz("cont_crear", "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": "participantes_creacion"});
 	}
@@ -43,7 +44,7 @@
 	 * 
 	 * @return {int}
 	 */
-	function guardar()
+	function guardar_participante()
 	{
 		cerrar_notificaciones();
 		imprimir_notificacion("<div uk-spinner></div> Agregando el participante...");
@@ -79,7 +80,7 @@
 	    // Inserción en base de datos vía Ajax
 	    ajax("<?php echo site_url('solicitud/insertar'); ?>", {"tipo": "participante", "datos": datos}, 'HTML');
         
-		cerrar();
+		cerrar_participante();
 		 
 	    cerrar_notificaciones();
 		imprimir_notificacion(`${$("#select_funcionario option:selected").text()} Se ha agregado como participante correctamente.`, `success`);

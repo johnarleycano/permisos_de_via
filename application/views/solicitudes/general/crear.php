@@ -6,7 +6,7 @@
         <div class="uk-margin">
             <label class="uk-form-label" for="select_proyecto">Proyecto *</label>
             <div class="uk-form-controls">
-                <select class="uk-select" id="select_proyecto">
+                <select class="uk-select" id="select_proyecto" title="Proyecto">
                     <option value="">Elija un proyecto</option>
 
                     <?php foreach($this->configuracion_model->obtener("proyectos") as $proyecto){ ?>
@@ -123,7 +123,7 @@
 		$("#input_fecha").val("<?php echo date('Y-m-d'); ?>");
 
         $("form").on("submit", function(){
-            guardar();
+            guardar_general();
 
             return false;
         });

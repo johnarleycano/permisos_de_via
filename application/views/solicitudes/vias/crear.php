@@ -54,21 +54,17 @@
 	    </div>
     </div>
 
-    <button class="uk-button uk-button-default uk-modal-close" type="button" id="cancelar">Cancelar</button>
+    <button class="uk-button uk-button-default uk-modal-close" type="button" onClick="javascript:cerrar_via()">Cancelar</button>
     <input class="uk-button uk-button-primary" type="submit" value="Agregar"/>
 </form>
 
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("form").on("submit", function(){
-            guardar();
+            guardar_via();
 
             return false;
         });
-
-        $("#cancelar").on("click", function(){
-			cerrar();
-		});
 
 		// Cuando se elija el sector, se cargan las vías de
 		// ese sector
@@ -99,10 +95,5 @@
 			}
 			cargar_lista_desplegable(datos);
 		});
-
-
-
-
-
 	});
 </script>
