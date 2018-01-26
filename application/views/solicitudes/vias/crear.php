@@ -35,7 +35,7 @@
     	<div class="uk-margin">
         	<label class="uk-form-label" for="input_abscisa_inicial">PR Inicial</label>
 	        <div class="uk-form-controls">
-                <input class="uk-input" type="text" id="input_abscisa_inicial" title="Abscisa inicial" >
+                <input class="uk-input" type="number" id="input_abscisa_inicial" title="Abscisa inicial" min="0">
 	        </div>
 	    </div>
 
