@@ -72,11 +72,16 @@ class Solicitud extends CI_Controller {
 
             switch ($tipo) {
                 case "documentos":
-                    $this->load->view("solicitudes/documentos/crear");
+                    $this->load->view("solicitudes/documentos/index");
                 break;
 
                 case "documentos_creacion":
                     $this->load->view("solicitudes/documentos/crear");
+                break;
+
+                case "documentos_listado":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/documentos/listar", $this->data);
                 break;
 
                 case "general":

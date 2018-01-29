@@ -23,7 +23,18 @@
         cargar_interfaz("cont_agregar_documento", "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": "documentos_creacion"});
 	}
 
+	/**
+	 * Interfaz de listado de registros
+	 * 
+	 * @return {void}              
+	 */
+	function listar_documentos()
+	{
+        cargar_interfaz("cont_lista_documentos", "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": "documentos_listado", "id_solicitud": $("#id_solicitud").val()});
+	}
+
 	$(document).ready(function(){
 		crear();
+		listar_documentos();
 	});
 </script>

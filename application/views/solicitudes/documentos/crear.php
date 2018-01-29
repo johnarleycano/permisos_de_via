@@ -74,6 +74,8 @@ bar.setAttribute('hidden', 'hidden');
             // alert('Upload Completed');
             cerrar_notificaciones();
 			imprimir_notificacion("El archivo se subió correctamente.", "success");
+
+			listar_documentos()
         }
 
     });
