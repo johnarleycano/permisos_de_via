@@ -75,6 +75,10 @@ class Solicitud extends CI_Controller {
                     $this->load->view("solicitudes/documentos/crear");
                 break;
 
+                case "documentos_creacion":
+                    $this->load->view("solicitudes/documentos/crear");
+                break;
+
                 case "general":
                     $this->data["id_solicitud"] = $this->input->post("id_solicitud");
                     $this->load->view("solicitudes/general/crear", $this->data);
@@ -190,6 +194,28 @@ class Solicitud extends CI_Controller {
         } else {
             // Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
             redirect('');
+        }
+    }
+
+    function subir()
+    {
+        // Se toman los datos por POST
+        $id_solicitud = $this->uri->segment(3);
+
+        // Se establece el directorio
+        $directorio = "./archivos/documentacion/$id_solicitud";
+
+        // Valida que el directorio exista. Si no existe,lo crea con el id obtenido
+        // con los permisos correspondientes
+        if( ! is_dir($directorio)){
+            @mkdir($directorio, 0777);
+        }
+
+        foreach ($_FILES as $key){
+            if (move_uploaded_file($key['tmp_name']["0"], "$directorio/{$key['name']['0']}")){
+                print json_encode($key['name']);
+            }
+            
         }
     }
 }
