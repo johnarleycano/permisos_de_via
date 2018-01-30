@@ -9,8 +9,8 @@
 !*/cache/.htaccess
 
 #codeigniter 3
-!application/config/config.php
-!application/config/database.php
+application/config/config.php
+application/config/database.php
 archivos/*
 commits.txt
 user_guide/*
