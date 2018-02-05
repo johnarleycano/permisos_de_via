@@ -1,26 +1,12 @@
-# Created by https://www.gitignore.io/api/codeigniter
+# Creado por https://www.gitignore.io/api/codeigniter
 
-### CodeIgniter ###
-*/config/development
-*/logs/log-*.php
-!*/logs/index.html
-*/cache/*
-!*/cache/index.html
-!*/cache/.htaccess
-
-#codeigniter 3
-application/config/config.php
-application/config/database.php
-archivos/*
+### Archivos ###
+index.php
 commits.txt
-user_guide/*
-application/logs/*
-!application/logs/index.html
-!application/logs/.htaccess
-/vendor/
 
-### CodeIgniter Patch ###
-#codeigniter 3
+### Carpetas ###
+archivos/documentacion/
+user_guide/
+application/config/
 
-
-# End of https://www.gitignore.io/api/codeigniter
+# Fin de https://www.gitignore.io/api/codeigniter
