@@ -4,6 +4,19 @@
 <form>
     <div class="uk-column-1-2@m uk-column-divider">
         <div class="uk-margin">
+            <label class="uk-form-label" for="select_tipo">Tipo de solicitud *</label>
+            <div class="uk-form-controls">
+                <select class="uk-select" id="select_tipo" title="Tipo de solicitud" autofocus>
+                    <option value="">Elija un tipo de solicitud</option>
+
+                    <?php foreach($this->configuracion_model->obtener("tipos_solicitudes") as $tipo){ ?>
+                        <option value="<?php echo $tipo->Pk_Id; ?>"><?php echo $tipo->Nombre; ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+        </div>
+
+        <div class="uk-margin">
             <label class="uk-form-label" for="select_proyecto">Proyecto *</label>
             <div class="uk-form-controls">
                 <select class="uk-select" id="select_proyecto" title="Proyecto">
@@ -13,13 +26,6 @@
     	                <option value="<?php echo $proyecto->Pk_Id; ?>"><?php echo $proyecto->Nombre; ?></option>
                     <?php } ?>
                 </select>
-            </div>
-        </div>
-
-        <div class="uk-margin">
-            <label class="uk-form-label" for="input_fecha">Fecha *</label>
-            <div class="uk-form-controls">
-                <input class="uk-input" type="date" id="input_fecha" title="Fecha" >
             </div>
         </div>
 
@@ -46,7 +52,6 @@
         </div>
     </div>
 
-    <h4 class="uk-heading-line uk-text-right"><span>Información del permiso</span></h4>
     <div class="uk-column-1-2@m uk-column-divider">
         <div class="uk-margin">
             <label class="uk-form-label" for="input_objeto">Objeto *</label>
@@ -120,7 +125,6 @@
 	$(document).ready(function(){
 		// Se ponen algunos valores por defecto
 		select_por_defecto("select_proyecto", 1);
-		$("#input_fecha").val("<?php echo date('Y-m-d'); ?>");
 
         $("form").on("submit", function(){
             guardar_general();
@@ -148,7 +152,6 @@
 <?php if ($solicitud) { ?>
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#input_fecha").val("<?php echo $solicitud->Fecha_Solicitud; ?>");
             $("#input_peticionario").val("<?php echo $solicitud->Peticionario; ?>");
             $("#input_cedula").val("<?php echo $solicitud->Cedula; ?>");
             $("#input_nit").val("<?php echo $solicitud->Nit; ?>");
@@ -157,6 +160,7 @@
             $("#input_direccion").val("<?php echo $solicitud->Direccion; ?>");
             $("#input_email").val("<?php echo $solicitud->Email; ?>");
             
+            select_por_defecto("select_tipo", <?php echo $solicitud->Fk_Id_Tipo_Solicitud; ?>);
             select_por_defecto("select_proyecto", <?php echo $solicitud->Fk_Id_Proyecto; ?>);
             select_por_defecto("select_municipio", <?php echo $solicitud->Fk_Id_Municipio; ?>);
 

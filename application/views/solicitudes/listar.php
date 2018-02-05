@@ -6,7 +6,7 @@
 	        <div class="uk-width-expand">
 	            <h4 class="uk-comment-title uk-margin-remove"><a class="uk-link-reset" onCLick="#"><?php echo $solicitud->Peticionario; ?></a></h4>
 	            <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-	                <li><a onCLick="#"><?php echo $this->configuracion_model->obtener("formato_fecha", $solicitud->Fecha_Solicitud); ?></a></li>
+	                <li><a onCLick="#"><?php echo $this->configuracion_model->obtener("formato_fecha", $solicitud->Fecha); ?></a></li>
 	                <li><a onCLick="#">DETALLES</a></li>
 	            </ul>
 	        </div>

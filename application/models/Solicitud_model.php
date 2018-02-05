@@ -105,7 +105,7 @@ Class Solicitud_model extends CI_Model{
             break;
 
             case "solicitudes":
-                return $this->db->order_by("Fecha_Solicitud", "DESC")->get("solicitudes")->result();
+                return $this->db->order_by("Fecha", "DESC")->get("solicitudes")->result();
             break;
 
             case 'vias':

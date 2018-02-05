@@ -126,6 +126,10 @@ Class Configuracion_model extends CI_Model{
                 return $this->db_configuracion->order_by("Nombre")->where("Fk_Id_Municipio", $id)->get("sectores_municipios")->result();
             break;
 
+            case "tipos_solicitudes":
+                return $this->db->order_by("Orden")->get("tipos_solicitudes")->result();
+            break;
+
             case "vias":
                 return $this->db_configuracion
                     ->where("Fk_Id_Sector", $id)

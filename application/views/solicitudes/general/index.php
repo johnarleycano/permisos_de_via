@@ -45,13 +45,12 @@
 		imprimir_notificacion("<div uk-spinner></div> Guardando la solicitud...");
 
 		campos_obligatorios = {
+			"select_tipo": $("#select_tipo").val(),
 			"select_proyecto": $("#select_proyecto").val(),
-			"input_fecha": $("#input_fecha").val(),
 			"select_sector": $("#select_sector").val(),
 			"input_objeto": $("#input_objeto").val(),
 			"input_alcance": $("#input_alcance").val(),
 			"input_peticionario": $("#input_peticionario").val(),
-			// "input_email": $("#input_email").val(),
 		}
 		// imprimir(campos_obligatorios);
 
@@ -62,7 +61,6 @@
 
 		datos = {
 	    	"Fk_Id_Proyecto": $("#select_proyecto").val(),
-	    	"Fecha_Solicitud": $("#input_fecha").val(),
 	    	"Fk_Id_Sector": $("#select_sector").val(),
 	    	"Objeto": $("#input_objeto").val(),
 	    	"Alcance": $("#input_alcance").val(),
@@ -71,6 +69,7 @@
 	    	"Nit": $("#input_nit").val(),
 	    	"Telefono": $("#input_telefono").val(),
 	    	"Celular": $("#input_celular").val(),
+	    	"Fk_Id_Tipo_Solicitud": $("#select_tipo").val(),
 	    	"Direccion": $("#input_direccion").val(),
 	    	"Email": $("#input_email").val(),
 	    	"Fecha": "<?php echo date("Y-m-d h:i:s"); ?>",
