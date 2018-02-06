@@ -7,8 +7,6 @@
             <label class="uk-form-label" for="select_tipo">Tipo de solicitud *</label>
             <div class="uk-form-controls">
                 <select class="uk-select" id="select_tipo" title="Tipo de solicitud" autofocus>
-                    <option value="">Elija un tipo de solicitud</option>
-
                     <?php foreach($this->configuracion_model->obtener("tipos_solicitudes") as $tipo){ ?>
                         <option value="<?php echo $tipo->Pk_Id; ?>"><?php echo $tipo->Nombre; ?></option>
                     <?php } ?>
@@ -124,7 +122,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		// Se ponen algunos valores por defecto
-		select_por_defecto("select_proyecto", 1);
+        select_por_defecto("select_proyecto", 1);
 
         $("form").on("submit", function(){
             guardar_general();

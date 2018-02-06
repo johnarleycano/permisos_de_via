@@ -41,7 +41,6 @@
 		imprimir_notificacion("<div uk-spinner></div> Guardando la solicitud...");
 
 		campos_obligatorios = {
-			"select_tipo": $("#select_tipo").val(),
 			"select_proyecto": $("#select_proyecto").val(),
 			"select_sector": $("#select_sector").val(),
 			"input_objeto": $("#input_objeto").val(),
