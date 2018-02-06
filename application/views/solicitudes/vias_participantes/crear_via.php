@@ -54,14 +54,14 @@
 	    </div>
     </div>
 
-    <button class="uk-button uk-button-default uk-modal-close" type="button" onClick="javascript:cerrar_via()">Cancelar</button>
+    <button class="uk-button uk-button-default uk-modal-close" type="button" onClick="javascript:cerrar_interfaz('via')">Cancelar</button>
     <input class="uk-button uk-button-primary" type="submit" value="Agregar"/>
 </form>
 
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("form").on("submit", function(){
-            guardar_via();
+            guardar_registro('via');
 
             return false;
         });

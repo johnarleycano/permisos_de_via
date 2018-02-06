@@ -8,8 +8,8 @@
 	<div class="uk-margin-medium-top">
 		<ul class="uk-flex-center" data-uk-tab="{connect:'#my-id'}" uk-tab>
 			<li class="uk-active"><a href="#info_general">General</a></li>
-	        <li><a onClick="javascript:listar('participantes');">Participantes</a></li>
-	        <li><a onClick="javascript:listar('vias');">Vías</a></li>
+	        <!-- <li><a onClick="javascript:listar('participantes');">Participantes</a></li> -->
+	        <li><a onClick="javascript:listar('vias');">Vías y participantes</a></li>
 	        <li><a onClick="javascript:listar('documentos');">Documentación</a></li>
 		</ul>
 		<ul id="my-id" class="uk-switcher uk-margin">
@@ -18,9 +18,9 @@
 				<div id="cont_general"></div>
 			</li>
 			
-			<li>
+			<!-- <li>
 				<div id="cont_participantes"></div>
-			</li>
+			</li> -->
 
 			<li>
 				<div id="cont_vias"></div>
