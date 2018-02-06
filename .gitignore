@@ -1,12 +1,13 @@
 # Creado por https://www.gitignore.io/api/codeigniter
 
 ### Archivos ###
-index.php
+/index.php
 commits.txt
 
 ### Carpetas ###
 archivos/documentacion/
 user_guide/
 application/config/
+#application/config/development/
 
 # Fin de https://www.gitignore.io/api/codeigniter
