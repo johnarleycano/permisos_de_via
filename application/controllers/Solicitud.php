@@ -93,30 +93,26 @@ class Solicitud extends CI_Controller {
                     $this->load->view("solicitudes/listar");
                 break;
 
-                case "participantes":
-                    $this->load->view("solicitudes/participantes/index");
-                break;
-
                 case "participantes_creacion":
-                    $this->load->view("solicitudes/participantes/crear");
+                    $this->load->view("solicitudes/vias_participantes/crear_participante");
                 break;
 
                 case "participantes_listado":
                     $this->data["id_solicitud"] = $this->input->post("id_solicitud");
-                    $this->load->view("solicitudes/participantes/listar", $this->data);
+                    $this->load->view("solicitudes/vias_participantes/listar_participantes", $this->data);
                 break;
 
                 case "vias":
-                    $this->load->view("solicitudes/vias/index");
+                    $this->load->view("solicitudes/vias_participantes/index");
                 break;
 
                 case "vias_creacion":
-                    $this->load->view("solicitudes/vias/crear");
+                    $this->load->view("solicitudes/vias_participantes/crear_via");
                 break;
 
                 case "vias_listado":
                     $this->data["id_solicitud"] = $this->input->post("id_solicitud");
-                    $this->load->view("solicitudes/vias/listar", $this->data);
+                    $this->load->view("solicitudes/vias_participantes/listar_vias", $this->data);
                 break;
             }
         } else {
