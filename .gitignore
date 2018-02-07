@@ -8,6 +8,5 @@ commits.txt
 archivos/documentacion/
 user_guide/
 application/config/
-#application/config/development/
 
 # Fin de https://www.gitignore.io/api/codeigniter
