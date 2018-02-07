@@ -49,6 +49,10 @@ class Solicitud extends CI_Controller {
             $tipo = $this->input->post('tipo');
 
             switch ($tipo) {
+                case 'lista_chequeo':
+                   echo $this->solicitud_model->actualizar($tipo, $this->input->post('valor'), $datos);
+                break;
+
                 case 'solicitud':
                    echo $this->solicitud_model->actualizar($tipo, $this->input->post('id_solicitud'), $datos);
                 break;
@@ -71,19 +75,6 @@ class Solicitud extends CI_Controller {
             $tipo = $this->input->post("tipo");
 
             switch ($tipo) {
-                case "documentos":
-                    $this->load->view("solicitudes/documentos/index");
-                break;
-
-                case "documentos_creacion":
-                    $this->load->view("solicitudes/documentos/crear");
-                break;
-
-                case "documentos_listado":
-                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
-                    $this->load->view("solicitudes/documentos/listar", $this->data);
-                break;
-
                 case "general":
                     $this->data["id_solicitud"] = $this->input->post("id_solicitud");
                     $this->load->view("solicitudes/general/crear", $this->data);
@@ -91,6 +82,26 @@ class Solicitud extends CI_Controller {
 
                 case "lista":
                     $this->load->view("solicitudes/listar");
+                break;
+
+                case "lista_chequeo":
+                    $this->load->view("solicitudes/lista_chequeo/index");
+                break;
+
+                case "lista_chequeo_documento":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->data["id_tipo"] = $this->input->post("id_tipo");
+                    $this->load->view("solicitudes/lista_chequeo/documento", $this->data);
+                break;
+
+                case "lista_chequeo_informacion":
+                    $this->data["id_tipo"] = $this->input->post("id_tipo");
+                    $this->load->view("solicitudes/lista_chequeo/informacion", $this->data);
+                break;
+
+                case "lista_chequeo_listado":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/lista_chequeo/listar", $this->data);
                 break;
 
                 case "participantes_creacion":
@@ -134,6 +145,28 @@ class Solicitud extends CI_Controller {
 	}
 
     /**
+     * Elimina registros en base de datos
+     * 
+     * @return [boolean] true, false
+     */
+    function eliminar(){
+        //Se valida que la peticion venga mediante ajax y no mediante el navegador
+        if($this->input->is_ajax_request()){
+            // Datos por POST
+            $tipo = $this->input->post("tipo");
+
+            switch ($tipo) {
+                case 'lista_chequeo':
+                    echo $this->solicitud_model->eliminar($tipo, $this->input->post("datos"));
+                break;
+            }
+        }else{
+            //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio
+            redirect('');
+        }
+    }
+
+    /**
      * Permite la inserción de datos en la base de datos 
      * 
      * @return [void]
@@ -147,6 +180,13 @@ class Solicitud extends CI_Controller {
             $tipo = $this->input->post('tipo');
 
             switch ($tipo) {
+                case "lista_chequeo":
+                    // Se inserta el registro y log en base de datos
+                    if ($this->solicitud_model->insertar($tipo, $datos)) {
+                        echo $id = $this->db->insert_id();
+                    }
+                break;
+
                 case "participante":
                     // Se inserta el registro y log en base de datos
                     if ($this->solicitud_model->insertar($tipo, $datos)) {

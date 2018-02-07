@@ -23,8 +23,29 @@ Class Solicitud_model extends CI_Model{
      */
     function actualizar($tipo, $id, $datos){
         switch ($tipo) {
+            case 'lista_chequeo':
+                return $this->db->where($datos)->update('listas_chequeo', $id);
+            break;
+
             case 'solicitud':
                 return $this->db->where("Pk_Id", $id)->update('solicitudes', $datos);
+            break;
+        }
+    }
+
+    /**
+     * Elimina registros en base de datos
+     * 
+     * @param  [string] $tipo [Tipo de elemento a eliminar]
+     * @param  [int] $id   [Id de la base de datos]
+     * @return [boolean] true, false
+     */
+    function eliminar($tipo, $id){
+        switch ($tipo) {
+            case 'lista_chequeo':
+                if($this->db->delete('listas_chequeo', $id)){
+                    return true;
+                }
             break;
         }
     }
@@ -40,6 +61,10 @@ Class Solicitud_model extends CI_Model{
     function insertar($tipo, $datos)
     {
         switch ($tipo) {
+            case "lista_chequeo":
+                return $this->db->insert('listas_chequeo', $datos);
+            break;
+
             case "participante":
                 return $this->db->insert('participantes', $datos);
             break;
@@ -106,6 +131,14 @@ Class Solicitud_model extends CI_Model{
 
             case "solicitudes":
                 return $this->db->order_by("Fecha", "DESC")->get("solicitudes")->result();
+            break;
+
+            case "tipos_documentos":
+                return $this->db->order_by("Orden")->get("tipos_documentos")->result();
+            break;
+
+            case "valor_lista_chequeo":
+                return $this->db->where($id)->get("listas_chequeo")->row();
             break;
 
             case 'vias':
