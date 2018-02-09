@@ -17,11 +17,11 @@
 		if($(`#aplica${id_tipo}`).attr("checked")){
 			// Se activan opciones
 			$(`#cumple${id_tipo}`).removeAttr('disabled')
-			$(`#documento${id_tipo}, #informacion${id_tipo}`).removeAttr('hidden')
+			$(`#documento${id_tipo}, #editar${id_tipo}`).removeAttr('hidden')
 
 			guardar("aplica", id_tipo)
 		} else {
-			$(`#documento${id_tipo}, #informacion${id_tipo}`).attr('hidden', true)
+			$(`#documento${id_tipo}, #editar${id_tipo}`).attr('hidden', true)
 			$(`#cumple${id_tipo}`).attr('disabled', true)
 
 			eliminar(id_tipo)
@@ -72,6 +72,32 @@
 	}
 
 	/**
+     * Guarda los cambios en base de datos
+     * 
+     * @param  {string} tipo        [Tipo de dato a guardar]
+     * @param  {int}    id_tipo     [Id del tipo de documento]
+     * 
+     * @return {void}
+     */
+    function guardar_observacion(id_tipo)
+    {
+        var datos = {
+            "Fk_Id_Solicitud": $("#id_solicitud").val(),
+            "Fk_Id_Tipo_Documento": id_tipo,
+        }
+
+        ajax("<?php echo site_url('solicitud/actualizar'); ?>", {"tipo": "lista_chequeo", "datos": datos, valor: {"Observacion": $("#input_observacion").val()}}, 'html')
+        // imprimir(datos, "tabla")
+        
+        cerrar_notificaciones()
+        imprimir_notificacion(`Se ha modificado la observación correctamente.`, `success`)
+        
+        listar_chequeo()
+
+        return false
+    }
+
+	/**
 	 * Elimina registros en base de datos
 	 * 
 	 * @param  {int} 	id_tipo 	[Id del tipo de documento]
@@ -105,7 +131,7 @@
 			return false;
 		}
 
-        cargar_interfaz("cont_modal", "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": `lista_chequeo_${tipo}`, "id_tipo": id, "id_solicitud": $("#id_solicitud").val()});
+        cargar_interfaz(`observacion${id}`, "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": `lista_chequeo_${tipo}`, "id_tipo": id, "id_solicitud": $("#id_solicitud").val()});
 	}
 
 	/**
