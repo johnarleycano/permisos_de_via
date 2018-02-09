@@ -9,8 +9,27 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>css/uikit.min.css" /><!-- Estilos para UI Kit -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>css/estilos.css" /><!-- Estilos generales -->
 
-<!-- Scripts -->
+
 <script src="<?php echo base_url(); ?>js/jquery-3.2.1.min.js"></script> <!-- jQuery -->
-<script src="<?php echo base_url(); ?>js/uikit.min.js"></script> <!-- Scripts para UI Kit -->
-<script src="<?php echo base_url(); ?>js/uikit-icons.min.js"></script> <!-- Scripts para UI Kit -->
+
+<?php if(ENVIRONMENT === 'development') { ?>
+	<!-- Estilos -->
+		
+
+	<!-- Scripts -->
+	<script src="<?php echo base_url(); ?>js/uikit.js"></script> <!-- Scripts para UI Kit -->
+	<script src="<?php echo base_url(); ?>js/uikit-icons.js"></script> <!-- Scripts para UI Kit -->
+
+<?php } ?>
+
+<?php if(ENVIRONMENT === 'production') { ?>
+	<!-- Estilos -->
+		
+
+	<!-- Scripts -->
+	<script src="<?php echo base_url(); ?>js/uikit.min.js"></script> <!-- Scripts para UI Kit -->
+	<script src="<?php echo base_url(); ?>js/uikit-icons.min.js"></script> <!-- Scripts para UI Kit -->
+
+<?php } ?>
+
 <script src="<?php echo base_url(); ?>js/funciones.js"></script> <!-- Funciones generales -->
