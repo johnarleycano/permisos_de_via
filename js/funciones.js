@@ -121,9 +121,28 @@ function cerrar_notificaciones()
  * 
  * @return [void]
  */
-function imprimir(mensaje)
+function imprimir(mensaje, tipo = null)
 {
-    console.log(mensaje);
+    switch(tipo) {
+        case "tabla":
+            console.table(mensaje)
+        break;
+
+        case "tiempo_inicio":
+            console.time(mensaje)
+        break;
+
+        case "tiempo_final":
+            console.timeEnd(mensaje)
+        break;
+
+        case "grupo":
+            console.timeEnd(mensaje)
+        break;
+
+        default:
+            console.group(mensaje)
+    }
 }
 
 /**
