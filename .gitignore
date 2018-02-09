@@ -3,6 +3,7 @@
 ### Archivos ###
 /index.php
 commits.txt
+package-lock.json
 
 ### Carpetas ###
 archivos/documentacion/
