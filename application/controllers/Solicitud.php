@@ -94,9 +94,10 @@ class Solicitud extends CI_Controller {
                     $this->load->view("solicitudes/lista_chequeo/documento", $this->data);
                 break;
 
-                case "lista_chequeo_informacion":
+                case "lista_chequeo_observacion":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
                     $this->data["id_tipo"] = $this->input->post("id_tipo");
-                    $this->load->view("solicitudes/lista_chequeo/informacion", $this->data);
+                    $this->load->view("solicitudes/lista_chequeo/observacion", $this->data);
                 break;
 
                 case "lista_chequeo_listado":
