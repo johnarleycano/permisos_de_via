@@ -243,6 +243,7 @@ class Solicitud extends CI_Controller {
     {
         // Se toman los datos por POST
         $id_solicitud = $this->uri->segment(3);
+        $id_tipo = $this->uri->segment(4);
 
         // Se establece el directorio
         $directorio = "./archivos/documentacion/$id_solicitud";
@@ -251,13 +252,16 @@ class Solicitud extends CI_Controller {
         // con los permisos correspondientes
         if( ! is_dir($directorio)){
             @mkdir($directorio, 0777);
+
+            if( ! is_dir("$directorio/$id_tipo")){
+                @mkdir("$directorio/$id_tipo", 0777);
+            }
         }
 
         foreach ($_FILES as $key){
-            if (move_uploaded_file($key['tmp_name']["0"], "$directorio/{$key['name']['0']}")){
+            if (move_uploaded_file($key['tmp_name']["0"], "$directorio/$id_tipo/{$key['name']['0']}")){
                 print json_encode($key['name']);
             }
-            
         }
     }
 }
