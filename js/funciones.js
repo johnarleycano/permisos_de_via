@@ -137,11 +137,11 @@ function imprimir(mensaje, tipo = null)
         break;
 
         case "grupo":
-            console.timeEnd(mensaje)
+            console.group(mensaje)
         break;
 
         default:
-            console.group(mensaje)
+            console.log(mensaje)
     }
 }
 
