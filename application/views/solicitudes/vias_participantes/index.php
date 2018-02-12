@@ -38,7 +38,7 @@
 
 		cargar_interfaz(`cont_crear_${tipo}`, "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": `${tipo}s_creacion`})
 		
-		$(`#btn_${tipo}`).show();
+		$(`#btn_${tipo}`).hide();
 	}
 
 	/**

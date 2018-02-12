@@ -68,7 +68,7 @@
 			"input_fecha_radicado_proyecto": $("#input_fecha_radicado_proyecto").val(),
 			"input_fecha_asignacion": $("#input_fecha_asignacion").val(),
 			"input_instrucciones": $("#input_instrucciones").val(),
-			"input_observaciones": $("#input_observaciones").val(),
+			"input_observaciones_concepto": $("#input_observaciones_concepto").val(),
 			"input_fecha_viabilidad": $("#input_fecha_viabilidad").val(),
 		}
 		// imprimir(campos_obligatorios)

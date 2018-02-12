@@ -47,8 +47,8 @@
 	    </div>
 
 		<div class="uk-margin">
-        	<label class="uk-form-label" for="input_observaciones">Observaciones *</label>
-            <textarea class="uk-textarea" id="input_observaciones" rows="2" title="Observaciones"></textarea>
+        	<label class="uk-form-label" for="input_observaciones_concepto">Observaciones *</label>
+            <textarea class="uk-textarea" id="input_observaciones_concepto" rows="2" title="Observaciones"></textarea>
 	    </div>
 	</div>
 

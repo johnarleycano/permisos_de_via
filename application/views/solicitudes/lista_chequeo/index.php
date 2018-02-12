@@ -35,7 +35,7 @@
 			$(`#cumple${id_tipo}`).removeAttr('disabled')
 			$(`#documento${id_tipo}, #editar${id_tipo}`).removeAttr('hidden')
 
-			guardar("aplica", id_tipo)
+			guardar_lista("aplica", id_tipo)
 		} else {
 			$(`#documento${id_tipo}, #editar${id_tipo}`).attr('hidden', true)
 			$(`#cumple${id_tipo}`).attr('disabled', true)
@@ -54,7 +54,7 @@
 	 * 
 	 * @return {void}-
 	 */
-	function guardar(tipo, id)
+	function guardar_lista(tipo, id)
 	{
 		const cumple = ($(`#cumple${id}`).is(":checked")) ? 1 : 0
 
