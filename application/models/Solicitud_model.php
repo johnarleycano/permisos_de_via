@@ -61,6 +61,10 @@ Class Solicitud_model extends CI_Model{
     function insertar($tipo, $datos)
     {
         switch ($tipo) {
+            case "concepto":
+                return $this->db->insert('conceptos', $datos);
+            break;
+
             case "lista_chequeo":
                 return $this->db->insert('listas_chequeo', $datos);
             break;
@@ -91,6 +95,10 @@ Class Solicitud_model extends CI_Model{
     function obtener($tipo, $id = null)
     {
         switch ($tipo) {
+            case "conceptos":
+                return $this->db->order_by("Fecha", "DESC")->where("Fk_Id_Solicitud", $id)->get("conceptos")->result();
+            break;
+            
             case "participante":
                 return $this->db->where($id)->get("participantes")->row();
             break;

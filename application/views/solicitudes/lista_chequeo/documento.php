@@ -16,8 +16,6 @@
                         </div>
                     </div>
 
-                    <span id="archivo"></span>
-
                     <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress>
 
                     <?php $archivos = glob("./archivos/documentacion/$id_solicitud/$id_tipo/*"); ?>
@@ -61,11 +59,9 @@
 
 
 <script type="text/javascript">
-    imprimir(`<?php echo site_url("solicitud/subir"); ?>/${$("#id_solicitud").val()}/${<?php echo $id_tipo; ?>}`)
     var bar = document.getElementById('js-progressbar');
 
     UIkit.upload('.js-upload', {
-
         url: `<?php echo site_url("solicitud/subir"); ?>/${$("#id_solicitud").val()}/${<?php echo $id_tipo; ?>}`,
         multiple: false,
         datatype: "html",

@@ -18,6 +18,14 @@
 
 			return false;
 		}
+		
+		// Si no se ha guardado la solicitud, no puede guardar el participante
+		if ($("#id_solicitud").val() == "0") {
+			cerrar_notificaciones();
+			imprimir_notificacion("Antes de modificar, por favor guarde la solicitud.", "danger");
+
+			return false;
+		}
 
 		$(`#aplica${id_tipo}`).attr(`checked`, !$(`#aplica${id_tipo}`).attr(`checked`))
 

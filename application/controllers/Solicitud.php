@@ -75,9 +75,23 @@ class Solicitud extends CI_Controller {
             $tipo = $this->input->post("tipo");
 
             switch ($tipo) {
+                case "conceptos":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/conceptos/index", $this->data);
+                break;
+
                 case "general":
                     $this->data["id_solicitud"] = $this->input->post("id_solicitud");
                     $this->load->view("solicitudes/general/crear", $this->data);
+                break;
+
+                case "conceptos_creacion":
+                    $this->load->view("solicitudes/conceptos/crear");
+                break;
+
+                case "conceptos_listado":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/conceptos/listar", $this->data);
                 break;
 
                 case "lista":
@@ -181,6 +195,13 @@ class Solicitud extends CI_Controller {
             $tipo = $this->input->post('tipo');
 
             switch ($tipo) {
+                case "concepto":
+                    // Se inserta el registro y log en base de datos
+                    if ($this->solicitud_model->insertar($tipo, $datos)) {
+                        echo $id = $this->db->insert_id();
+                    }
+                break;
+
                 case "lista_chequeo":
                     // Se inserta el registro y log en base de datos
                     if ($this->solicitud_model->insertar($tipo, $datos)) {
@@ -229,6 +250,10 @@ class Solicitud extends CI_Controller {
             $id = $this->input->post("id");
 
             switch ($tipo) {
+                case "conceptos":
+                    print json_encode($this->solicitud_model->obtener($tipo, $id));
+                break;
+                
                 case "participante":
                     print json_encode($this->solicitud_model->obtener($tipo, array("Fk_Id_Solicitud" => $this->input->post("id_solicitud"), "Fk_Id_Funcionario" => $this->input->post("id_funcionario"))));
                 break;
@@ -252,10 +277,10 @@ class Solicitud extends CI_Controller {
         // con los permisos correspondientes
         if( ! is_dir($directorio)){
             @mkdir($directorio, 0777);
+        }
 
-            if( ! is_dir("$directorio/$id_tipo")){
-                @mkdir("$directorio/$id_tipo", 0777);
-            }
+        if( ! is_dir("$directorio/$id_tipo")){
+            @mkdir("$directorio/$id_tipo", 0777);
         }
 
         foreach ($_FILES as $key){

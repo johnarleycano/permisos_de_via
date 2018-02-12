@@ -11,7 +11,8 @@
 	            </ul>
 	        </div>
 	    </header>
-	    <div class="uk-comment-body">
+	    
+	    <div class="uk-comment-body" style="cursor: pointer;">
 	        <p><?php echo $solicitud->Objeto; ?></p>
 	    </div>
 	</article>

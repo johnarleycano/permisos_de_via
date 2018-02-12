@@ -10,10 +10,10 @@
 			<li class="uk-active"><a href="#info_general">General</a></li>
 	        <li><a onClick="javascript:listar('vias');">Vías y participantes</a></li>
 	        <li><a onClick="javascript:listar('lista_chequeo');">Lista de chequeo</a></li>
+	        <li><a onClick="javascript:listar('conceptos');">Conceptos</a></li>
 		</ul>
 		<ul id="my-id" class="uk-switcher uk-margin">
 			<li>
-				<!-- <a href="#" id="autoplayer" data-uk-switcher-item="next"></a> -->
 				<div id="cont_general"></div>
 			</li>
 			
@@ -23,6 +23,10 @@
 
 			<li>
 				<div id="cont_lista_chequeo"></div>
+			</li>
+
+			<li>
+				<div id="cont_conceptos"></div>
 			</li>
 		</ul>
 	</div>
