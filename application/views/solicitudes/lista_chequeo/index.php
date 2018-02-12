@@ -11,6 +11,14 @@
 	 * @return {void}
 	 */
 	function aplica(id_tipo) {
+		// Si no se ha guardado la solicitud, no puede guardar el participante
+		if ($("#id_solicitud").val() == "0") {
+			cerrar_notificaciones();
+			imprimir_notificacion("Antes de modificar, por favor guarde la solicitud.", "danger");
+
+			return false;
+		}
+
 		$(`#aplica${id_tipo}`).attr(`checked`, !$(`#aplica${id_tipo}`).attr(`checked`))
 
 		// Si está chequeado
@@ -131,7 +139,9 @@
 			return false;
 		}
 
-        cargar_interfaz(`observacion${id}`, "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": `lista_chequeo_${tipo}`, "id_tipo": id, "id_solicitud": $("#id_solicitud").val()});
+		const contenedor = (tipo == "observacion") ? `${tipo}${id}` : "cont_modal"
+
+        cargar_interfaz(contenedor, "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": `lista_chequeo_${tipo}`, "id_tipo": id, "id_solicitud": $("#id_solicitud").val()});
 	}
 
 	/**
