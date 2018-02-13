@@ -75,6 +75,20 @@ class Solicitud extends CI_Controller {
             $tipo = $this->input->post("tipo");
 
             switch ($tipo) {
+                case "bitacora":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/bitacora/index", $this->data);
+                break;
+
+                case "bitacora_creacion":
+                    $this->load->view("solicitudes/bitacora/crear");
+                break;
+
+                case "bitacora_listado":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/bitacora/listar", $this->data);
+                break;
+
                 case "conceptos":
                     $this->data["id_solicitud"] = $this->input->post("id_solicitud");
                     $this->load->view("solicitudes/conceptos/index", $this->data);
@@ -195,6 +209,13 @@ class Solicitud extends CI_Controller {
             $tipo = $this->input->post('tipo');
 
             switch ($tipo) {
+                case "bitacora":
+                    // Se inserta el registro y log en base de datos
+                    if ($this->solicitud_model->insertar($tipo, $datos)) {
+                        echo $id = $this->db->insert_id();
+                    }
+                break;
+
                 case "concepto":
                     // Se inserta el registro y log en base de datos
                     if ($this->solicitud_model->insertar($tipo, $datos)) {
