@@ -4,6 +4,7 @@
 /index.php
 commits.txt
 package-lock.json
+\.htaccess
 
 ### Carpetas ###
 archivos/documentacion/
