@@ -24,6 +24,12 @@ Class Configuracion_model extends CI_Model{
     function obtener($tipo, $id = null)
     {
         switch ($tipo) {
+            case "aplicacion":
+                return $this->db_configuracion
+                ->where("Pk_Id", $id)
+                ->get("aplicaciones")->row();
+            break;
+
             case "costados":
                 $this->db_configuracion
                     ->select(array(
