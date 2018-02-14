@@ -1,4 +1,4 @@
-<input class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom" onCLick="javascript:crear()" value="Agregar concepto" type="button" id="btn_concepto" />
+<input class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom" onCLick="javascript:crear_concepto()" value="Agregar concepto" type="button" id="btn_concepto" />
 <div id="cont_crear_concepto"></div>
 <hr>
 <div id="cont_lista_conceptos"></div>
@@ -21,7 +21,7 @@
 	 * 
 	 * @return {void}
 	 */
-	function crear()
+	function crear_concepto()
 	{
 		// Si no se ha guardado la solicitud, no puede guardar el participante
 		if ($("#id_solicitud").val() == "0") {
@@ -100,8 +100,6 @@
 
 		cerrar_notificaciones();
 		imprimir_notificacion(`El concepto se ha agregado correctamente.`, `success`);
-
-		$(`#btn_concepto`).show();
 
 		listar_conceptos();
 	}

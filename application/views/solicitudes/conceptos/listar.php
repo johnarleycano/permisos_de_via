@@ -30,7 +30,7 @@ if(count($conceptos) == 0){
 					<td><?php echo $concepto->Radicado_ANI; ?></td>
 					<td><?php echo $concepto->Radicado_Proyecto; ?></td>
 					<td><?php echo ($concepto->Viable == 1) ? "Viable" : "No viable" ; ?></td>
-					<td><?php echo $this->configuracion_model->obtener("formato_fecha", $concepto->Fecha_Viabilidad) ?></td>
+					<td><?php echo $this->configuracion_model->obtener("formato_fecha", $concepto->Fecha_Viabilidad); ?></td>
 					<td>
 						
 					</td>

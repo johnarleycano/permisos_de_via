@@ -133,6 +133,16 @@
 	}
 
 	/**
+	 * Interfaz de listado de registros
+	 * 
+	 * @return {void}              
+	 */
+	function listar_chequeo()
+	{
+        cargar_interfaz("cont_lista_chequeo", "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": "lista_chequeo_listado", "id_solicitud": $("#id_solicitud").val()});
+	}
+
+	/**
 	 * Interfaz para crear un registro
 	 * 
 	 * @return {void}
@@ -152,20 +162,7 @@
         cargar_interfaz(contenedor, "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": `lista_chequeo_${tipo}`, "id_tipo": id, "id_solicitud": $("#id_solicitud").val()});
 	}
 
-	/**
-	 * Interfaz de listado de registros
-	 * 
-	 * @return {void}              
-	 */
-	function listar_chequeo()
-	{
-        cargar_interfaz("cont_lista_chequeo", "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": "lista_chequeo_listado", "id_solicitud": $("#id_solicitud").val()});
-	}
-
 	$(document).ready(function(){
-		// crear();
 		listar_chequeo();
-
-		// $("input[type='checkbox']").on("click", actualizar($(this)))
 	});
 </script>
