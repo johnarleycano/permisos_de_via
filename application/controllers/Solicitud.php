@@ -22,6 +22,11 @@ class Solicitud extends CI_Controller {
 
         // Carga de modelos
         $this->load->model(array('configuracion_model', 'solicitud_model'));
+
+        // Si no ha iniciado sesión, se redirige a la aplicación de configuración
+        if(!$this->session->userdata('Pk_Id_Usuario')){
+            redirect("sesion/cerrar");
+        }
     }
     
     /**

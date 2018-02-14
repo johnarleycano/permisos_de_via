@@ -19,6 +19,7 @@
         <div class="uk-navbar-center-right"><div>
             <ul class="uk-navbar-nav">
                 <li><a href="#">Configuración</a></li>
+                <li><a href="<?php echo site_url('sesion/cerrar'); ?>">Salir</a></li>
             </ul>
         </div></div>
 
