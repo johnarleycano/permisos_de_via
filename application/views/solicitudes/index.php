@@ -4,6 +4,19 @@
 
 <script type="text/javascript">
 	/**
+	 * Genera el reporte de acuerdo al tipo
+	 * 
+	 * @param  {string} tipo 
+	 * @param  {int} id   Id de la solicitud
+	 * 
+	 * @return {void}      
+	 */
+	function generar_reporte(tipo, id)
+	{
+		redireccionar(`<?php echo site_url("reportes/excel/concepto/"); ?>${id}`)
+	}
+
+	/**
 	 * Listado de las solicitudes
 	 * 
 	 * @return [void]

@@ -103,6 +103,10 @@ Class Solicitud_model extends CI_Model{
                 return $this->db->order_by("Fecha_Registro", "DESC")->where("Fk_Id_Solicitud", $id)->get("bitacora")->result();
             break;
 
+            case "concepto":
+                return $this->db->where("Pk_Id", $id)->get("conceptos")->row();
+            break;
+
             case "conceptos":
                 return $this->db->order_by("Fecha", "DESC")->where("Fk_Id_Solicitud", $id)->get("conceptos")->result();
             break;
@@ -115,12 +119,14 @@ Class Solicitud_model extends CI_Model{
                 $this->db
                     ->select(array(
                             "p.Pk_Id",
-                            "p.Fk_Id_Solicitud",
                             "CONCAT(u.Nombres, ' ',u.Apellidos) Nombre",
+                            "u.Documento",
+                            "c.Nombre Cargo",
                         ))
                     ->from('participantes p')
                     ->join('funcionarios f', 'p.Fk_Id_Funcionario = f.Pk_Id')
                     ->join('configuracion.usuarios u', 'f.Fk_Id_Usuario = u.Pk_Id')
+                    ->join('configuracion.cargos c', 'u.Fk_Id_Cargo = c.Pk_Id')
                     ->where('p.Fk_Id_Solicitud', $id)
                     ->order_by('Nombre')
                 ;
@@ -135,9 +141,21 @@ Class Solicitud_model extends CI_Model{
                         "s.*",
                         "se.Nombre Sector",
                         "se.Fk_Id_Municipio",
+                        "m.Nombre Municipio",
+                        "p.Nombre Proyecto",
+                        "p.Numero_Contrato",
+                        "e.Nombre Empresa",
+                        "i.Nombre Interventoria",
+                        "i.Numero_Contrato Numero_Contrato_Interventoria",
+                        "ts.Nombre Tipo",
                     ))
                     ->from('solicitudes s')
+                    ->join('tipos_solicitudes ts', 's.Fk_Id_Tipo_Solicitud = ts.Pk_Id')
                     ->join('configuracion.sectores_municipios se', 's.Fk_Id_Sector = se.Pk_Id')
+                    ->join('configuracion.municipios m', 'se.Fk_Id_Municipio = m.Pk_Id')
+                    ->join('configuracion.proyectos p', 's.Fk_Id_Proyecto = p.Pk_Id')
+                    ->join('configuracion.empresas e', 'p.Fk_Id_Empresa = e.Pk_Id')
+                    ->join('configuracion.interventorias i', 'p.Fk_Id_Interventoria = i.Pk_Id')
                     ->where('s.Pk_Id', $id)
                 ;
 
@@ -162,6 +180,7 @@ Class Solicitud_model extends CI_Model{
                     ->select(array(
                             "s.Codigo Sector",
                             "cv.Nombre Via",
+                            "cv.Codigo",
                             "tc.Nombre Costado",
                             "sv.Abscisa_Inicial",
                             "sv.Abscisa_Final" 
