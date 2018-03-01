@@ -27,7 +27,7 @@ class Sesion extends CI_Controller {
     function index()
     {
         // Se obtiene los datos de la aplicación principal
-        $aplicacion = $this->configuracion_model->obtener("aplicacion", 15);
+        $aplicacion = $this->configuracion_model->obtener("aplicacion", $this->config->item("id_aplicacion_sesion"));
 
         // Se lee el archivo con los datos de sesión activa
         $archivo = file_get_contents($aplicacion->Url."sesion.json");
