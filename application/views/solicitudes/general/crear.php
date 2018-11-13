@@ -115,11 +115,32 @@
     </div>
 
     <p>
+        <?php if($id_solicitud){ ?>
+            <button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" type="button" id="generar_reporte" onCLick="javascript:generar('concepto', <?php echo $id_solicitud; ?>)"><span class="uk-text-success">Generar reporte</span></button>
+        <?php } ?>
     	<button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom" type="submit" id="guardar" >Guardar</button>
     </p>
 </form>
 
 <script type="text/javascript">
+    /**
+     * Genera el reporte de acuerdo al tipo
+     * 
+     * @param  {string} tipo 
+     * @param  {int} id   Id de la solicitud
+     * 
+     * @return {void}      
+     */
+    function generar(tipo, id)
+    {
+        cerrar_notificaciones();
+        imprimir_notificacion("<div uk-spinner></div> Generando reporte...")
+
+        redireccionar(`<?php echo site_url("reportes/excel/concepto/"); ?>${id}`)
+
+        cerrar_notificaciones();
+    }
+
 	$(document).ready(function(){
 		// Se ponen algunos valores por defecto
         select_por_defecto("select_proyecto", 1);
