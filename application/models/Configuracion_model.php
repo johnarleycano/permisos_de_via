@@ -46,6 +46,10 @@ Class Configuracion_model extends CI_Model{
                 // return $this->db_configuracion->get_compiled_select(); // string de la consulta
                 return $this->db_configuracion->get()->result();
             break;
+
+            case "elementos":
+                return $this->db->get("elementos")->result();
+            break;
             
             case 'formato_fecha':
                 $fecha = $id;
