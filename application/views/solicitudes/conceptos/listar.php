@@ -26,14 +26,14 @@ if(count($conceptos) == 0){
         <tbody>
         	<?php
             foreach ($conceptos as $concepto) {
-                $fecha = $this->configuracion_model->obtener("formato_fecha", $concepto->Fecha_Viabilidad);
+                $fecha = (isset($concepto->Fecha_Viabilidad)) ? $this->configuracion_model->obtener("formato_fecha", $concepto->Fecha_Viabilidad) : null;
             ?>
 	        	<tr>
 					<td class="uk-text-right"><?php echo $num++; ?></td>
 					<td><?php echo $concepto->Radicado_ANI; ?></td>
 					<td><?php echo $concepto->Radicado_Proyecto; ?></td>
 					<td><?php echo ($concepto->Viable == 1) ? "Viable" : "No viable" ; ?></td>
-					<td><?php echo "{$fecha['mes_texto']} {$fecha['dia']}, {$fecha['anio']}"; ?></td>
+					<td><?php if($fecha) echo "{$fecha['mes_texto']} {$fecha['dia']}, {$fecha['anio']}"; ?></td>
 					<td>
 						
 					</td>

@@ -116,7 +116,7 @@ Class Solicitud_model extends CI_Model{
             break;
 
             case "conceptos":
-                return $this->db->where("Fk_Id_Solicitud", $id)->get("elementos_solicitudes")->result();
+                return $this->db->where("Fk_Id_Solicitud", $id)->get("conceptos")->result();
             break;
 
             case "elemento_solicitud":
