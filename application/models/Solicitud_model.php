@@ -122,6 +122,8 @@ Class Solicitud_model extends CI_Model{
                             "CONCAT(u.Nombres, ' ',u.Apellidos) Nombre",
                             "u.Documento",
                             "c.Nombre Cargo",
+                            "f.Fk_Id_Empresa",
+                            "f.Fk_Id_Interventoria",
                         ))
                     ->from('participantes p')
                     ->join('funcionarios f', 'p.Fk_Id_Funcionario = f.Pk_Id')
@@ -150,12 +152,12 @@ Class Solicitud_model extends CI_Model{
                         "ts.Nombre Tipo",
                     ))
                     ->from('solicitudes s')
-                    ->join('tipos_solicitudes ts', 's.Fk_Id_Tipo_Solicitud = ts.Pk_Id')
-                    ->join('configuracion.sectores_municipios se', 's.Fk_Id_Sector = se.Pk_Id')
-                    ->join('configuracion.municipios m', 'se.Fk_Id_Municipio = m.Pk_Id')
-                    ->join('configuracion.proyectos p', 's.Fk_Id_Proyecto = p.Pk_Id')
-                    ->join('configuracion.empresas e', 'p.Fk_Id_Empresa = e.Pk_Id')
-                    ->join('configuracion.interventorias i', 'p.Fk_Id_Interventoria = i.Pk_Id')
+                    ->join('tipos_solicitudes ts', 's.Fk_Id_Tipo_Solicitud = ts.Pk_Id', 'left')
+                    ->join('configuracion.sectores_municipios se', 's.Fk_Id_Sector = se.Pk_Id', 'left')
+                    ->join('configuracion.municipios m', 'se.Fk_Id_Municipio = m.Pk_Id', 'left')
+                    ->join('configuracion.proyectos p', 's.Fk_Id_Proyecto = p.Pk_Id', 'left')
+                    ->join('configuracion.empresas e', 'p.Fk_Id_Empresa = e.Pk_Id', 'left')
+                    ->join('configuracion.interventorias i', 'p.Fk_Id_Interventoria = i.Pk_Id', 'left')
                     ->where('s.Pk_Id', $id)
                 ;
 
@@ -181,6 +183,8 @@ Class Solicitud_model extends CI_Model{
                             "s.Codigo Sector",
                             "cv.Nombre Via",
                             "cv.Codigo",
+                            "cv.Categoria",
+                            "tc.Pk_Id Fk_Id_Tipo_Costado",
                             "tc.Nombre Costado",
                             "sv.Abscisa_Inicial",
                             "sv.Abscisa_Final" 

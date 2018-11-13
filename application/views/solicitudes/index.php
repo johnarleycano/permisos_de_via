@@ -13,7 +13,12 @@
 	 */
 	function generar_reporte(tipo, id)
 	{
+		cerrar_notificaciones();
+        imprimir_notificacion("<div uk-spinner></div> Generando reporte...")
+
 		redireccionar(`<?php echo site_url("reportes/excel/concepto/"); ?>${id}`)
+
+		cerrar_notificaciones();
 	}
 
 	/**

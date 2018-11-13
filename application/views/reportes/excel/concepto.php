@@ -1,4 +1,13 @@
 <?php
+// Fechas
+$fecha = $this->configuracion_model->obtener("formato_fecha", date("Y-m-d"));
+$numero = new NumerosALetras();
+$dia_texto = strtolower($numero->traducir(date("d"), "numero"));
+$dia = date("d");
+$mes_texto = strtolower($fecha['mes_texto']);
+$anio = date("Y");
+
+
 $solicitud = $this->solicitud_model->obtener("solicitud", $id_solicitud);
 $participantes = $this->solicitud_model->obtener("participantes", $id_solicitud);
 $vias = $this->solicitud_model->obtener("vias", $id_solicitud);
@@ -17,7 +26,7 @@ $objPHPExcel
 	->getProperties()
 	->setCreator("John Arley Cano Salinas - Devimed S.A.")
 	->setLastModifiedBy("John Arley Cano Salinas")
-	->setTitle("Sistema de administración de permisos de usos de vía - Generado el ".$this->configuracion_model->obtener("formato_fecha", date('Y-m-d')).' - '.date('h:i A'))
+	->setTitle("Sistema de administración de permisos de usos de vía - Generado el ".$fecha['dia']." de ".$fecha['mes_texto']." de ".$anio." - ".date('h:i A'))
 	->setSubject("Concepto técnico de permiso de ocupación temporal")
 	->setDescription("Formato de la ANI GSCP-F-196")
 	->setKeywords("gestion proyectos infraestructura concepto tecnico operativo viabilidad permiso solicitud via acceso ocupacion temporal")
@@ -64,18 +73,18 @@ $objPHPExcel->getActiveSheet()->getHeaderFooter()->setOddFooter('&L&B' .$objPHPE
 /*
  * Definicion de la anchura de las columnas
  */
-$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(25);
-$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(20);
+$objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(24);
+$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(18);
 $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(11);
 $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(11);
 $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(11);
 $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(11);
-$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(11);
-$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(11);
-$objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(8);
-$objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(8);
-$objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(8);
-$objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(9);
+$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(10);
+$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(10);
+$objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(10);
+$objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(9);
+$objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(11);
+$objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(8);
 
 /**
  * Definición de altura de las filas
@@ -315,18 +324,32 @@ $objPHPExcel->getActiveSheet()
 ;
 
 $fila++;
+
+// Si no tiene ningún registro, agrega una fila vacía
+if(count($vias) == 0) $fila++;
+
 foreach ($vias as $via) {
+	// Márgenes
+	$margen_derecha = ($via->Fk_Id_Tipo_Costado == 1) ? "X" : "" ;
+	$margen_izquierda = ($via->Fk_Id_Tipo_Costado == 2) ? "X" : "" ;
+
 	$objPHPExcel->getActiveSheet()
 		->mergeCells("C{$fila}:D{$fila}")
 		->mergeCells("E{$fila}:F{$fila}")
-		->mergeCells("I{$fila}:L{$fila}")
 		->setCellValue("A{$fila}", 'CÓDIGO')
 		->setCellValue("C{$fila}", 'CATEGORÍA')
+		->setCellValue("I{$fila}", 'DERECHO')
+		->setCellValue("K{$fila}", 'IZQUIERDO')
 		->setCellValue("B{$fila}", $via->Codigo)
+		->setCellValue("E{$fila}", $via->Categoria)
 		->setCellValue("G{$fila}", $via->Abscisa_Inicial)
 		->setCellValue("H{$fila}", $via->Abscisa_Final)
-		->setCellValue("I{$fila}", $via->Costado)
+		->setCellValue("J{$fila}", $margen_derecha)
+		->setCellValue("L{$fila}", $margen_izquierda)
 	;
+
+	$objPHPExcel->getActiveSheet()->getStyle("J{$fila}")->applyFromArray($centrado);
+	$objPHPExcel->getActiveSheet()->getStyle("L{$fila}")->applyFromArray($centrado);
 
 	$fila++;
 }
@@ -425,10 +448,11 @@ $fila++;
 $objPHPExcel->getActiveSheet()->getRowDimension($fila)->setRowHeight(5);
 
 $fila++;
+$objPHPExcel->getActiveSheet()->setDinamicSizeRow("VALOR ESTIMADO DE RECUPERACIÓN DE LA VÍA (no podrá ser superior al 30% del valor total de las obras objeto del permiso ni inferior a 50 SMMLV y se debe anexar respectiva metodología)", $fila, "A:D");
+
 $objPHPExcel->getActiveSheet()
 	->mergeCells("A{$fila}:D{$fila}")
 	->mergeCells("E{$fila}:L{$fila}")
-	->setCellValue("A{$fila}", 'VALOR ESTIMADO DE RECUPERACIÓN DE LA VÍA')
 	->getStyle("A{$fila}")->applyFromArray($negrita)
 ;
 $objPHPExcel->getActiveSheet()->getStyle("A{$fila}:L{$fila}")->applyFromArray($bordes);
@@ -492,6 +516,13 @@ $objPHPExcel->getActiveSheet()
 ;
 
 $fila++;
+$objPHPExcel->getActiveSheet()
+	->mergeCells("C{$fila}:F{$fila}")
+	->mergeCells("G{$fila}:L{$fila}")
+;
+
+$objPHPExcel->getActiveSheet()->getStyle("A{$fila_inicial}:L{$fila}")->applyFromArray($bordes);
+
 $fila++;
 $objPHPExcel->getActiveSheet()->getRowDimension($fila)->setRowHeight(5);
 
@@ -561,7 +592,7 @@ $objPHPExcel->getActiveSheet()
 	->getStyle("A{$fila}")->applyFromArray($centrado)
 ;
 
-$objPHPExcel->getActiveSheet()->setDinamicSizeRow("Para constancia de lo anterior, se firma la presente acta bajo la responsabilidad expresa de los que intervienen en ella de conformidad con las funciones y/u obligaciones desempeñadas por cada uno de los mismos de acuerdo con lo estipulado en la resolución 716 de 2015, a los     XXXXXXXX    (XX) días del mes    XXXXXXXX    de       XXXX  .", $fila, "A:L");
+$objPHPExcel->getActiveSheet()->setDinamicSizeRow("Para constancia de lo anterior, se firma la presente acta bajo la responsabilidad expresa de los que intervienen en ella de conformidad con las funciones y/u obligaciones desempeñadas por cada uno de los mismos de acuerdo con lo estipulado en la resolución 716 de 2015, a los $dia_texto ($dia) días del mes de {$mes_texto} de $anio.", $fila, "A:L");
 $objPHPExcel->getActiveSheet()->getStyle("A{$fila_inicial}:L{$fila}")->applyFromArray($bordes);
 
 $fila++;
@@ -585,17 +616,21 @@ foreach ($participantes as $participante) {
 		->mergeCells("A{$fila}:C{$fila}")
 		->mergeCells("D{$fila}:I{$fila}")
 		->mergeCells("J{$fila}:L{$fila}")
-		->setCellValue("A{$fila}", '')
 		->setCellValue("D{$fila}", $participante->Nombre)
 		->setCellValue("J{$fila}", '')
 	;
+	$objPHPExcel->getActiveSheet()->setDinamicSizeRow(($participante->Fk_Id_Empresa) ? "CONCESIONARIO Y/O ADMINISTRADOR DE LA INFRAESTRUCTURA FÉRREA" : "INTERVENTORÍA", $fila, "A:C");
+
+	$fila++;
 }
+
+$fila--;
 $objPHPExcel->getActiveSheet()->getStyle("A{$fila_inicial}:L{$fila}")->applyFromArray($bordes);
 
 // Se modifican los encabezados del HTTP para indicar que se envia un archivo de Excel.
 header('Cache-Control: max-age=0');
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment; filename="Prueba.xlsx"');
+header("Content-Disposition: attachment; filename='Solicitud permiso de vía $id_solicitud.xlsx'");
 
 //Se genera el excel
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
