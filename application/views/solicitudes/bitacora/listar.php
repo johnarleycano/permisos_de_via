@@ -23,10 +23,13 @@ if(count($bitacora) == 0){
         	</tr>
         </thead>
         <tbody>
-        	<?php foreach ($bitacora as $registro) { ?>
+        	<?php
+            foreach ($bitacora as $registro) {
+                $fecha = $this->configuracion_model->obtener("formato_fecha", $registro->Fecha_Registro);
+            ?>
 	        	<tr>
 					<td class="uk-text-right"><?php echo $num++; ?></td>
-					<td><?php echo $this->configuracion_model->obtener("formato_fecha", $registro->Fecha_Registro); ?></td>
+					<td><?php echo "{$fecha['mes_texto']} {$fecha['dia']}, {$fecha['anio']}"; ?></td>
 					<td><?php echo $registro->Radicado; ?></td>
 					<td><?php echo $registro->Detalle; ?></td>
 					<td>
