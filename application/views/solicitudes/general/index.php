@@ -53,6 +53,8 @@
 	    	"Fk_Id_Sector": $("#select_sector").val(),
 	    	"Objeto": $("#input_objeto").val(),
 	    	"Alcance": $("#input_alcance").val(),
+	    	"Instrucciones": $("#input_instrucciones").val(),
+	    	"Observaciones": $("#input_observaciones").val(),
 	    	"Peticionario": $("#input_peticionario").val(),
 	    	"Cedula": $("#input_cedula").val(),
 	    	"Nit": $("#input_nit").val(),
@@ -62,7 +64,6 @@
 	    	"Direccion": $("#input_direccion").val(),
 	    	"Email": $("#input_email").val(),
 	    	"Fecha": "<?php echo date("Y-m-d h:i:s"); ?>",
-	    	// "Fk_Id_Usuario": "<?php // echo $this->session->userdata('Pk_Id_Usuario'); ?>",
 	    }
 	    // imprimir(datos);
 	    

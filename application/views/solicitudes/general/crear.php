@@ -114,6 +114,19 @@
         </div>
     </div>
 
+    <h4 class="uk-heading-line uk-text-right"><span>Otros datos</span></h4>
+    <div class="uk-column-1-2@m uk-column-divider">
+        <div>
+            <label class="uk-form-label" for="input_instrucciones">Instrucciones *</label>
+            <textarea class="uk-textarea" id="input_instrucciones" rows="4" title="Instrucciones" placeholder="Instrucciones para el mantenimiento y la rehabilitación de las obras objeto de permiso"><?php echo ($solicitud) ? $solicitud->Instrucciones : "" ; ?></textarea>
+        </div>
+
+        <div>
+            <label class="uk-form-label" for="input_observaciones">Observaciones *</label>
+            <textarea class="uk-textarea" id="input_observaciones" rows="4" title="Observaciones" placeholder="Observaciones y/o recomendaciones"><?php echo ($solicitud) ? $solicitud->Observaciones : "" ; ?></textarea>
+        </div>
+    </div>
+
     <p>
         <?php if($id_solicitud){ ?>
             <button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" type="button" id="generar_reporte" onCLick="javascript:generar('concepto', <?php echo $id_solicitud; ?>)"><span class="uk-text-success">Generar reporte</span></button>
