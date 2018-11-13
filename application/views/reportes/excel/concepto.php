@@ -369,6 +369,8 @@ $objPHPExcel->getActiveSheet()
 	->getStyle("A{$fila}")->applyFromArray($centrado_negrita)
 ;
 
+$elementos = $this->configuracion_model->obtener("elementos");
+
 $fila++;
 $objPHPExcel->getActiveSheet()
 	->mergeCells("C{$fila}:D{$fila}")
@@ -376,19 +378,36 @@ $objPHPExcel->getActiveSheet()
 	->mergeCells("G{$fila}:H{$fila}")
 	->mergeCells("I{$fila}:J{$fila}")
 	->mergeCells("K{$fila}:L{$fila}")
-	->setCellValue("A{$fila}", 'Alcantarilla')
-	->setCellValue("B{$fila}", 'Puente')
-	->setCellValue("C{$fila}", 'Cruces de vías')
-	->setCellValue("E{$fila}", 'Peajes')
-	->setCellValue("E{$fila}", 'Peajes')
-	->setCellValue("G{$fila}", 'Cunetas')
-	->setCellValue("I{$fila}", 'Cauces vallado')
-	->setCellValue("K{$fila}", 'Andén')
+	->setCellValue("A{$fila}", $elementos[0]->Nombre)
+	->setCellValue("B{$fila}", $elementos[1]->Nombre)
+	->setCellValue("C{$fila}", $elementos[2]->Nombre)
+	->setCellValue("E{$fila}", $elementos[3]->Nombre)
+	->setCellValue("G{$fila}", $elementos[4]->Nombre)
+	->setCellValue("I{$fila}", $elementos[5]->Nombre)
+	->setCellValue("K{$fila}", $elementos[6]->Nombre)
 	->getStyle("A{$fila}:K{$fila}")->applyFromArray($centrado)
 ;
+$fila++;
+
+$objPHPExcel->getActiveSheet()
+	->mergeCells("C{$fila}:D{$fila}")
+	->mergeCells("E{$fila}:F{$fila}")
+	->mergeCells("G{$fila}:H{$fila}")
+	->mergeCells("I{$fila}:J{$fila}")
+	->mergeCells("K{$fila}:L{$fila}")
+;
+
+// Arreglo de celdas
+$celdas = array("A", "B", "C", "E", "G", "I", "K");
+
+for ($i=0; $i < count($celdas); $i++) { 
+	$registro = $this->solicitud_model->obtener("elemento_solicitud", array("Fk_Id_Solicitud" => $id_solicitud, "Fk_Id_Elemento" => $elementos[$i]->Pk_Id));
+	if(isset($registro->Abscisa_Inicial)){
+		$objPHPExcel->getActiveSheet()->setCellValue("{$celdas[$i]}{$fila}", "PR $registro->Abscisa_Inicial a PR $registro->Abscisa_Final");
+	}
+}
 
 // Estilos
-$fila++;
 $objPHPExcel->getActiveSheet()->getStyle("A{$fila_inicial}:L{$fila}")->applyFromArray($bordes);
 
 $fila++;
