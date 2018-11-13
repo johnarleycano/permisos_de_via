@@ -20,7 +20,8 @@ class Reportes extends CI_Controller {
     function __construct() {
         parent::__construct();
         require('system/libraries/PHPExcel.php');
-
+        require('system/libraries/Numeros.php');
+        
         // Si no ha iniciado sesión, se redirige a la aplicación de configuración
         if(!$this->session->userdata('Pk_Id_Usuario')){
             redirect("sesion/cerrar");
