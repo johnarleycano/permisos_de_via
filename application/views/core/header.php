@@ -29,6 +29,6 @@
 
 <!-- Estilos -->
 <link rel="stylesheet" href="<?php echo base_url(); ?>css/uikit.min.css" />
-<link rel="stylesheet" href="<?php echo base_url(); ?>css/estilos.css" />
+<link rel="stylesheet" href="<?php echo base_url(); ?>css/estilos.css?<?php echo date('Ymdihs'); ?>" />
 
-<script src="<?php echo base_url(); ?>js/funciones.js"></script>
+<script src="<?php echo base_url(); ?>js/funciones.js?<?php echo date('Ymdihs'); ?>"></script>

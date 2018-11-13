@@ -4,8 +4,7 @@
 <!-- Id de la solicitud (cuando se cree el registro) -->
 <input type="hidden" id="id_solicitud" value="<?php echo $id_solicitud; ?>">
 
-<form class="uk-form-horizontal uk-margin-large">
-	<div class="uk-margin-medium-top">
+<form class="uk-form-horizontal">
 		<ul class="uk-flex-center" data-uk-tab="{connect:'#my-id'}" uk-tab>
 			<li class="uk-active"><a href="#info_general">General</a></li>
 	        <li><a onClick="javascript:listar('vias');">Vías y participantes</a></li>
@@ -20,7 +19,6 @@
 			<li><div id="cont_conceptos"></div></li>
 			<li><div id="cont_bitacora"></div></li>
 		</ul>
-	</div>
 </form>
 
 <script type="text/javascript">

@@ -191,7 +191,6 @@ Class Solicitud_model extends CI_Model{
                     ->join('configuracion.sectores s', 'cv.Fk_Id_Sector = s.Pk_Id')
                     ->join('configuracion.tipos_costados tc', 'c.Fk_Id_Tipo_Costado = tc.Pk_Id')
                     ->where('sv.Fk_Id_Solicitud', $id)
-                    // ->order_by('Nombre')
                 ;
 
                 // return $this->db->get_compiled_select(); // string de la consulta

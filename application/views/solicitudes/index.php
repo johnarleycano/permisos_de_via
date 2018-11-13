@@ -23,7 +23,6 @@
 	 */
 	function listar_solicitudes()
 	{
-		imprimir("listado solicitudes")
 		cargar_interfaz("cont_solicitudes", "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": "lista"});
 	}
 

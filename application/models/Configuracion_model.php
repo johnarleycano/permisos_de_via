@@ -95,7 +95,7 @@ Class Configuracion_model extends CI_Model{
 
                 //Se foramtea la fecha
                 // $fecha = $dia_num." de ".$mes_es." de ".$anio_es;
-                return "$mes_es $dia_num, $anio_es";
+                return array("dia" => $dia_num, "mes_texto" => $mes_es, "anio" => $anio_es);
             break;
             
             case "funcionarios":
