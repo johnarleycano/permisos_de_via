@@ -5,7 +5,7 @@
 	        <div class="uk-form-controls">
 	            <select class="uk-select" id="select_sector" title="Sector" autofocus>
 	            	<option value="">Elija...</option>
-	            	<?php foreach ($this->configuracion_model->obtener("sectores") as $sector) { ?>
+	            	<?php foreach ($this->configuracion_model->obtener("sectores_activos") as $sector) { ?>
 		                <option value="<?php echo $sector->Pk_Id ?>"><?php echo $sector->Codigo; ?></option>
 	            	<?php } ?>
 	            </select>
