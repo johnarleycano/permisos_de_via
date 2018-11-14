@@ -33,7 +33,11 @@ if(count($bitacora) == 0){
 					<td><?php echo $registro->Radicado; ?></td>
 					<td><?php echo $registro->Detalle; ?></td>
 					<td>
-						
+                        <a onClick="javascript:eliminar(<?php echo $registro->Pk_Id; ?>)" class="uk-link-muted">
+                            <div uk-tooltip="title: Eliminar">
+                                <span uk-icon="close"></span>
+                            </div>
+                        </a>
 					</td>
 				</tr>
 			<?php } ?>

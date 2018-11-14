@@ -205,6 +205,10 @@ class Solicitud extends CI_Controller {
             $tipo = $this->input->post("tipo");
 
             switch ($tipo) {
+                case 'bitacora':
+                    echo $this->solicitud_model->eliminar($tipo, $this->input->post("datos"));
+                break;
+
                 case 'lista_chequeo':
                     echo $this->solicitud_model->eliminar($tipo, $this->input->post("datos"));
                 break;

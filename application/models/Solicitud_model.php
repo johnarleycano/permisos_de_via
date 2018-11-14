@@ -46,6 +46,10 @@ Class Solicitud_model extends CI_Model{
      */
     function eliminar($tipo, $id){
         switch ($tipo) {
+            case 'bitacora':
+                return $this->db->delete('bitacora', $id);
+            break;
+
             case 'lista_chequeo':
                 if($this->db->delete('listas_chequeo', $id)){
                     return true;
