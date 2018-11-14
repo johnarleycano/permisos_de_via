@@ -268,6 +268,7 @@ $objPHPExcel->getActiveSheet()->getStyle("A24:J25")->applyFromArray($centrado_ne
 $objPHPExcel->getActiveSheet()->getStyle("A1:L3")->applyFromArray($bordes);
 $objPHPExcel->getActiveSheet()->getStyle("A5:L17")->applyFromArray($bordes);
 $objPHPExcel->getActiveSheet()->getStyle("A19:L22")->applyFromArray($bordes);
+$objPHPExcel->getActiveSheet()->getStyle("A19")->applyFromArray($centrado_negrita);
 
 $fila = 26;
 foreach ($participantes as $participante) {
@@ -504,9 +505,8 @@ $fila++;
 $objPHPExcel->getActiveSheet()->mergeCells("A{$fila}:L{$fila}");
 
 // Si es un concepto específico
-if (isset($concepto)) {
-	$objPHPExcel->getActiveSheet()->setDinamicSizeRow($concepto->Instrucciones, $fila, "A:K");
-}
+$objPHPExcel->getActiveSheet()->setDinamicSizeRow($solicitud->Instrucciones, $fila, "A:K");
+
 $objPHPExcel->getActiveSheet()->getStyle("A{$fila_inicial}:L{$fila}")->applyFromArray($bordes);
 
 $fila++;
@@ -558,10 +558,7 @@ $objPHPExcel->getActiveSheet()
 $fila++;
 $objPHPExcel->getActiveSheet()->mergeCells("A{$fila}:L{$fila}");
 
-// Si es un concepto específico
-if (isset($concepto)) {
-	$objPHPExcel->getActiveSheet()->setDinamicSizeRow($concepto->Observaciones, $fila, "A:K");
-}
+$objPHPExcel->getActiveSheet()->setDinamicSizeRow($solicitud->Observaciones, $fila, "A:K");
 $objPHPExcel->getActiveSheet()->getStyle("A{$fila_inicial}:L{$fila}")->applyFromArray($bordes);
 
 $fila++;
