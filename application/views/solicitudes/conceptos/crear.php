@@ -1,3 +1,6 @@
+<!-- Consulta de la solicitud -->
+<?php $solicitud = $this->solicitud_model->obtener("solicitud", $id_solicitud); ?>
+
 <form id="cont_concepto">
     <div class="uk-column-1-2@s">
 		<div class="uk-margin">
@@ -17,7 +20,7 @@
 
 	<div class="uk-column-1-2@s">
 		<div class="uk-margin">
-        	<label class="uk-form-label" for="input_radicado_proyecto">Radicado {proyecto} *</label>
+        	<label class="uk-form-label" for="input_radicado_proyecto">Radicado <?php echo $solicitud->Proyecto; ?> *</label>
 	        <div class="uk-form-controls">
                 <input class="uk-input" type="text" id="input_radicado_proyecto" title="Radicado {proyecto}">
 	        </div>

@@ -45,7 +45,7 @@
 			return false;
 		}
 
-		cargar_interfaz(`cont_crear_concepto`, "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": `conceptos_creacion`})
+		cargar_interfaz(`cont_crear_concepto`, "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": `conceptos_creacion`, "id_solicitud": "<?php echo $id_solicitud; ?>"})
 		
 		$(`#btn_concepto`).hide()
 	}

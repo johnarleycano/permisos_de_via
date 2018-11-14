@@ -1,4 +1,7 @@
 <?php
+// Consulta de la solicitud
+$solicitud = $this->solicitud_model->obtener("solicitud", $id_solicitud);
+
 // Se consultan los registros
 $conceptos = $this->solicitud_model->obtener("conceptos", $id_solicitud);
 
@@ -17,7 +20,7 @@ if(count($conceptos) == 0){
             <tr>
             	<th class="uk-text-center">#</th>
             	<th class="uk-text-center">Radicado ANI</th>
-            	<th class="uk-text-center">Radicado {proyecto}</th>
+            	<th class="uk-text-center">Radicado <?php echo $solicitud->Proyecto; ?></th>
             	<th class="uk-text-center">Concepto emitido</th>
             	<th class="uk-text-center">Fecha de emisión</th>
             	<th class="uk-text-center">Opciones</th>

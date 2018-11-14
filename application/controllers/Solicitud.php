@@ -104,7 +104,8 @@ class Solicitud extends CI_Controller {
                 break;
 
                 case "conceptos_creacion":
-                    $this->load->view("solicitudes/conceptos/crear");
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/conceptos/crear", $this->data);
                 break;
 
                 case "conceptos_listado":
