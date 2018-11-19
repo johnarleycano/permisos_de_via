@@ -62,7 +62,7 @@ $objPHPExcel->getActiveSheet()->getPageMargins()
 ;
 
 // Título de la hoja
-$objPHPExcel->getActiveSheet()->setTitle("Concepto de la solicitud $id_solicitud");
+$objPHPExcel->getActiveSheet()->setTitle("Concepto");
 
 // Ocultar la cuadrícula:
 // $objPHPExcel->getActiveSheet()->setShowGridlines(false);
@@ -646,7 +646,7 @@ $objPHPExcel->getActiveSheet()->getStyle("A{$fila_inicial}:L{$fila}")->applyFrom
 // Se modifican los encabezados del HTTP para indicar que se envia un archivo de Excel.
 header('Cache-Control: max-age=0');
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header("Content-Disposition: attachment; filename='Solicitud permiso de vía $id_solicitud.xlsx'");
+header("Content-Disposition: attachment; filename='Solicitud $solicitud->Peticionario.xlsx'");
 
 //Se genera el excel
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
