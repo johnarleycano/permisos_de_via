@@ -441,21 +441,26 @@ foreach ($tipos_documentos as $documento) {
 	$lista_chequeo = $this->solicitud_model->obtener("valor_lista_chequeo", Array("Fk_Id_Tipo_Documento" => $documento->Pk_Id, "Fk_Id_Solicitud" => $id_solicitud));
 	$observacion = (isset($lista_chequeo)) ? $lista_chequeo->Observacion : "" ;
 
-	if(isset($lista_chequeo)) {
-		if($lista_chequeo->Cumple == 1) {
-			$objPHPExcel->getActiveSheet()->setCellValue("C{$fila}", "X");
-		} else {
-			$objPHPExcel->getActiveSheet()->setCellValue("D{$fila}", "X");
-		}
-	}
-
 	$objPHPExcel->getActiveSheet()
 		->mergeCells("A{$fila}:B{$fila}")
 		->mergeCells("E{$fila}:L{$fila}")
 	;
 
 	$objPHPExcel->getActiveSheet()->setDinamicSizeRow("$documento->Orden - $documento->Nombre", $fila, "A:B");
-	$objPHPExcel->getActiveSheet()->setDinamicSizeRow($observacion, $fila, "E:L");
+
+	// Si existe el registro en la lista de chequeo
+	if(isset($lista_chequeo)) {
+		if($lista_chequeo->Cumple == 1) {
+			$objPHPExcel->getActiveSheet()->setCellValue("C{$fila}", "X");
+		} else {
+			$objPHPExcel->getActiveSheet()->setCellValue("D{$fila}", "X");
+		}
+
+		$objPHPExcel->getActiveSheet()->setDinamicSizeRow($observacion, $fila, "E:L");
+	} else {
+		$objPHPExcel->getActiveSheet()->setDinamicSizeRow("N/A", $fila, "E:L");
+	}
+	
 
 	$fila++;
 }
