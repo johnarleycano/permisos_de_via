@@ -7,7 +7,6 @@ $dia = date("d");
 $mes_texto = strtolower($fecha['mes_texto']);
 $anio = date("Y");
 
-
 $solicitud = $this->solicitud_model->obtener("solicitud", $id_solicitud);
 $participantes = $this->solicitud_model->obtener("participantes", $id_solicitud);
 $vias = $this->solicitud_model->obtener("vias", $id_solicitud);
@@ -436,10 +435,12 @@ $objPHPExcel->getActiveSheet()
 	->getStyle("A{$fila}:L{$fila2}")->applyFromArray($centrado_negrita)
 ;
 
+$valor_recuperacion_via = 0;
+
 $fila += 2;
 foreach ($tipos_documentos as $documento) {
 	$lista_chequeo = $this->solicitud_model->obtener("valor_lista_chequeo", Array("Fk_Id_Tipo_Documento" => $documento->Pk_Id, "Fk_Id_Solicitud" => $id_solicitud));
-	$observacion = (isset($lista_chequeo)) ? $lista_chequeo->Observacion : "" ;
+	$observacion = (isset($lista_chequeo)) ? $lista_chequeo->Observacion : "N/A" ;
 
 	$objPHPExcel->getActiveSheet()
 		->mergeCells("A{$fila}:B{$fila}")
@@ -448,19 +449,24 @@ foreach ($tipos_documentos as $documento) {
 
 	$objPHPExcel->getActiveSheet()->setDinamicSizeRow("$documento->Orden - $documento->Nombre", $fila, "A:B");
 
+	// Si el ítem es presupuesto de obra
+	if(isset($lista_chequeo) && $valor_recuperacion_via == 0 & strpos($documento->Nombre, "Presupuesto") !== false){
+		// Se extraen los decimales del presupuesto	
+		$presupuesto = explode(",", $observacion);
+
+		// Se extrae cualquier cadena no numérica del valor
+		$valor = filter_var($presupuesto[0], FILTER_SANITIZE_NUMBER_INT) . PHP_EOL;
+
+		// Se calcula el 30% del valor del presupuesto
+		$valor_recuperacion_via = number_format(($valor * 30) / 100, 2, ',', '.');
+	}
+
 	// Si existe el registro en la lista de chequeo
 	if(isset($lista_chequeo)) {
-		if($lista_chequeo->Cumple == 1) {
-			$objPHPExcel->getActiveSheet()->setCellValue("C{$fila}", "X");
-		} else {
-			$objPHPExcel->getActiveSheet()->setCellValue("D{$fila}", "X");
-		}
-
-		$objPHPExcel->getActiveSheet()->setDinamicSizeRow($observacion, $fila, "E:L");
-	} else {
-		$objPHPExcel->getActiveSheet()->setDinamicSizeRow("N/A", $fila, "E:L");
+		($lista_chequeo->Cumple == 1) ? $objPHPExcel->getActiveSheet()->setCellValue("C{$fila}", "X") : $objPHPExcel->getActiveSheet()->setCellValue("D{$fila}", "X") ;
 	}
-	
+
+	$objPHPExcel->getActiveSheet()->setDinamicSizeRow($observacion, $fila, "E:L");
 
 	$fila++;
 }
@@ -474,6 +480,7 @@ $objPHPExcel->getActiveSheet()->getRowDimension($fila)->setRowHeight(5);
 
 $fila++;
 $objPHPExcel->getActiveSheet()->setDinamicSizeRow("VALOR ESTIMADO DE RECUPERACIÓN DE LA VÍA (no podrá ser superior al 30% del valor total de las obras objeto del permiso ni inferior a 50 SMMLV y se debe anexar respectiva metodología)", $fila, "A:D");
+$objPHPExcel->getActiveSheet()->setCellValue("E{$fila}", "$ $valor_recuperacion_via");
 
 $objPHPExcel->getActiveSheet()
 	->mergeCells("A{$fila}:D{$fila}")
