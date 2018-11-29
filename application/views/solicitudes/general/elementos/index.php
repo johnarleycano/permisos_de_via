@@ -1,6 +1,4 @@
-<div id="cont_crear_elemento"></div>
-<hr>
-<div id="cont_lista_elementos"></div>
+<div id="cont_lista"></div>
 
 <script type="text/javascript">
 	/**
@@ -9,31 +7,22 @@
 	 * 
 	 * @return {int}
 	 */
-	function guardar_elemento()
+	function guardar()
 	{
-		cerrar_notificaciones();
+		cerrar_notificaciones()
 		imprimir_notificacion("<div uk-spinner></div> Actualizando información de los elementos...")
-
-		const id_solicitud = $("#id_solicitud").val()
-
-		// Si no se ha guardado la solicitud, no puede guardar el elemento
-		if ($("#id_solicitud").val() == "0") {
-			cerrar_notificaciones();
-			imprimir_notificacion("Antes de crear un registro, por favor guarde la solicitud.", "danger");
-			
-			return false;
-		}
 
 		const datos = []
 
 		// Se recorren los campos
 		$.each($("input[data-tipo^='abscisa']"), function(i, l){
+			// Id del elemento
 			var id_elemento = $(this).attr('id')
 			
+			// Si hay información digitada
 			if($(this).val() != ""){
-
 				var dato = {
-					"Fk_Id_Solicitud": id_solicitud,
+					"Fk_Id_Solicitud": $("#id_solicitud").val(),
 					"Fk_Id_Elemento": id_elemento,
 				}
 
@@ -56,13 +45,23 @@
 					ajax("<?php echo site_url('solicitud/insertar'); ?>", {"tipo": "elemento_solicitud", "datos": dato}, 'HTML')
 				}
 
-				cerrar_notificaciones();
-				imprimir_notificacion("Los datos se actualizaron con éxito.", "success");
+				cerrar_notificaciones()
+				imprimir_notificacion("Los datos se actualizaron con éxito.", "success")
 			}
 		})
 	}
 
+	/**
+	 * Interfaz de listado de registros
+	 * 
+	 * @return {void}              
+	 */
+	function listar(tipo)
+	{
+		cargar_interfaz(`cont_lista`, "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": `general_elementos_crear`, "id_solicitud": $("#id_solicitud").val()})
+	}
+
 	$(document).ready(function(){
-		cargar_interfaz(`cont_crear_elemento`, "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": `elementos_creacion`, "id_solicitud": "<?php echo $id_solicitud; ?>"})
+		listar()
 	})
 </script>

@@ -1,7 +1,7 @@
-<input class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom" onCLick="javascript:crear_bitacora()" value="Agregar registro" type="button" id="btn_bitacora" />
-<div id="cont_crear_bitacora"></div>
+<input class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom" value="Agregar bitácora" type="button" id="btn_bitacora" onClick="javascript:crear()" />
+<div id="cont_crear"></div>
 <hr>
-<div id="cont_lista_bitacora"></div>
+<div id="cont_lista"></div>
 
 <!-- Modal eliminar -->
 <div id="modal_eliminar" uk-modal>
@@ -25,8 +25,8 @@
 	 */
 	function cerrar_interfaz()
 	{
-		$(`#btn_bitacora`).show('slow');
-		$(`#cont_registro`).hide('slow');
+		$(`#btn_bitacora`).show()
+		$(`#cont_crear`).hide()
 	}
 
 	/**
@@ -34,18 +34,19 @@
 	 * 
 	 * @return {void}
 	 */
-	function crear_bitacora()
+	function crear()
 	{
 		// Si no se ha guardado la solicitud, no puede guardar el participante
 		if ($("#id_solicitud").val() == "0") {
 			cerrar_notificaciones();
-			imprimir_notificacion("Antes de crear un registro, por favor guarde la solicitud.", "danger");
+			imprimir_notificacion("Antes de crear un registro, por favor guarde la solicitud.", "danger")
 			
-			return false;
+			return false
 		}
 
-		cargar_interfaz(`cont_crear_bitacora`, "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": `bitacora_creacion`})
+		cargar_interfaz(`cont_crear`, "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": `general_bitacora_crear`})
 		
+		$(`#cont_crear`).show()
 		$(`#btn_bitacora`).hide()
 	}
 
@@ -57,7 +58,7 @@
 			return false
 		}
 
-		cerrar_notificaciones();
+		cerrar_notificaciones()
 		imprimir_notificacion(`<div uk-spinner></div> Eliminando registro ${$("#id_bitacora").val()}...`)
 
 		// Se elimina el registro
@@ -65,7 +66,7 @@
 		
 		// Si se elimina
 		if(eliminar){
-			listar_bitacora()
+			listar()
 			UIkit.modal("#modal_eliminar").hide()
 
 			cerrar_notificaciones();
@@ -79,9 +80,9 @@
 	 * 
 	 * @return {int}
 	 */
-	function guardar_bitacora()
+	function guardar()
 	{
-		cerrar_notificaciones();
+		cerrar_notificaciones()
 		imprimir_notificacion("<div uk-spinner></div> Creando registro...")
 
 		const campos_obligatorios = {
@@ -92,9 +93,7 @@
 		// imprimir(campos_obligatorios)
 
 		// Si existen campos obligatorios sin diligenciar
-		if(validar_campos_obligatorios(campos_obligatorios)){
-			return false;
-		}
+		if(validar_campos_obligatorios(campos_obligatorios)) return false
 
 		const datos = {
 			"Fk_Id_Solicitud": $("#id_solicitud").val(),
@@ -102,18 +101,19 @@
 			"Fecha_Registro": $("#input_fecha").val(),
 			"Detalle": $("#input_detalle").val(),
 			"Radicado": $("#input_radicado_bitacora").val(),
+	    	"Fk_Id_Usuario": "<?php echo $this->session->userdata('Pk_Id_Usuario'); ?>",
 		}
 		// imprimir(datos)
 
 		// Inserción en base de datos vía Ajax
-		ajax("<?php echo site_url('solicitud/insertar'); ?>", {"tipo": "bitacora", "datos": datos}, 'HTML');
+		ajax("<?php echo site_url('solicitud/insertar'); ?>", {"tipo": "bitacora", "datos": datos}, 'HTML')
 		
-		cerrar_interfaz();
+		cerrar_interfaz()
 
-		cerrar_notificaciones();
-		imprimir_notificacion(`El registro en bitácora se ha agregado correctamente.`, `success`);
+		cerrar_notificaciones()
+		imprimir_notificacion(`El registro en bitácora se ha agregado correctamente.`, `success`)
 
-		listar_bitacora();
+		listar()
 	}
 
 	/**
@@ -121,12 +121,12 @@
 	 * 
 	 * @return {void}              
 	 */
-	function listar_bitacora()
+	function listar(tipo)
 	{
-		cargar_interfaz("cont_lista_bitacora", "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": "bitacora_listado", "id_solicitud": $("#id_solicitud").val()});
+    	cargar_interfaz("cont_lista", "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": `general_bitacora_lista`, "id_solicitud": $("#id_solicitud").val()})
 	}
 
 	$(document).ready(function(){
-		listar_bitacora();
-	});
+		listar()
+	})
 </script>

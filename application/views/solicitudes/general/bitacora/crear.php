@@ -21,15 +21,5 @@
     </div>
 
 	<button class="uk-button uk-button-default uk-modal-close" type="button" onClick="javascript:cerrar_interfaz()">Cancelar</button>
-    <input class="uk-button uk-button-primary" type="submit" value="Guardar"/>
+    <input class="uk-button uk-button-primary" type="button" value="Guardar" onClick="javascript:guardar()"/>
 </form>
-
-<script type="text/javascript">
-	$(document).ready(function(){
-		$("form").on("submit", function(){
-            guardar_bitacora();
-
-            return false;
-        });
-    });
-</script>

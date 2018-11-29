@@ -1,7 +1,7 @@
-<?php $solicitudes = $this->solicitud_model->obtener("solicitudes"); ?>
-
 <?php
-foreach ($solicitudes as $solicitud) {
+// Recorrido de las solicitudes
+foreach ($this->solicitud_model->obtener("solicitudes") as $solicitud) {
+	// Fecha
 	$fecha = $this->configuracion_model->obtener("formato_fecha", $solicitud->Fecha);
 ?>
 	<article class="uk-comment">
@@ -9,7 +9,7 @@ foreach ($solicitudes as $solicitud) {
 	        <div class="uk-width-expand">
 	            <h4 class="uk-comment-title uk-margin-remove"><a class="uk-link-reset" onCLick="#"><?php echo $solicitud->Peticionario; ?></a></h4>
 	            <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
-	                <li><a onCLick="javascript:editar(<?php echo $solicitud->Pk_Id; ?>);"><?php echo "{$fecha['mes_texto']} {$fecha['dia']}, {$fecha['anio']}"; ?></a></li>
+	                <li><a href="<?php echo site_url('solicitud/index/').$solicitud->Pk_Id; ?>"><?php echo "{$fecha['mes_texto']} {$fecha['dia']}, {$fecha['anio']}"; ?></a></li>
 	                <li><a onCLick="javascript:editar(<?php echo $solicitud->Pk_Id; ?>);">DETALLES</a></li>
 	                <li><a onCLick="javascript:generar_reporte('concepto', <?php echo $solicitud->Pk_Id; ?>)" class="uk-text-success"><i class="fas fa-file-excel"></i> Generar reporte</a></li>
 	            </ul>
@@ -23,3 +23,36 @@ foreach ($solicitudes as $solicitud) {
 
 	<hr class="uk-divider-icon">
 <?php } ?>
+
+<script type="text/javascript">
+	/**
+	 * Modifica la información de la interfaz
+	 * 
+	 * @param  {int} id_solicitud 	Id de la solicitud
+	 * 
+	 * @return {void}
+	 */
+	function editar(id_solicitud)
+	{
+		redireccionar(`<?php echo site_url('solicitud/index') ?>/${id_solicitud}`);
+	}
+
+	/**
+	 * Genera el reporte de acuerdo al tipo
+	 * 
+	 * @param  {string} tipo 
+	 * @param  {int} id   Id de la solicitud
+	 * 
+	 * @return {void}      
+	 */
+	function generar_reporte(tipo, id)
+	{
+		cerrar_notificaciones();
+        imprimir_notificacion("<div uk-spinner></div> Generando reporte...")
+
+        // Redirección
+		redireccionar(`<?php echo site_url("reportes/excel/concepto/"); ?>${id}`)
+
+		cerrar_notificaciones();
+	}
+</script>

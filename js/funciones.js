@@ -83,24 +83,24 @@ function cargar_interfaz(contenedor, url, datos)
 function cargar_lista_desplegable(datos){
     // Si no se elige ninguna opción, se limpia la lista
     if (datos.elemento_padre.val() == "") {
-        limpiar_lista(datos.elemento_hijo, datos.mensaje_padre);
+        limpiar_lista(datos.elemento_hijo, datos.mensaje_padre)
 
-        return false;
+        return false
     }
     
     // Se limpia la lista
-    limpiar_lista(datos.elemento_hijo, datos.mensaje_hijo);
+    limpiar_lista(datos.elemento_hijo, datos.mensaje_hijo)
 
     // Consulta de las vías del sector seleccionado
-    vias = ajax(datos.url, {"tipo": datos.tipo, "id": datos.id}, "JSON");
+    registros = ajax(datos.url, {"tipo": datos.tipo, "id": datos.id}, "JSON")
 
     // Se recorren las vías y se alimenta la lista desplegable
-    $.each(vias, function(clave, via) {
-        datos.elemento_hijo.append("<option value='" + via.Pk_Id + "'>" + via.Nombre + "</option>");
-    });
+    $.each(registros, function(clave, registro) {
+        datos.elemento_hijo.append(`<option value="${registro.Pk_Id}">${registro.Nombre}</option>`);
+    })
 
     // Se pone el foco en la siguiente lista desplegable
-    datos.elemento_hijo.focus();
+    datos.elemento_hijo.focus()
 }
 
 /**

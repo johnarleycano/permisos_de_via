@@ -1,4 +1,4 @@
-<form id="cont_elemento" class="uk-form-width-large uk-align-center">
+<form class="uk-form-width-large uk-align-center">
 	<div class="uk-grid-small" uk-grid>
 		<div class="uk-width-1-2@s">
 	        <h4><center>Elemento</center></h4>
@@ -11,6 +11,7 @@
 	    </div>
 
 		<?php
+		// Recorrido de los elementos
 		foreach ($this->configuracion_model->obtener("elementos") as $elemento) {
 			// Se consulta el registro
 			$registro = $this->solicitud_model->obtener("elemento_solicitud", array("Fk_Id_Solicitud" => $id_solicitud, "Fk_Id_Elemento" => $elemento->Pk_Id));
@@ -29,15 +30,5 @@
 	<br>
 
 	<button class="uk-button uk-button-default uk-modal-close" type="button" onClick="javascript:cerrar_interfaz()">Cancelar</button>
-    <input class="uk-button uk-button-primary" type="submit" value="Actualizar"/>
+    <input class="uk-button uk-button-primary" type="button" value="Actualizar" onClick="javascript:guardar()"/>
 </form>
-
-<script type="text/javascript">
-	$(document).ready(function(){
-		$("form").on("submit", function(){
-            guardar_elemento();
-
-            return false;
-        });
-    });
-</script>

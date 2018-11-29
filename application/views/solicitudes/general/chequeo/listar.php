@@ -30,7 +30,7 @@
 
                     <td class="uk-text-center">
                         <!-- Cumple -->
-                        <label><input class="uk-radio" type="checkbox" id="cumple<?php echo $tipo->Pk_Id; ?>" onClick="javascript:guardar_lista('cumple', <?php echo $tipo->Pk_Id; ?>)" <?php echo (isset($registro) && $registro->Cumple == 1) ? "checked" : ""; ?> <?php echo (isset($registro)) ? "" : "disabled"; ?>></label>
+                        <label><input class="uk-radio" type="checkbox" id="cumple<?php echo $tipo->Pk_Id; ?>" onClick="javascript:guardar('cumple', <?php echo $tipo->Pk_Id; ?>)" <?php echo (isset($registro) && $registro->Cumple == 1) ? "checked" : ""; ?> <?php echo (isset($registro)) ? "" : "disabled"; ?>></label>
                     </td>
 
                     <td class="uk-text-center">

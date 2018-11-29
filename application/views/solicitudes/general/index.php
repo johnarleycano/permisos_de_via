@@ -1,102 +1,72 @@
-<!-- Se consulta el id de la solicitud, en caso de ser edición -->
-<?php $id_solicitud = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0 ; ?>
+<!-- Tabs de opciones -->
+<div class="uk-width-1-6">
+	<ul class="uk-tab-left" id="cont_opciones" uk-tab>
+		<li class="uk-active"><a onCLick="javascript:cargar('informacion')"> <span uk-icon="icon: home; ratio: 0.7"></span> General</a></li>
+        <li><a onClick="javascript:cargar('peticionario');"><span uk-icon="icon: user; ratio: 0.7"></span> Peticionario</a></li>
+        <li><a onClick="javascript:cargar('vias');"><span uk-icon="icon: location; ratio: 0.7"></span> Vías</a></li>
+        <li><a onClick="javascript:cargar('participantes');"><span uk-icon="icon: users; ratio: 0.7"></span> Participantes</a></li>
+        <li><a onClick="javascript:cargar('elementos');"><span uk-icon="icon: thumbnails; ratio: 0.7"></span> Elementos</a></li>
+        <li><a onClick="javascript:cargar('chequeo');"><span uk-icon="icon: check; ratio: 0.7"></span> Chequeo</a></li>
+        <li><a onClick="javascript:cargar('bitacora');"><span uk-icon="icon: list; ratio: 0.7"></span> Bitácora</a></li>
+    </ul>
+	<hr>
 
-<!-- Id de la solicitud (cuando se cree el registro) -->
-<input type="hidden" id="id_solicitud" value="<?php echo $id_solicitud; ?>">
+    <!-- Reporte -->
+    <button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" type="button" id="btn_reporte" onCLick="javascript:generar('concepto', <?php echo $id_solicitud; ?>)"><span class="uk-text-success">REPORTE</span></button>
+    
+    <!-- Guardar -->
+	<button class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom" type="submit" onClick="javascript:guardar();">Guardar</button>
+</div>
 
-<form class="uk-form-horizontal">
-		<ul class="uk-flex-center" data-uk-tab="{connect:'#my-id'}" uk-tab>
-			<li class="uk-active"><a href="#info_general">General</a></li>
-	        <li><a onClick="javascript:listar('vias');">Vías y participantes</a></li>
-	        <li><a onClick="javascript:listar('elementos');">Elementos</a></li>
-	        <li><a onClick="javascript:listar('lista_chequeo');">Lista de chequeo</a></li>
-	        <li><a onClick="javascript:listar('conceptos');">Conceptos</a></li>
-	        <li><a onClick="javascript:listar('bitacora');">Bitácora</a></li>
-		</ul>
-		<ul id="my-id" class="uk-switcher uk-margin">
-			<li><div id="cont_general"></div></li>
-			<li><div id="cont_vias"></div></li>
-			<li><div id="cont_elementos"></div></li>
-			<li><div id="cont_lista_chequeo"></div></li>
-			<li><div id="cont_conceptos"></div></li>
-			<li><div id="cont_bitacora"></div></li>
-		</ul>
-</form>
+<div class="uk-width-5-6">
+	<div id="cont_general"></div>
+</div>
 
 <script type="text/javascript">
-	/**
-	 * Envía información a base de datos
-	 * 
-	 * @return {void}
-	 */
-	function guardar_general()
+    /**
+     * Interfaz de carga
+     * 
+     * @param  {string}     tipo    [tipo de tab]
+     * 
+     * @return
+     */
+	function cargar(tipo)
 	{
-		cerrar_notificaciones();
-		imprimir_notificacion("<div uk-spinner></div> Guardando la solicitud...");
+		// Si se va a cambiar de opción y no se ha guardado la solicitud
+		if(tipo != "informacion" && $("#id_solicitud").val() == 0){
+			cerrar_notificaciones()
+			imprimir_notificacion("Antes de continuar, por favor guarde los cambios.", "danger")
 
-		campos_obligatorios = {
-			"select_proyecto": $("#select_proyecto").val(),
-			"select_sector": $("#select_sector").val(),
-			"input_objeto": $("#input_objeto").val(),
-			"input_alcance": $("#input_alcance").val(),
-			"input_peticionario": $("#input_peticionario").val(),
-		}
-		// imprimir(campos_obligatorios);
-
-		// Si existen campos obligatorios sin diligenciar
-		if(validar_campos_obligatorios(campos_obligatorios)){
-			return false;
+			return false
 		}
 
-		datos = {
-	    	"Fk_Id_Proyecto": $("#select_proyecto").val(),
-	    	"Fk_Id_Sector": $("#select_sector").val(),
-	    	"Objeto": $("#input_objeto").val(),
-	    	"Alcance": $("#input_alcance").val(),
-	    	"Instrucciones": $("#input_instrucciones").val(),
-	    	"Observaciones": $("#input_observaciones").val(),
-	    	"Peticionario": $("#input_peticionario").val(),
-	    	"Cedula": $("#input_cedula").val(),
-	    	"Nit": $("#input_nit").val(),
-	    	"Telefono": $("#input_telefono").val(),
-	    	"Celular": $("#input_celular").val(),
-	    	"Fk_Id_Tipo_Solicitud": $("#select_tipo").val(),
-	    	"Direccion": $("#input_direccion").val(),
-	    	"Email": $("#input_email").val(),
-	    	"Fecha": "<?php echo date("Y-m-d h:i:s"); ?>",
-	    }
-	    // imprimir(datos);
-	    
-	    // Se verifica si guarda o actualiza el registro
-	    if ($("#id_solicitud").val() == "0") {
-		    id = ajax("<?php echo site_url('solicitud/insertar'); ?>", {"tipo": "solicitud", "datos": datos}, 'HTML');
-
-		    // Se pone el id en un campo para validar la demás información que se la asocie
-	    	$("#id_solicitud").val(id);
-		} else {
-		    ajax("<?php echo site_url('solicitud/actualizar'); ?>", {"tipo": "solicitud", "datos": datos, "id_solicitud": $("#id_solicitud").val()}, 'HTML');
-		} 
-
-        cerrar_notificaciones();
-		imprimir_notificacion("Los datos han sido guardados exitosamente", "success");
-
-		return false;
+		// Carga de interfaz
+    	$("#cont_general").load("<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": `general_${tipo}`, "id_solicitud": $("#id_solicitud").val()})
 	}
-	
+
 	/**
-	 * Listado de las opciones en la creación
-	 * de las solicitudes
-	 * 
-	 * @param  {string} tipo [tipo de información a cargar]
-	 * 
-	 * @return {void}
-	 */
-	function listar(tipo)
-	{
-        cargar_interfaz(`cont_${tipo}`, "<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": tipo, "id_solicitud": <?php echo $id_solicitud; ?>});
-	}
+     * Genera el reporte de acuerdo al tipo
+     * 
+     * @param  {string} tipo 
+     * @param  {int} id   Id de la solicitud
+     * 
+     * @return {void}      
+     */
+    function generar(tipo)
+    {
+        cerrar_notificaciones()
+        imprimir_notificacion("<div uk-spinner></div> Generando reporte...")
+
+        // Redirección
+        redireccionar(`<?php echo site_url("reportes/excel/concepto/"); ?>${$("#id_solicitud").val()}`)
+
+        cerrar_notificaciones()
+    }
 
 	$(document).ready(function(){
-		listar("general");
-	});
+		// Se desactiva el botón para generar el reporte si no se ha guardado la solicitud
+		if($("#id_solicitud").val() == 0) $("#btn_reporte").addClass("uk-disabled")
+
+		cargar("informacion")
+	})
 </script>

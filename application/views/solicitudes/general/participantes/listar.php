@@ -13,13 +13,18 @@ if(count($participantes) == 0){
     <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
         <thead>
             <tr>
-            	<th class="uk-text-center">Funcionario</th>
+                <th class="uk-text-center">Funcionario</th>
+            	<th class="uk-text-center">Opciones</th>
         	</tr>
         </thead>
         <tbody>
+            <!-- Recorrido de los registros -->
         	<?php foreach ($participantes as $participante) { ?>
 	        	<tr>
 					<td><?php echo $participante->Nombre; ?></td>
+                    <td>
+                        
+                    </td>
 				</tr>
 			<?php } ?>
     	</tbody>

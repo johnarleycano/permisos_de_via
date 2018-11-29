@@ -28,16 +28,28 @@ class Solicitud extends CI_Controller {
             redirect("sesion/cerrar");
         }
     }
-    
+
     /**
-     * Interfaz inicial
+     * Interfaz de creación de la solicitud
      * 
      * @return [void]
      */
     function index()
     {
+        $this->data['titulo'] = 'Crear solicitud';
+        $this->data['contenido_principal'] = 'solicitudes/index';
+        $this->load->view('core/template', $this->data);
+    }
+    
+    /**
+     * Interfaz de visualización
+     * 
+     * @return [void]
+     */
+    function ver()
+    {
         $this->data['titulo'] = 'Solicitudes';
-        $this->data['contenido_principal'] = 'solicitudes/index.php';
+        $this->data['contenido_principal'] = 'solicitudes/listar';
         $this->load->view('core/template', $this->data);
     }
 
@@ -84,95 +96,117 @@ class Solicitud extends CI_Controller {
             $tipo = $this->input->post("tipo");
 
             switch ($tipo) {
-                case "bitacora":
-                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
-                    $this->load->view("solicitudes/bitacora/index", $this->data);
-                break;
-
-                case "bitacora_creacion":
-                    $this->load->view("solicitudes/bitacora/crear");
-                break;
-
-                case "bitacora_listado":
-                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
-                    $this->load->view("solicitudes/bitacora/listar", $this->data);
-                break;
-
                 case "conceptos":
                     $this->data["id_solicitud"] = $this->input->post("id_solicitud");
                     $this->load->view("solicitudes/conceptos/index", $this->data);
                 break;
 
-                case "conceptos_creacion":
-                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
-                    $this->load->view("solicitudes/conceptos/crear", $this->data);
-                break;
-
-                case "conceptos_listado":
-                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
-                    $this->load->view("solicitudes/conceptos/listar", $this->data);
-                break;
-
-                case "elementos":
-                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
-                    $this->load->view("solicitudes/elementos/index", $this->data);
-                break;
-
-                case "elementos_creacion":
-                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
-                    $this->load->view("solicitudes/elementos/crear", $this->data);
-                break;
-
                 case "general":
                     $this->data["id_solicitud"] = $this->input->post("id_solicitud");
-                    $this->load->view("solicitudes/general/crear", $this->data);
+                    $this->load->view("solicitudes/general/index", $this->data);
                 break;
 
-                case "lista":
-                    $this->load->view("solicitudes/listar");
+                case "general_bitacora":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/general/bitacora/index", $this->data);
                 break;
 
-                case "lista_chequeo":
-                    $this->load->view("solicitudes/lista_chequeo/index");
+                case "general_bitacora_crear":
+                    $this->load->view("solicitudes/general/bitacora/crear");
                 break;
 
-                case "lista_chequeo_documento":
+                case "general_bitacora_lista":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/general/bitacora/listar", $this->data);
+                break;
+
+                case "general_chequeo":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/general/chequeo/index", $this->data);
+                break;
+
+                case "general_chequeo_documento":
                     $this->data["id_solicitud"] = $this->input->post("id_solicitud");
                     $this->data["id_tipo"] = $this->input->post("id_tipo");
-                    $this->load->view("solicitudes/lista_chequeo/documento", $this->data);
+                    $this->load->view("solicitudes/general/chequeo/documento", $this->data);
                 break;
 
-                case "lista_chequeo_observacion":
+                case "general_chequeo_listado":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/general/chequeo/listar", $this->data);
+                break;
+
+                case "general_chequeo_observacion":
                     $this->data["id_solicitud"] = $this->input->post("id_solicitud");
                     $this->data["id_tipo"] = $this->input->post("id_tipo");
-                    $this->load->view("solicitudes/lista_chequeo/observacion", $this->data);
+                    $this->load->view("solicitudes/general/chequeo/observacion", $this->data);
                 break;
 
-                case "lista_chequeo_listado":
+                case "general_elementos":
                     $this->data["id_solicitud"] = $this->input->post("id_solicitud");
-                    $this->load->view("solicitudes/lista_chequeo/listar", $this->data);
+                    $this->load->view("solicitudes/general/elementos/index", $this->data);
                 break;
 
-                case "participantes_creacion":
-                    $this->load->view("solicitudes/vias_participantes/crear_participante");
-                break;
-
-                case "participantes_listado":
+                case "general_elementos_crear":
                     $this->data["id_solicitud"] = $this->input->post("id_solicitud");
-                    $this->load->view("solicitudes/vias_participantes/listar_participantes", $this->data);
+                    $this->load->view("solicitudes/general/elementos/crear", $this->data);
                 break;
 
-                case "vias":
-                    $this->load->view("solicitudes/vias_participantes/index");
-                break;
-
-                case "vias_creacion":
-                    $this->load->view("solicitudes/vias_participantes/crear_via");
-                break;
-
-                case "vias_listado":
+                case "general_informacion":
                     $this->data["id_solicitud"] = $this->input->post("id_solicitud");
-                    $this->load->view("solicitudes/vias_participantes/listar_vias", $this->data);
+                    $this->load->view("solicitudes/general/informacion_general", $this->data);
+                break;
+
+                case "general_participantes":
+                    $this->load->view("solicitudes/general/participantes/index");
+                break;
+
+                case "general_participantes_crear":
+                    $this->load->view("solicitudes/general/participantes/crear");
+                break;
+
+                case "general_participantes_lista":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/general/participantes/listar", $this->data);
+                break;
+
+                case "general_peticionario":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/general/peticionario", $this->data);
+                break;
+
+                case "general_vias":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/general/vias/index", $this->data);
+                break;
+
+                case "general_vias_crear":
+                    $this->load->view("solicitudes/general/vias/crear");
+                break;
+
+                case "general_vias_lista":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/general/vias/listar", $this->data);
+                break;
+
+                case "pago":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/pago/index", $this->data);
+                break;
+
+                case "pago_aceptacion":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/pago/aceptacion", $this->data);
+                break;
+
+                case "pago_facturacion":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/pago/facturacion", $this->data);
+                break;
+
+                case "pago_solicitud":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/pago/solicitud", $this->data);
                 break;
             }
         } else {
@@ -180,18 +214,6 @@ class Solicitud extends CI_Controller {
             redirect('');
         }
     }
-
-	/**
-     * Interfaz de creación de la solicitud
-     * 
-     * @return [void]
-     */
-	function crear()
-	{
-        $this->data['titulo'] = 'Crear solicitud';
-        $this->data['contenido_principal'] = 'solicitudes/general/index';
-        $this->load->view('core/template', $this->data);
-	}
 
     /**
      * Elimina registros en base de datos
@@ -210,6 +232,10 @@ class Solicitud extends CI_Controller {
                 break;
 
                 case 'lista_chequeo':
+                    echo $this->solicitud_model->eliminar($tipo, $this->input->post("datos"));
+                break;
+
+                case 'pago':
                     echo $this->solicitud_model->eliminar($tipo, $this->input->post("datos"));
                 break;
             }
@@ -253,6 +279,13 @@ class Solicitud extends CI_Controller {
                 break;
 
                 case "lista_chequeo":
+                    // Se inserta el registro y log en base de datos
+                    if ($this->solicitud_model->insertar($tipo, $datos)) {
+                        echo $id = $this->db->insert_id();
+                    }
+                break;
+
+                case "pago":
                     // Se inserta el registro y log en base de datos
                     if ($this->solicitud_model->insertar($tipo, $datos)) {
                         echo $id = $this->db->insert_id();
@@ -312,8 +345,16 @@ class Solicitud extends CI_Controller {
                     print json_encode($this->solicitud_model->obtener($tipo, $id));
                 break;
                 
+                case "pago":
+                    print json_encode($this->solicitud_model->obtener($tipo, $id));
+                break;
+                
                 case "participante":
                     print json_encode($this->solicitud_model->obtener($tipo, array("Fk_Id_Solicitud" => $this->input->post("id_solicitud"), "Fk_Id_Funcionario" => $this->input->post("id_funcionario"))));
+                break;
+                
+                case "solicitud":
+                    print json_encode($this->solicitud_model->obtener($tipo, $id));
                 break;
             }
         } else {

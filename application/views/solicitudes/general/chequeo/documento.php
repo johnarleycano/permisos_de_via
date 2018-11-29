@@ -57,7 +57,6 @@
     </div>
 </div>
 
-
 <script type="text/javascript">
     var bar = document.getElementById('js-progressbar');
 
@@ -65,75 +64,67 @@
         url: `<?php echo site_url("solicitud/subir"); ?>/${$("#id_solicitud").val()}/${<?php echo $id_tipo; ?>}`,
         multiple: false,
         datatype: "html",
-
         beforeSend: function () {
-            cerrar_notificaciones();
-            imprimir_notificacion("<div uk-spinner></div> Subiendo el archivo...");
+            cerrar_notificaciones()
+            imprimir_notificacion("<div uk-spinner></div> Subiendo el archivo...")
             // cerrar_notificaciones();
-			// imprimir_notificacion("<div uk-spinner></div> Preparando el archivo...");
+            // imprimir_notificacion("<div uk-spinner></div> Preparando el archivo...")
         },
         beforeAll: function () {
-            // console.log('beforeAll', arguments);
+            // console.log('beforeAll', arguments)
         },
         load: function () {
             // cerrar_notificaciones();
-			// imprimir_notificacion("<div uk-spinner></div> Cargando el archivo...");
-
-
+            // imprimir_notificacion("<div uk-spinner></div> Cargando el archivo...")
         },
         error: function () {
-            // console.log('error', arguments);
+            // console.log('error', arguments)
         },
         complete: function () {
-            // console.log('complete', arguments);
+            // console.log('complete', arguments)
         },
 
         loadStart: function (e) {
-            // console.log('loadStart', arguments);
+            // console.log('loadStart', arguments)
 
-            bar.removeAttribute('hidden');
-            bar.max = e.total;
-            bar.value = e.loaded;
+            bar.removeAttribute('hidden')
+            bar.max = e.total
+            bar.value = e.loaded
         },
 
         progress: function (e) {
-            // console.log('progress', arguments);
-            
-
-            
-
-            bar.max = e.total;
-            bar.value = e.loaded;
+            // console.log('progress', arguments)
+            bar.max = e.total
+            bar.value = e.loaded
         },
 
         loadEnd: function (e) {
-            // console.log('loadEnd', arguments);
+            // console.log('loadEnd', arguments)
 
-            bar.max = e.total;
-            bar.value = e.loaded;
-        	// imprimir(e)
+            bar.max = e.total
+            bar.value = e.loaded
+            // imprimir(e)
         },
 
         completeAll: function (e) {
 
             $("#cont_subir").hide()
-            // console.log('completeAll', arguments);
-bar.setAttribute('hidden', 'hidden');
+            // console.log('completeAll', arguments)
+            bar.setAttribute('hidden', 'hidden')
 
             // setTimeout(function () {
                 
             // }, 1000);
 
-            // alert('Upload Completed');
-            cerrar_notificaciones();
-			imprimir_notificacion("El archivo se subió correctamente.", "success");
+            // alert('Upload Completed')
+            cerrar_notificaciones()
+            imprimir_notificacion("El archivo se subió correctamente.", "success")
 
-            UIkit.modal("#modal_archivos").hide();
+            UIkit.modal("#modal_archivos").hide()
         }
-
-    });
+    })
 
     $(document).ready(function(){
-        UIkit.modal("#modal_archivos").show();
-    });
+        UIkit.modal("#modal_archivos").show()
+    })
 </script>

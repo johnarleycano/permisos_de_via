@@ -18,6 +18,7 @@ if(count($vias) == 0){
             	<th class="uk-text-center">Costado</th>
             	<th class="uk-text-center">Abscisa Inicial</th>
             	<th class="uk-text-center">Abscisa Final</th>
+            	<th class="uk-text-center">Opciones</th>
         	</tr>
         </thead>
         <tbody>
@@ -28,6 +29,7 @@ if(count($vias) == 0){
 					<td><?php echo $via->Costado; ?></td>
 					<td class="uk-text-right"><?php echo $via->Abscisa_Inicial; ?></td>
 					<td class="uk-text-right"><?php echo $via->Abscisa_Final; ?></td>
+					<td></td>
 				</tr>
 			<?php } ?>
     	</tbody>

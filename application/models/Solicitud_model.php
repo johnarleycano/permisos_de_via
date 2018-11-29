@@ -51,9 +51,11 @@ Class Solicitud_model extends CI_Model{
             break;
 
             case 'lista_chequeo':
-                if($this->db->delete('listas_chequeo', $id)){
-                    return true;
-                }
+                return $this->db->delete('listas_chequeo', $id);
+            break;
+
+            case 'pago':
+                return $this->db->delete('pagos', $id);
             break;
         }
     }
@@ -83,6 +85,10 @@ Class Solicitud_model extends CI_Model{
 
             case "lista_chequeo":
                 return $this->db->insert('listas_chequeo', $datos);
+            break;
+
+            case "pago":
+                return $this->db->insert('pagos', $datos);
             break;
 
             case "participante":
@@ -127,6 +133,10 @@ Class Solicitud_model extends CI_Model{
                 return $this->db->where($id)->get("elementos_solicitudes")->row();
             break;
             
+            case "pago":
+                return $this->db->where("Fk_Id_Solicitud", $id)->get("pagos")->row();
+            break;
+
             case "participante":
                 return $this->db->where($id)->get("participantes")->row();
             break;
