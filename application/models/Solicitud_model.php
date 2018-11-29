@@ -170,7 +170,7 @@ Class Solicitud_model extends CI_Model{
                         "se.Nombre Sector",
                         "se.Fk_Id_Municipio",
                         "m.Nombre Municipio",
-                        "p.Nombre Proyecto",
+                        "p.Nombre_Completo Proyecto",
                         "p.Numero_Contrato",
                         "e.Nombre Empresa",
                         "i.Nombre Interventoria",
