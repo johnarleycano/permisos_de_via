@@ -238,6 +238,10 @@ class Solicitud extends CI_Controller {
                 case 'pago':
                     echo $this->solicitud_model->eliminar($tipo, $this->input->post("datos"));
                 break;
+
+                case 'via':
+                    echo $this->solicitud_model->eliminar($tipo, $this->input->post("datos"));
+                break;
             }
         }else{
             //Si la peticion fue hecha mediante navegador, se redirecciona a la pagina de inicio

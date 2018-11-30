@@ -27,7 +27,13 @@ if(count($vias) == 0){
 					<td><?php echo $via->Municipio; ?></td>
 					<td class="uk-text-right"><?php echo $via->Abscisa_Inicial; ?></td>
 					<td class="uk-text-right"><?php echo $via->Abscisa_Final; ?></td>
-					<td></td>
+					<td>
+                        <a onClick="javascript:eliminar(<?php echo $via->Pk_Id; ?>)" class="uk-link-muted">
+                            <div uk-tooltip="title: Eliminar <?php echo $via->Tramo; ?>">
+                                <span uk-icon="close"></span>
+                            </div>
+                        </a>               
+                    </td>
 				</tr>
 			<?php } ?>
     	</tbody>
