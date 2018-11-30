@@ -23,7 +23,11 @@ if(count($participantes) == 0){
 	        	<tr>
 					<td><?php echo $participante->Nombre; ?></td>
                     <td>
-                        
+                        <a onClick="javascript:eliminar(<?php echo $participante->Pk_Id; ?>)" class="uk-link-muted">
+                            <div uk-tooltip="title: Eliminar a <?php echo $participante->Nombre; ?>">
+                                <span uk-icon="close"></span>
+                            </div>
+                        </a>
                     </td>
 				</tr>
 			<?php } ?>

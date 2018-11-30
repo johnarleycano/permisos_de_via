@@ -58,6 +58,10 @@ Class Solicitud_model extends CI_Model{
                 return $this->db->delete('pagos', $id);
             break;
 
+            case 'participante':
+                return $this->db->delete('participantes', $id);
+            break;
+
             case 'via':
                 return $this->db->delete('vias', $id);
             break;

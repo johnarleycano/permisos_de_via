@@ -3,6 +3,19 @@
 <hr>
 <div id="cont_lista"></div>
 
+<!-- Modal eliminar -->
+<div id="modal_eliminar" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Advertencia</h2>
+        <p>¿Está seguro de eliminar el participante?</p>
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Cancelar</button>
+            <button class="uk-button uk-button-primary" type="button" onClick="javascript:eliminar()">Eliminar</button>
+        </p>
+        <input type="hidden" id="id_participante">
+    </div>
+</div>
+
 <script type="text/javascript">
 	/**
 	 * Interfaz de creación
@@ -28,6 +41,30 @@
 	{
 		$(`#btn_participante`).show()
 		$(`#cont_crear`).hide()
+	}
+
+	function eliminar(id = null)
+	{
+		if(id){
+			$("#id_participante").val(id)
+			UIkit.modal("#modal_eliminar").show()
+			return false
+		}
+
+		cerrar_notificaciones()
+		imprimir_notificacion(`<div uk-spinner></div> Eliminando registro ${$("#id_participante").val()}...`)
+
+		// Se elimina el registro
+		let eliminar = ajax("<?php echo site_url('solicitud/eliminar'); ?>", {"tipo": "participante", "datos": {"Pk_Id": $("#id_participante").val()}}, 'HTML')
+		
+		// Si se elimina
+		if(eliminar){
+			listar()
+			UIkit.modal("#modal_eliminar").hide()
+
+			cerrar_notificaciones();
+			imprimir_notificacion(`Registro eliminado con éxito`, `success`)
+		}
 	}
 
 	/**
