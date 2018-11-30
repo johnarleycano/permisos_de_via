@@ -220,6 +220,9 @@ Class Solicitud_model extends CI_Model{
                             "tc.Nombre Costado",
                             "t.Nombre Tramo",
                             "m.Nombre Municipio",
+                            "c.Fk_Id_Tipo_Costado",
+                            "cv.Codigo",
+                            "cv.Categoria",
                         ))
                     ->from('vias sv')
                     ->join('configuracion.costados c', 'sv.Fk_Id_Costado = c.Pk_Id')
