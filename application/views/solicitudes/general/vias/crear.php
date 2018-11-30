@@ -1,20 +1,20 @@
 <div class="uk-column-1-3@m">
 	<div class="uk-margin">
-        <label class="uk-form-label" for="select_sector">Sector *</label>
-        <select class="uk-select" id="select_sector" title="Sector" >
+    	<label class="uk-form-label" for="select_via">Vía *</label>
+        <select class="uk-select" id="select_via" title="Vía">
         	<option value="">Elija...</option>
-        	<?php foreach ($this->configuracion_model->obtener("sectores_activos") as $sector) { ?>
-                <option value="<?php echo $sector->Pk_Id ?>"><?php echo $sector->Codigo; ?></option>
+        	<?php foreach ($this->configuracion_model->obtener("vias") as $via) { ?>
+                <option value="<?php echo $via->Pk_Id; ?>"><?php echo $via->Nombre; ?></option>
         	<?php } ?>
         </select>
 	</div>
 
 	<div class="uk-margin">
-    	<label class="uk-form-label" for="select_via">Vía *</label>
-        <select class="uk-select" id="select_via" title="Vía">
-        	<option value="">Elija primero un sector...</option>
+    	<label class="uk-form-label" for="select_tramo">Tramo *</label>
+        <select class="uk-select" id="select_tramo" title="Tramo">
+        	<option value="">Elija primero una vía...</option>
         </select>
-	</div>
+    </div>
 
 	<div class="uk-margin">
     	<label class="uk-form-label" for="select_costado">Costado *</label>
@@ -48,24 +48,20 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		// Cuando se elija el sector, se cargan las vías de ese sector
-		$("#select_sector").on("change", function(){
-			datos = {
-				url: "<?php echo site_url('configuracion/obtener'); ?>",
-				tipo: "vias",
-				id: $(this).val(),
-				elemento_padre: $("#select_sector"),
-				elemento_hijo: $("#select_via"),
-				mensaje_padre: "Elija primero un sector",
-				mensaje_hijo: "Elija una vía"
-			}
-			cargar_lista_desplegable(datos)
-			select_por_defecto("select_costado", "")
-		})
-
-		// Cuando se elija la vía, se cargan los costados de esa vía
+		// Cuando se elija la vía, se cargan los costados y tramos de esa vía
 		$("#select_via").on("change", function(){
-			datos = {
+			let datos_tramo = {
+				url: "<?php echo site_url('configuracion/obtener'); ?>",
+				tipo: "tramos",
+				id: $(this).val(),
+				elemento_padre: $("#select_via"),
+				elemento_hijo: $("#select_tramo"),
+				mensaje_padre: "Elija primero una vía",
+				mensaje_hijo: "Elija un tramo"
+			}
+			cargar_lista_desplegable(datos_tramo)
+
+			let datos_costado = {
 				url: "<?php echo site_url('configuracion/obtener'); ?>",
 				tipo: "costados",
 				id: $(this).val(),
@@ -74,7 +70,7 @@
 				mensaje_padre: "Elija primero una vía",
 				mensaje_hijo: "Elija un costado"
 			}
-			cargar_lista_desplegable(datos)
+			cargar_lista_desplegable(datos_costado)
 		})
 	})
 </script>

@@ -206,20 +206,19 @@ Class Solicitud_model extends CI_Model{
             case 'vias':
                 $this->db
                     ->select(array(
-                            "s.Codigo Sector",
-                            "cv.Nombre Via",
-                            "cv.Codigo",
-                            "cv.Categoria",
-                            "tc.Pk_Id Fk_Id_Tipo_Costado",
-                            "tc.Nombre Costado",
+                            "sv.Pk_Id",
                             "sv.Abscisa_Inicial",
-                            "sv.Abscisa_Final" 
+                            "sv.Abscisa_Final",
+                            "tc.Nombre Costado",
+                            "t.Nombre Tramo",
+                            "m.Nombre Municipio",
                         ))
                     ->from('vias sv')
                     ->join('configuracion.costados c', 'sv.Fk_Id_Costado = c.Pk_Id')
-                    ->join('configuracion.vias cv', 'c.Fk_Id_Via = cv.Pk_Id')
-                    ->join('configuracion.sectores s', 'cv.Fk_Id_Sector = s.Pk_Id')
                     ->join('configuracion.tipos_costados tc', 'c.Fk_Id_Tipo_Costado = tc.Pk_Id')
+                    ->join('configuracion.tramos t', 'sv.Fk_Id_Tramo = t.Pk_Id', 'left')
+                    ->join('configuracion.vias cv', 't.Fk_Id_Via = cv.Pk_Id', 'left')
+                    ->join('configuracion.municipios m', 't.Fk_Id_Municipio_Jurisdiccion = m.Pk_Id', 'left')
                     ->where('sv.Fk_Id_Solicitud', $id)
                 ;
 

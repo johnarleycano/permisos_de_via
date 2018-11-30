@@ -141,10 +141,24 @@ Class Configuracion_model extends CI_Model{
                 return $this->db->order_by("Orden")->get("tipos_solicitudes")->result();
             break;
 
+            case "tramos":
+                $this->db_configuracion
+                    ->select(array(
+                        "t.Pk_Id",
+                        "CONCAT( t.Nombre, ' (Municipio de ', m.Nombre, ')' ) Nombre",
+                        ))
+                    ->from('tramos t')
+                    ->join('municipios m', 't.Fk_Id_Municipio_Jurisdiccion = m.Pk_Id')
+                    ->where('Fk_Id_Via', $id)
+                    ->order_by('Nombre');
+                
+                // return $this->db_configuracion->get_compiled_select(); // string de la consulta
+                return $this->db_configuracion->get()->result();
+            break;
+
             case "vias":
                 return $this->db_configuracion
-                    ->where("Fk_Id_Sector", $id)
-                    ->order_by("Abscisa_Inicial")
+                    ->order_by("Nombre")
                     ->get("vias")
                     ->result();
             break;

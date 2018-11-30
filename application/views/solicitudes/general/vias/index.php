@@ -39,6 +39,7 @@
 
 		let datos = {
 	    	"Fk_Id_Costado": $("#select_costado").val(),
+	    	"Fk_Id_Tramo": $("#select_tramo").val(),
 	    	"Observaciones": $("#input_observaciones").val(),
 	    	"Fk_Id_Solicitud": $("#id_solicitud").val(),
 	    	"Abscisa_Inicial": $("#input_abscisa_inicial").val(),

@@ -44,6 +44,10 @@ class Configuracion extends CI_Controller {
 					print json_encode($this->configuracion_model->obtener($tipo, $id));
 				break;
 
+                case "tramos":
+					print json_encode($this->configuracion_model->obtener($tipo, $id));
+				break;
+
 				case "vias":
 					print json_encode($this->configuracion_model->obtener($tipo, $id));
 				break;
