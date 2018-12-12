@@ -1,47 +1,46 @@
 <?php
-// Consulta de la solicitud
-$solicitud = $this->solicitud_model->obtener("solicitud", $id_solicitud);
-
 // Se consultan los registros
 $conceptos = $this->solicitud_model->obtener("conceptos", $id_solicitud);
 
-$num = 1;
-
-// Si no hay registros, se muestra mensaje
-if(count($conceptos) == 0){
-	echo "No hay conceptos emitidos, todavía";
-	exit();
-}
+$cont = 1;
 ?>
+<ul class="uk-tab-left" id="cont_opciones_conceptos" uk-tab>
+	<?php
+	$id = null;
 
-<div class="uk-overflow-auto">
-    <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
-        <thead>
-            <tr>
-            	<th class="uk-text-center">#</th>
-            	<th class="uk-text-center">Radicado ANI</th>
-            	<th class="uk-text-center">Radicado <?php echo $solicitud->Proyecto; ?></th>
-            	<th class="uk-text-center">Concepto emitido</th>
-            	<th class="uk-text-center">Fecha de emisión</th>
-            	<th class="uk-text-center">Opciones</th>
-        	</tr>
-        </thead>
-        <tbody>
-        	<?php
-            foreach ($conceptos as $concepto) {
-                $fecha = (isset($concepto->Fecha_Viabilidad)) ? $this->configuracion_model->obtener("formato_fecha", $concepto->Fecha_Viabilidad) : null;
-            ?>
-	        	<tr>
-					<td class="uk-text-right"><?php echo $num++; ?></td>
-					<td><?php echo $concepto->Radicado_ANI; ?></td>
-					<td><?php echo $concepto->Radicado_Proyecto; ?></td>
-					<td><?php echo ($concepto->Viable == 1) ? "Viable" : "No viable" ; ?></td>
-					<td><?php if($fecha) echo "{$fecha['mes_texto']} {$fecha['dia']}, {$fecha['anio']}"; ?></td>
-					<td>
-						
-					</td>
-				</tr>
-			<?php } ?>
-    	</tbody>
-    </table>
-</div>
+	// Recorrido de conceptos
+	foreach ($conceptos as $concepto) {
+		$id = $concepto->Pk_Id;
+	?>
+ 		<!-- Concepto -->
+ 		<li id="item_<?php echo $cont; ?>"><a onClick="javascript:crear(<?php echo $concepto->Pk_Id; ?>)"> Concepto <?php echo $cont; ?></a></li>
+	<?php $cont++; } ?>
+	
+	<li class="uk-hidden" id="item_<?php echo $cont; ?>"><a onClick="javascript:crear()"> Concepto <?php echo $cont; ?></a></li>
+</ul>
+
+<input type="hidden" id="ultimo_contador" value="<?php echo $cont; ?>">
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("li").removeClass("uk-active")
+
+		
+		var total_conceptos = "<?php echo count($conceptos); ?>"
+		
+		// Si no hay conceptos
+		if(total_conceptos == 0){
+			// Se carga la interfaz del último concepto
+	    	crear()
+
+	    	// Se muestra el nuevo ítem
+			$(`li`).removeClass("uk-hidden")
+		} else {
+			// Se carga el concepto
+			crear("<?php echo $id; ?>")
+
+			// Se marca activo
+			$(`#item_${total_conceptos}`).addClass("uk-active")
+		}
+	})	
+</script>

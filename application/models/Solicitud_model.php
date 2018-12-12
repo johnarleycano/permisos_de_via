@@ -23,6 +23,10 @@ Class Solicitud_model extends CI_Model{
      */
     function actualizar($tipo, $id, $datos){
         switch ($tipo) {
+            case 'concepto':
+                return $this->db->where("Pk_Id", $id)->update('conceptos', $datos);
+            break;
+
             case 'elemento_solicitud':
                 return $this->db->where("Pk_Id", $id)->update('elementos_solicitudes', $datos);
             break;
@@ -205,6 +209,10 @@ Class Solicitud_model extends CI_Model{
 
             case "tipos_documentos":
                 return $this->db->order_by("Orden")->get("tipos_documentos")->result();
+            break;
+
+            case "ultimo_concepto":
+                return $this->db->select("Pk_Id, Viable")->order_by("Pk_Id", "DESC")->where("Fk_Id_Solicitud", $id)->get("conceptos")->row();
             break;
 
             case "valor_lista_chequeo":

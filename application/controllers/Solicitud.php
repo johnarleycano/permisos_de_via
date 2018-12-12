@@ -66,6 +66,10 @@ class Solicitud extends CI_Controller {
             $tipo = $this->input->post('tipo');
 
             switch ($tipo) {
+                case 'concepto':
+                   echo $this->solicitud_model->actualizar($tipo, $this->input->post('id_concepto'), $datos);
+                break;
+
                 case 'elemento_solicitud':
                    echo $this->solicitud_model->actualizar($tipo, $this->input->post('id'), $datos);
                 break;
@@ -99,6 +103,17 @@ class Solicitud extends CI_Controller {
                 case "conceptos":
                     $this->data["id_solicitud"] = $this->input->post("id_solicitud");
                     $this->load->view("solicitudes/conceptos/index", $this->data);
+                break;
+
+                case "conceptos_crear":
+                    $this->data["id_concepto"] = $this->input->post("id_concepto");
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/conceptos/crear", $this->data);
+                break;
+
+                case "conceptos_lista":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/conceptos/listar", $this->data);
                 break;
 
                 case "general":
@@ -362,6 +377,10 @@ class Solicitud extends CI_Controller {
                 break;
                 
                 case "solicitud":
+                    print json_encode($this->solicitud_model->obtener($tipo, $id));
+                break;
+                
+                case "ultimo_concepto":
                     print json_encode($this->solicitud_model->obtener($tipo, $id));
                 break;
             }
