@@ -1,5 +1,5 @@
 <footer style="
-     background: white;
+    background: white;
     bottom: 0;
     color: gray;
     font-size: 0.8em;

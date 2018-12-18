@@ -2,53 +2,53 @@
     <div class="uk-modal-dialog">
         <form class="uk-form-horizontal uk-margin-large">
             <button class="uk-modal-close-default" type="button" uk-close></button>
-                <div class="uk-modal-header">
-                    <h2 class="uk-modal-title">Subir documento</h2>
-                </div>
+            <div class="uk-modal-header">
+                <h2 class="uk-modal-title">Subir documento</h2>
+            </div>
 
-                <div class="uk-modal-body" uk-overflow-auto>
-                    <div class="js-upload uk-placeholder uk-text-center" id="cont_subir">
-                        <span uk-icon="icon: cloud-upload"></span>
-                        <span class="uk-text-middle">Adjunte el documento arrastrándolo aquí o</span>
-                        <div uk-form-custom>
-                            <input type="file" name="fileToUpload">
-                            <span class="uk-link">seleccione uno desde su dispositivo.</span>
-                        </div>
+            <div class="uk-modal-body" uk-overflow-auto>
+                <div class="js-upload uk-placeholder uk-text-center" id="cont_subir">
+                    <span uk-icon="icon: cloud-upload"></span>
+                    <span class="uk-text-middle">Adjunte el documento arrastrándolo aquí o</span>
+                    <div uk-form-custom>
+                        <input type="file" name="fileToUpload">
+                        <span class="uk-link">seleccione uno desde su dispositivo.</span>
                     </div>
-
-                    <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress>
-
-                    <?php $archivos = glob("./archivos/documentacion/$id_solicitud/$id_tipo/*"); ?>
-
-                    <!-- Si no hay registros, se muestra mensaje -->
-                    <?php if(count($archivos) == 0){ ?>
-                        <span>No hay documentos todavía</span>
-                    <?php } else { ?>
-                        <div class="uk-overflow-auto">
-                            <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
-                                <thead>
-                                    <tr>
-                                        <th class="uk-text-center">Archivo</th>
-                                        <th class="uk-text-center">Tamaño</th>
-                                        <th class="uk-text-center">Tipo</th>
-                                        <th class="uk-text-center">Opciones</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <?php foreach ($archivos as $nombre) { ?>
-                                        <tr>
-                                            <td><?php echo basename($nombre); ?></td>
-                                            <td class="uk-text-right"><?php echo (filesize($nombre) / 1000)." KB"; ?></td>
-                                            <td><?php  ?></td>
-                                            <td></td>
-                                        </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    <?php } ?>
                 </div>
+
+                <progress id="js-progressbar" class="uk-progress" value="0" max="100" hidden></progress>
+
+                <?php $archivos = glob("./archivos/documentacion/$id_solicitud/$id_tipo/*"); ?>
+
+                <!-- Si no hay registros, se muestra mensaje -->
+                <?php if(count($archivos) == 0){ ?>
+                    <span>No hay documentos todavía</span>
+                <?php } else { ?>
+                    <div class="uk-overflow-auto">
+                        <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
+                            <thead>
+                                <tr>
+                                    <th class="uk-text-center">Archivo</th>
+                                    <th class="uk-text-center">Tamaño</th>
+                                    <th class="uk-text-center">Tipo</th>
+                                    <th class="uk-text-center">Opciones</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php foreach ($archivos as $nombre) { ?>
+                                    <tr>
+                                        <td><?php echo basename($nombre); ?></td>
+                                        <td class="uk-text-right"><?php echo (filesize($nombre) / 1000)." KB"; ?></td>
+                                        <td><?php  ?></td>
+                                        <td></td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php } ?>
+            </div>
 
             <div class="uk-modal-footer uk-text-right">
                 <button class="uk-button uk-button-default uk-modal-close" type="button">Cerrar</button>
