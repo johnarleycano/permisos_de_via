@@ -21,6 +21,10 @@ class Reportes extends CI_Controller {
         parent::__construct();
         require('system/libraries/PHPExcel.php');
         require('system/libraries/Numeros.php');
+        require('system/libraries/Fpdf.php');
+
+        //Definir la ruta de las fuentes
+        define('FPDF_FONTPATH','system/fonts/');
         
         // Si no ha iniciado sesión, se redirige a la aplicación de configuración
         if(!$this->session->userdata('Pk_Id_Usuario')){
