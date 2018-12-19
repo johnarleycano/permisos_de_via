@@ -142,7 +142,6 @@
             $("#input_radicado_aceptacion").val("<?php echo $pago->Radicado_Aceptacion; ?>")
         	$("#input_fecha_oficio").val("<?php echo $pago->Fecha_Oficio; ?>")
             $("#input_radicado_oficio").val("<?php echo $pago->Radicado_Oficio; ?>")
-
         })
     </script> 
 <?php } ?>

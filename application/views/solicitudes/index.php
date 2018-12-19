@@ -40,8 +40,8 @@
 			return false
 		}
 
-		// Si va a entrar a los conceptos pero no tiene radicado de aceptación del pago
-		if(tipo == "conceptos" && $.trim(solicitud.Radicado_Soporte_Aceptacion) == ""){
+		// Si va a entrar a los conceptos, si hizo el pago, pero no tiene radicado de aceptación del pago
+		if(tipo == "conceptos" && solicitud.Realizo_Pago == 1 && $.trim(solicitud.Radicado_Soporte_Aceptacion) == ""){
 			cerrar_notificaciones()
 			imprimir_notificacion("Antes de generar conceptos, por favor indique los datos de aceptación del pago.", "danger")
 
