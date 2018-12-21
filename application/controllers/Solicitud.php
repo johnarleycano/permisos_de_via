@@ -21,7 +21,7 @@ class Solicitud extends CI_Controller {
         parent::__construct();
 
         // Carga de modelos
-        $this->load->model(array('configuracion_model', 'solicitud_model'));
+        $this->load->model(array('configuracion_model', 'solicitud_model', 'normatividad_model'));
 
         // Si no ha iniciado sesión, se redirige a la aplicación de configuración
         if(!$this->session->userdata('Pk_Id_Usuario')){
@@ -76,6 +76,16 @@ class Solicitud extends CI_Controller {
 
                 case 'lista_chequeo':
                    echo $this->solicitud_model->actualizar($tipo, $this->input->post('valor'), $datos);
+                break;
+
+                case 'lista_chequeo_normatividad':
+                    // Primero borramos los datos que ya tenía
+                    $this->solicitud_model->eliminar("lista_chequeo_normatividad", array("Fk_Id_Solicitud" => $this->input->post("id_solicitud"), "Fk_Id_Tipo_Documento" => $this->input->post("id_documento")));
+
+                    // Registros eliminados
+                    // echo $this->db->affected_rows();
+
+                    echo $this->solicitud_model->insertar($tipo, $datos);
                 break;
 
                 case 'solicitud':
@@ -149,6 +159,12 @@ class Solicitud extends CI_Controller {
                 case "general_chequeo_listado":
                     $this->data["id_solicitud"] = $this->input->post("id_solicitud");
                     $this->load->view("solicitudes/general/chequeo/listar", $this->data);
+                break;
+
+                case "general_chequeo_normatividad":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->data["id_tipo"] = $this->input->post("id_tipo");
+                    $this->load->view("solicitudes/general/chequeo/normatividad", $this->data);
                 break;
 
                 case "general_chequeo_observacion":

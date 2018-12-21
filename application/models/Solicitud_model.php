@@ -58,6 +58,10 @@ Class Solicitud_model extends CI_Model{
                 return $this->db->delete('listas_chequeo', $id);
             break;
 
+            case 'lista_chequeo_normatividad':
+                return $this->db->delete('listas_chequeo_normas', $id);
+            break;
+
             case 'pago':
                 return $this->db->delete('pagos', $id);
             break;
@@ -97,6 +101,10 @@ Class Solicitud_model extends CI_Model{
 
             case "lista_chequeo":
                 return $this->db->insert('listas_chequeo', $datos);
+            break;
+
+            case "lista_chequeo_normatividad":
+                return $this->db->insert_batch('listas_chequeo_normas', $datos);
             break;
 
             case "pago":
@@ -143,6 +151,10 @@ Class Solicitud_model extends CI_Model{
 
             case "elemento_solicitud":
                 return $this->db->where($id)->get("elementos_solicitudes")->row();
+            break;
+
+            case "lista_chequeo_normatividad":
+                return $this->db->where($id)->get("listas_chequeo_normas")->result();
             break;
             
             case "pago":
@@ -207,6 +219,10 @@ Class Solicitud_model extends CI_Model{
                 return $this->db->order_by("Fecha", "DESC")->get("solicitudes")->result();
             break;
 
+            case "tipo_documento":
+                return $this->db->where($id)->get("tipos_documentos")->row();
+            break;
+
             case "tipos_documentos":
                 return $this->db->order_by("Orden")->get("tipos_documentos")->result();
             break;
@@ -217,6 +233,10 @@ Class Solicitud_model extends CI_Model{
 
             case "valor_lista_chequeo":
                 return $this->db->where($id)->get("listas_chequeo")->row();
+            break;
+
+            case "valores_lista_chequeo":
+                return $this->db->where($id)->get("listas_chequeo")->result();
             break;
 
             case 'vias':

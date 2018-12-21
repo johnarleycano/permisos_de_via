@@ -54,6 +54,8 @@ Class Normatividad_model extends CI_Model{
             break;
 
             case "normas":
+                if($id) $this->db->where("Fk_Id_Resolucion", $id);
+                
                 $this->db
 	                ->select(array(
 	                	"n.*",

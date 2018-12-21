@@ -81,17 +81,45 @@
 
 	        case 'observacion':
 		        ajax("<?php echo site_url('solicitud/actualizar'); ?>", {"tipo": "lista_chequeo", "datos": datos, valor: {"Observacion": $("#text_observacion").val()}}, 'html')
-				imprimir($("#text_observacion").val())
+				
 				cerrar_notificaciones()
 				imprimir_notificacion(`Se ha modificado la observación correctamente.`, `success`)
-	        	// UIkit.modal("#modal_documento").hide()
 	        break
 
 	   		case 'aplica':
 	   			datos["Cumple"] = cumple
 				ajax("<?php echo site_url('solicitud/insertar'); ?>", {"tipo": "lista_chequeo", "datos": datos}, 'html')
-				cerrar_notificaciones(),
+				cerrar_notificaciones()
 				imprimir_notificacion(`Lista de chequeo actualizada correctamente.`, `success`)
+	   		break
+
+	   		case 'normatividad':
+	   			var normas = []
+
+	            // Recorrido de las normas chequeadas
+				$("input[name='normatividad']:checked").each(function(){
+					var norma = {
+						"Fk_Id_Norma": $(this).val(),
+						"Fk_Id_Solicitud": $("#id_solicitud").val(),
+						"Fk_Id_Tipo_Documento": id,
+					}
+
+					// Se agrega los datos de la norma al arreglo
+	                normas.push(norma)
+				})
+				// imprimir(normas, "tabla")
+
+				// Si hay una norma seleccionada
+				if(normas.length > 0) ajax("<?php echo site_url('solicitud/actualizar'); ?>", {"tipo": "lista_chequeo_normatividad", "id_solicitud": $("#id_solicitud").val(), "id_documento": id, "datos": normas}, "html")
+				
+				// Se desmarcan todos los checks
+				$("input[name='normatividad']").prop('checked',false)
+
+				// Se cierra el modal
+	        	$("#modal_normatividad").removeClass('uk-open').hide()
+
+				cerrar_notificaciones()
+				imprimir_notificacion(`Se ha modificado la observación correctamente.`, `success`)
 	   		break
 		}
 
