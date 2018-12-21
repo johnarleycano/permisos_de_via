@@ -77,10 +77,13 @@
 		cerrar_notificaciones();
         imprimir_notificacion("<div uk-spinner></div> Generando reporte...")
 
-        // Redirección
-		redireccionar(`<?php echo site_url("reportes/excel/concepto/"); ?>${id}`)
+		switch(tipo) {
+			case 'concepto':
+				redireccionar(`<?php echo site_url("reportes/excel/concepto/"); ?>${id}`)
+		    break
+		}
 
-		cerrar_notificaciones();
+		cerrar_notificaciones()
 	}
 
 	$(document).ready(function(){

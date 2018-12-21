@@ -7,11 +7,11 @@ foreach ($this->solicitud_model->obtener("solicitudes") as $solicitud) {
 	<article class="uk-comment">
 	    <header class="uk-comment-header uk-grid-medium uk-flex-middle" uk-grid>
 	        <div class="uk-width-expand">
-	            <h4 class="uk-comment-title uk-margin-remove"><a class="uk-link-reset" onCLick="#"><?php echo $solicitud->Peticionario; ?></a></h4>
+	            <h4 class="uk-comment-title uk-margin-remove"><a class="uk-link-reset" onCLick="javascript:editar(<?php echo $solicitud->Pk_Id; ?>);"><?php echo $solicitud->Peticionario; ?></a></h4>
 	            <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
 	                <li><a href="<?php echo site_url('solicitud/index/').$solicitud->Pk_Id; ?>"><?php echo "{$fecha['mes_texto']} {$fecha['dia']}, {$fecha['anio']}"; ?></a></li>
-	                <li><a onCLick="javascript:editar(<?php echo $solicitud->Pk_Id; ?>);">DETALLES</a></li>
-	                <li><a onCLick="javascript:generar_reporte('concepto', <?php echo $solicitud->Pk_Id; ?>)" class="uk-text-success"><i class="fas fa-file-excel"></i> Generar reporte</a></li>
+	                <li><a onCLick="javascript:editar(<?php echo $solicitud->Pk_Id; ?>);">VER</a></li>
+	                <li><a onCLick="javascript:generar_reporte('concepto', <?php echo $solicitud->Pk_Id; ?>)" class="uk-text-success"><i class="fas fa-file-excel"></i> CONCEPTO TÉCNICO</a></li>
 	            </ul>
 	        </div>
 	    </header>
@@ -50,9 +50,16 @@ foreach ($this->solicitud_model->obtener("solicitudes") as $solicitud) {
 		cerrar_notificaciones();
         imprimir_notificacion("<div uk-spinner></div> Generando reporte...")
 
-        // Redirección
-		redireccionar(`<?php echo site_url("reportes/excel/concepto/"); ?>${id}`)
+		switch(tipo) {
+			case 'concepto':
+				redireccionar(`<?php echo site_url("reportes/excel/concepto/"); ?>${id}`)
+		    break
 
-		cerrar_notificaciones();
+		    case 'observaciones':
+				redireccionar(`<?php echo site_url("reportes/excel/observaciones/"); ?>${id}`)
+		    break
+		}
+
+		cerrar_notificaciones()
 	}
 </script>

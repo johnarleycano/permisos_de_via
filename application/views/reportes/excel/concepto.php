@@ -166,7 +166,7 @@ $objPHPExcel->getActiveSheet()
  */
 $objDrawing = new PHPExcel_Worksheet_Drawing();
 $objDrawing->setName('Logo');
-$objDrawing->setDescription('Logo de uso exclusivo de Precisión Metrológica');
+$objDrawing->setDescription('Logo de uso exclusivo de Devimed S.A.');
 $objDrawing->setPath("./img/logo_ani.png");
 $objDrawing->setCoordinates('A1');
 $objDrawing->setHeight(130);
