@@ -1,4 +1,5 @@
 <div id="cont_modal"></div>
+<button class="uk-button uk-button-default uk-width-1-1 uk-margin-small-bottom" type="button" id="btn_reporte" onCLick="javascript:generar('observaciones', <?php echo $id_solicitud; ?>)"><span class="uk-text-success">REPORTE DE REVISIÓN DE DOCUMENTACIÓN</span></button>
 
 <div class="uk-overflow-auto">
     <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">

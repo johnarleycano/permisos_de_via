@@ -81,6 +81,10 @@
 			case 'concepto':
 				redireccionar(`<?php echo site_url("reportes/excel/concepto/"); ?>${id}`)
 		    break
+
+		    case 'observaciones':
+				redireccionar(`<?php echo site_url("reportes/excel/observaciones/"); ?>${id}`)
+		    break
 		}
 
 		cerrar_notificaciones()

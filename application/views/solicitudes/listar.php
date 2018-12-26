@@ -12,6 +12,7 @@ foreach ($this->solicitud_model->obtener("solicitudes") as $solicitud) {
 	                <li><a href="<?php echo site_url('solicitud/index/').$solicitud->Pk_Id; ?>"><?php echo "{$fecha['mes_texto']} {$fecha['dia']}, {$fecha['anio']}"; ?></a></li>
 	                <li><a onCLick="javascript:editar(<?php echo $solicitud->Pk_Id; ?>);">VER</a></li>
 	                <li><a onCLick="javascript:generar_reporte('concepto', <?php echo $solicitud->Pk_Id; ?>)" class="uk-text-success"><i class="fas fa-file-excel"></i> CONCEPTO TÉCNICO</a></li>
+	                <li><a onCLick="javascript:generar_reporte('observaciones', <?php echo $solicitud->Pk_Id; ?>)" class="uk-text-success"><i class="fas fa-file-excel"></i> OBSERVACIONES</a></li>
 	            </ul>
 	        </div>
 	    </header>

@@ -35,17 +35,22 @@ class Reportes extends CI_Controller {
         $this->load->model(array('configuracion_model', 'solicitud_model'));
     }
 
-	function excel()
-	{
-		// Suiche tipo
+    function excel()
+    {
+        // Suiche tipo
         switch ($this->uri->segment(3)) {
             case 'concepto':
                 $this->data["id_solicitud"] = $this->uri->segment(4);
                 $this->data["id_concepto"] = $this->uri->segment(5);
                 $this->load->view("reportes/excel/concepto", $this->data);
             break;
+
+            case 'observaciones':
+                $this->data["id_solicitud"] = $this->uri->segment(4);
+                $this->load->view("reportes/excel/observaciones", $this->data);
+            break;
         }
-	}
+    }
 }
 /* Fin del archivo Reportes.php */
 /* Ubicación: ./application/controllers/Reportes.php */

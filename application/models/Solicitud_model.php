@@ -154,7 +154,17 @@ Class Solicitud_model extends CI_Model{
             break;
 
             case "lista_chequeo_normatividad":
-                return $this->db->where($id)->get("listas_chequeo_normas")->result();
+                $this->db
+                    ->select(array(
+                        "ln.*",
+                        "n.Numeral"
+                    ))
+                    ->from("listas_chequeo_normas ln")
+                    ->join('normas n', 'ln.Fk_Id_Norma = n.Pk_Id')
+                    ->where($id)
+                ;
+
+                return $this->db->get()->result();
             break;
             
             case "pago":
@@ -213,6 +223,22 @@ Class Solicitud_model extends CI_Model{
 
                 // return $this->db->get_compiled_select(); // string de la consulta
                 return $this->db->get()->row();
+            break;
+
+            case "solicitud_normas":
+                $this->db
+                    ->select(array(
+                        "n.*",
+                    ))
+                    ->from('listas_chequeo_normas l')
+                    ->join('normas n', 'l.Fk_Id_Norma = n.Pk_Id')
+                    ->where('l.Fk_Id_Solicitud', $id)
+                    ->order_by('n.Numeral')
+                    ->group_by('l.Fk_Id_Norma')
+                ;
+
+                // return $this->db->get_compiled_select(); // string de la consulta
+                return $this->db->get()->result();
             break;
 
             case "solicitudes":
