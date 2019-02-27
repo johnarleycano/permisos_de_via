@@ -222,6 +222,7 @@ Class Solicitud_model extends CI_Model{
                         "i.Nombre Interventoria",
                         "i.Numero_Contrato Numero_Contrato_Interventoria",
                         "ts.Nombre Tipo",
+                        "p.Radicado_Oficio Expediente_ANI",
                     ))
                     ->from('solicitudes s')
                     ->join('tipos_solicitudes ts', 's.Fk_Id_Tipo_Solicitud = ts.Pk_Id', 'left')
@@ -230,6 +231,7 @@ Class Solicitud_model extends CI_Model{
                     ->join('configuracion.proyectos p', 's.Fk_Id_Proyecto = p.Pk_Id', 'left')
                     ->join('configuracion.empresas e', 'p.Fk_Id_Empresa = e.Pk_Id', 'left')
                     ->join('configuracion.interventorias i', 'p.Fk_Id_Interventoria = i.Pk_Id', 'left')
+                    ->join('pagos p', 'p.Fk_Id_Solicitud = s.Pk_Id', 'left')
                     ->where('s.Pk_Id', $id)
                 ;
 

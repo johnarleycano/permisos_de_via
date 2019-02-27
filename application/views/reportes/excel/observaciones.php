@@ -6,7 +6,8 @@ $anio = date("Y");
 
 $lista = $this->solicitud_model->obtener("valores_lista_chequeo", array("Fk_Id_Solicitud" => $id_solicitud, "Cumple" => 0));
 $solicitud = $this->solicitud_model->obtener("solicitud", $id_solicitud);
-
+$pago = $this->solicitud_model->obtener("pago", $id_solicitud);
+$vias = $this->solicitud_model->obtener("vias", $id_solicitud);
 
 /******************************************************
  **************** Configuración general ***************
@@ -92,18 +93,14 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(4);
 /**
  * Definición de altura de las filas
  */
-// $objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(25);
+$objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(25);
 
 // Celdas a combinar
 $objPHPExcel->getActiveSheet()
 	->mergeCells('A1:J1')
-	->mergeCells('A2:J2')
-	->mergeCells('A3:J3')
-	->mergeCells('A4:J4')
-	->mergeCells('A5:J5')
-	->mergeCells('A6:J6')
-	->mergeCells('A7:J7')
-	->mergeCells('E8:J8')
+	->mergeCells('B2:J2')
+	->mergeCells('B3:J3')
+	->mergeCells('B4:J4')
 ;
 
 /**
@@ -113,32 +110,75 @@ $objDrawing = new PHPExcel_Worksheet_Drawing();
 $objDrawing->setName('Logo');
 $objDrawing->setDescription('Logo de uso exclusivo de Devimed S.A.');
 $objDrawing->setPath("./img/logo.png");
-$objDrawing->setCoordinates('H3');
+$objDrawing->setCoordinates('H4');
 $objDrawing->setHeight(60);
 $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
 
 // Encabezados
 $objPHPExcel->getActiveSheet()
 	->setCellValue("A1", "RESOLUCIÓN 716 DE 2015")
-	->setCellValue("A3", strtoupper("PETICIONARIO: $solicitud->Peticionario"))
-	->setCellValue("A4", strtoupper("Expediente ANI:"))
-	->setCellValue("A5", strtoupper("Radicado $solicitud->Proyecto: $solicitud->Radicado_Solicitud"))
-	->setCellValue("A7", strtoupper("OBSERVACIÓN"))
-	->setCellValue("A8", strtoupper("REQUISITO"))
-	->setCellValue("B8", strtoupper("CUMPLE"))
-	->setCellValue("C8", strtoupper("NO CUMPLE"))
-	->setCellValue("D8", strtoupper("ANOTACIONES ADICIONALES"))
-	->setCellValue("E8", strtoupper("OBSERVACIONES"))
+	->setCellValue("A2", strtoupper("PETICIONARIO:"))
+	->setCellValue("B2", $solicitud->Peticionario)
+	->setCellValue("A3", strtoupper("Expediente ANI:"))
+	->setCellValue("B3", $solicitud->Expediente_ANI)
+	->setCellValue("A4", strtoupper("Radicado $solicitud->Proyecto:"))
+	->setCellValue("B4", $solicitud->Radicado_Solicitud)
 ;
+
+$fila = 5;
+
+// Se recorren las vías
+foreach ($vias as $via) {
+	// Celdas a combinar
+	$objPHPExcel->getActiveSheet()->mergeCells("B$fila:J$fila");
+
+	$objPHPExcel->getActiveSheet()
+		->setCellValue("A$fila", "TRAMO")
+		->setCellValue("B$fila", "$via->Tramo ($via->Municipio)")
+	;
+
+	$fila++;
+
+	// Celdas a combinar
+	$objPHPExcel->getActiveSheet()->mergeCells("B$fila:J$fila");
+
+	$objPHPExcel->getActiveSheet()
+		->setCellValue("A$fila", "ABSCISAS")
+		->setCellValue("B$fila", "Desde $via->Abscisa_Inicial hasta $via->Abscisa_Final")
+	;
+
+	$fila++;
+}
+$fila--;
+
+$objPHPExcel->getActiveSheet()->getStyle("A2:J$fila")->applyFromArray($borde_externo);
+$objPHPExcel->getActiveSheet()->getStyle("A2:A$fila")->applyFromArray($negrita);
+$fila++;
+$fila++;
+$fila_inicial = $fila;
+
+$objPHPExcel->getActiveSheet()->mergeCells("A$fila:J$fila");
+$objPHPExcel->getActiveSheet()->setCellValue("A$fila", "OBSERVACIÓN");
+$fila++;
+$objPHPExcel->getActiveSheet()->getStyle("A$fila_inicial:J$fila")->applyFromArray($centrado_negrita);
+
+$objPHPExcel->getActiveSheet()->mergeCells("E$fila:J$fila");
+
+// Encabezados
+$objPHPExcel->getActiveSheet()
+	->setCellValue("A$fila", "REQUISITO")
+	->setCellValue("B$fila", "CUMPLE")
+	->setCellValue("C$fila", "NO CUMPLE")
+	->setCellValue("D$fila", "ANOTACIONES ADICIONALES")
+	->setCellValue("E$fila", "OBSERVACIONES")
+;
+
+$fila++;
+
 
 // Estilos
 $objPHPExcel->getActiveSheet()->getStyle("A1")->applyFromArray($centrado_negrita);
-$objPHPExcel->getActiveSheet()->getStyle("A3:J5")->applyFromArray($borde_externo);
-$objPHPExcel->getActiveSheet()->getStyle("A7:E8")->applyFromArray($centrado_negrita);
-$objPHPExcel->getActiveSheet()->getStyle("C")->applyFromArray($centrado);
-$objPHPExcel->getActiveSheet()->getStyle("A7:J8")->applyFromArray($bordes);
-
-$fila = 9;
+$objPHPExcel->getActiveSheet()->getStyle("B:C")->applyFromArray($centrado);
 
 // Recorrido de los registros
 foreach ($lista as $registro) {
@@ -171,7 +211,7 @@ foreach ($lista as $registro) {
 }
 
 $fila--;
-$objPHPExcel->getActiveSheet()->getStyle("A9:D{$fila}")->applyFromArray($bordes);
+$objPHPExcel->getActiveSheet()->getStyle("A$fila_inicial:J$fila")->applyFromArray($bordes);
 
 /******************************************************
  ******************* Hoja de normas *******************
