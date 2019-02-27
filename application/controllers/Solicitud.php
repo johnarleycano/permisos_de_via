@@ -88,6 +88,10 @@ class Solicitud extends CI_Controller {
                     echo $this->solicitud_model->insertar($tipo, $datos);
                 break;
 
+                case 'observacion':
+                   echo $this->solicitud_model->actualizar($tipo, $this->input->post('id_observacion'), $datos);
+                break;
+
                 case 'solicitud':
                    echo $this->solicitud_model->actualizar($tipo, $this->input->post('id_solicitud'), $datos);
                 break;
@@ -110,20 +114,14 @@ class Solicitud extends CI_Controller {
             $tipo = $this->input->post("tipo");
 
             switch ($tipo) {
-                case "conceptos":
+                case "concepto":
                     $this->data["id_solicitud"] = $this->input->post("id_solicitud");
-                    $this->load->view("solicitudes/conceptos/index", $this->data);
+                    $this->load->view("solicitudes/concepto/index", $this->data);
                 break;
 
-                case "conceptos_crear":
-                    $this->data["id_concepto"] = $this->input->post("id_concepto");
+                case "concepto_crear":
                     $this->data["id_solicitud"] = $this->input->post("id_solicitud");
-                    $this->load->view("solicitudes/conceptos/crear", $this->data);
-                break;
-
-                case "conceptos_lista":
-                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
-                    $this->load->view("solicitudes/conceptos/listar", $this->data);
+                    $this->load->view("solicitudes/concepto/crear", $this->data);
                 break;
 
                 case "general":
@@ -220,6 +218,22 @@ class Solicitud extends CI_Controller {
                     $this->load->view("solicitudes/general/vias/listar", $this->data);
                 break;
 
+                case "observaciones":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/observaciones/index", $this->data);
+                break;
+
+                case "observaciones_crear":
+                    $this->data["id_observacion"] = $this->input->post("id_observacion");
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/observaciones/crear", $this->data);
+                break;
+
+                case "observaciones_lista":
+                    $this->data["id_solicitud"] = $this->input->post("id_solicitud");
+                    $this->load->view("solicitudes/observaciones/listar", $this->data);
+                break;
+
                 case "pago":
                     $this->data["id_solicitud"] = $this->input->post("id_solicitud");
                     $this->load->view("solicitudes/pago/index", $this->data);
@@ -300,16 +314,12 @@ class Solicitud extends CI_Controller {
             switch ($tipo) {
                 case "bitacora":
                     // Se inserta el registro y log en base de datos
-                    if ($this->solicitud_model->insertar($tipo, $datos)) {
-                        echo $id = $this->db->insert_id();
-                    }
+                    if ($this->solicitud_model->insertar($tipo, $datos)) echo $this->db->insert_id();
                 break;
 
                 case "concepto":
                     // Se inserta el registro y log en base de datos
-                    if ($this->solicitud_model->insertar($tipo, $datos)) {
-                        echo $id = $this->db->insert_id();
-                    }
+                    if ($this->solicitud_model->insertar($tipo, $datos)) echo $this->db->insert_id();
                 break;
 
                 case "elemento_solicitud":
@@ -319,37 +329,32 @@ class Solicitud extends CI_Controller {
 
                 case "lista_chequeo":
                     // Se inserta el registro y log en base de datos
-                    if ($this->solicitud_model->insertar($tipo, $datos)) {
-                        echo $id = $this->db->insert_id();
-                    }
+                    if ($this->solicitud_model->insertar($tipo, $datos)) echo $this->db->insert_id();
+                break;
+
+                case "observacion":
+                    // Se inserta el registro y log en base de datos
+                    if ($this->solicitud_model->insertar($tipo, $datos)) echo $this->db->insert_id();
                 break;
 
                 case "pago":
                     // Se inserta el registro y log en base de datos
-                    if ($this->solicitud_model->insertar($tipo, $datos)) {
-                        echo $id = $this->db->insert_id();
-                    }
+                    if ($this->solicitud_model->insertar($tipo, $datos)) echo $this->db->insert_id();
                 break;
 
                 case "participante":
                     // Se inserta el registro y log en base de datos
-                    if ($this->solicitud_model->insertar($tipo, $datos)) {
-                        echo $id = $this->db->insert_id();
-                    }
+                    if ($this->solicitud_model->insertar($tipo, $datos)) echo $this->db->insert_id();
                 break;
 
                 case "solicitud":
                     // Se inserta el registro y log en base de datos
-                    if ($this->solicitud_model->insertar($tipo, $datos)) {
-                        echo $id = $this->db->insert_id();
-                    }
+                    if ($this->solicitud_model->insertar($tipo, $datos)) echo $this->db->insert_id();
                 break;
                 
                 case "via":
                     // Se inserta el registro y log en base de datos
-                    if ($this->solicitud_model->insertar($tipo, $datos)) {
-                        echo $id = $this->db->insert_id();
-                    }
+                    if ($this->solicitud_model->insertar($tipo, $datos)) echo $this->db->insert_id();
                 break;
             }
         }else{
@@ -372,7 +377,7 @@ class Solicitud extends CI_Controller {
             $id = $this->input->post("id");
 
             switch ($tipo) {
-                case "conceptos":
+                case "concepto":
                     print json_encode($this->solicitud_model->obtener($tipo, $id));
                 break;
 
@@ -381,6 +386,10 @@ class Solicitud extends CI_Controller {
                 break;
 
                 case "elementos":
+                    print json_encode($this->solicitud_model->obtener($tipo, $id));
+                break;
+
+                case "observacion":
                     print json_encode($this->solicitud_model->obtener($tipo, $id));
                 break;
                 
@@ -393,10 +402,6 @@ class Solicitud extends CI_Controller {
                 break;
                 
                 case "solicitud":
-                    print json_encode($this->solicitud_model->obtener($tipo, $id));
-                break;
-                
-                case "ultimo_concepto":
                     print json_encode($this->solicitud_model->obtener($tipo, $id));
                 break;
             }

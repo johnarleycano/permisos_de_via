@@ -9,7 +9,8 @@
 	<ul class="uk-flex-center" data-uk-tab="{connect:'#modulos'}" uk-tab>
 		<li class="uk-active"><a onCLick="javascript:cargar_modulo('general')">1. DATOS GENERALES</a></li>
         <li><a onClick="javascript:cargar_modulo('pago');">2. DATOS DEL PAGO</a></li>
-        <li><a onClick="javascript:cargar_modulo('conceptos');">3. CONCEPTOS</a></li>
+        <li><a onClick="javascript:cargar_modulo('observaciones');">3. OBSERVACIONES</a></li>
+        <li><a onClick="javascript:cargar_modulo('concepto');">4. CONCEPTO</a></li>
 	</ul>
 
 	<div id="cont_contenido" uk-grid></div>
@@ -29,8 +30,11 @@
 	 */
 	function cargar_modulo(tipo = "general")
 	{
+		// Id de la solicitud
+		let id_solicitud = $("#id_solicitud").val()
+
 		// Consulta de la solicitud
-		let solicitud = ajax("<?php echo site_url('solicitud/obtener'); ?>", {"tipo": "solicitud", "id": $("#id_solicitud").val()}, 'JSON')
+		let solicitud = ajax("<?php echo site_url('solicitud/obtener'); ?>", {"tipo": "solicitud", "id": id_solicitud}, 'JSON')
 
 		// Si se va a cambiar de opción y no se ha guardado la solicitud
 		if(tipo != "general" && $("#id_solicitud").val() == 0){
@@ -40,10 +44,18 @@
 			return false
 		}
 
-		// Si va a entrar a los conceptos, si hizo el pago, pero no tiene radicado de aceptación del pago
-		if(tipo == "conceptos" && solicitud.Realizo_Pago == 1 && $.trim(solicitud.Radicado_Soporte_Aceptacion) == ""){
+		// Si va a entrar al concepto, si hizo el pago, pero no tiene radicado de aceptación del pago
+		if(tipo == "concepto" && solicitud.Realizo_Pago == 1 && $.trim(solicitud.Radicado_Soporte_Aceptacion) == ""){
 			cerrar_notificaciones()
-			imprimir_notificacion("Antes de generar conceptos, por favor indique los datos de aceptación del pago.", "danger")
+			imprimir_notificacion("Antes de emitir el concepto, por favor indique los datos de aceptación del pago.", "danger")
+
+			return false
+		}
+
+		// Si va a entrar a las observaciones, si hizo el pago, pero no tiene radicado de aceptación del pago
+		if(tipo == "observaciones" && solicitud.Realizo_Pago == 1 && $.trim(solicitud.Radicado_Soporte_Aceptacion) == ""){
+			cerrar_notificaciones()
+			imprimir_notificacion("Antes de crear observaciones, por favor indique los datos de aceptación del pago.", "danger")
 
 			return false
 		}
@@ -51,15 +63,19 @@
 		// Carga de interfaz
 		switch(tipo) {
 		    case 'general':
-		    	$("#cont_contenido").load("<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": tipo, "id_solicitud": $("#id_solicitud").val()})
+		    	$("#cont_contenido").load("<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": tipo, "id_solicitud": id_solicitud})
 	        break;
 
 		    case 'pago':
-		    	$("#cont_contenido").load("<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": tipo, "id_solicitud": $("#id_solicitud").val()})
+		    	$("#cont_contenido").load("<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": tipo, "id_solicitud": id_solicitud})
 	        break;
 
-		    case 'conceptos':
-		    	$("#cont_contenido").load("<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": tipo, "id_solicitud": $("#id_solicitud").val()})
+		    case 'observaciones':
+		    	$("#cont_contenido").load("<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": tipo, "id_solicitud": id_solicitud})
+	        break;
+
+		    case 'concepto':
+		    	$("#cont_contenido").load("<?php echo site_url('solicitud/cargar_interfaz'); ?>", {"tipo": tipo, "id_solicitud": id_solicitud})
 	        break;
 		}
 	}

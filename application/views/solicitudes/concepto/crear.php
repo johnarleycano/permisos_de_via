@@ -1,11 +1,8 @@
-<!-- Consulta de datos -->
-<?php 
+<?php
+// Consulta de datos
 $solicitud = $this->solicitud_model->obtener("solicitud", $id_solicitud);
-$concepto = $this->solicitud_model->obtener("concepto", $id_concepto);
+$concepto = $this->solicitud_model->obtener("concepto", $id_solicitud);
 ?>
-
-<!-- Input que almacena el id del concepto que se está trabajando -->
-<input type="hidden" id="id_concepto">
 
 <div class="uk-column-1-2@s">
 	<div class="uk-margin">
@@ -50,13 +47,13 @@ $concepto = $this->solicitud_model->obtener("concepto", $id_concepto);
 
 <div class="uk-column-1-2@s">
 	<div class="uk-margin">
-    	<label class="uk-form-label" for="input_instrucciones">Instrucciones *</label>
+    	<label class="uk-form-label" for="input_instrucciones">Instrucciones</label>
         <textarea class="uk-textarea" id="input_instrucciones" rows="2" title="Instrucciones"></textarea>
     </div>
 
 	<div class="uk-margin">
-    	<label class="uk-form-label" for="input_observaciones_concepto">Observaciones *</label>
-        <textarea class="uk-textarea" id="input_observaciones_concepto" rows="2" title="Observaciones"></textarea>
+    	<label class="uk-form-label" for="input_observaciones">Observaciones</label>
+        <textarea class="uk-textarea" id="input_observaciones" rows="2" title="Observaciones"></textarea>
     </div>
 </div>
 
@@ -82,11 +79,6 @@ $concepto = $this->solicitud_model->obtener("concepto", $id_concepto);
 <button class="uk-button uk-button-default uk-modal-close" type="button" onClick="javascript:cerrar_interfaz()">Cancelar</button>
 <input class="uk-button uk-button-primary" type="button" onClick="javascript:guardar()" value="Guardar cambios"/>
 
-<script type="text/javascript">
-    // Id del concepto
-    $("#id_concepto").val("<?php echo $id_concepto; ?> ")
-</script>
-
 <!-- Cuando tiene una solicitud -->
 <?php if ($concepto) { ?>
 	<script type="text/javascript">
@@ -97,7 +89,7 @@ $concepto = $this->solicitud_model->obtener("concepto", $id_concepto);
     	$("#input_fecha_radicado_proyecto").val("<?php echo $concepto->Fecha_Radicado_Proyecto; ?>")
     	$("#input_fecha_asignacion").val("<?php echo $concepto->Fecha_Asignacion; ?>")
     	$("#input_instrucciones").val("<?php echo $concepto->Instrucciones; ?>")
-    	$("#input_observaciones_concepto").val("<?php echo $concepto->Observaciones; ?>")
+    	$("#input_observaciones").val("<?php echo $concepto->Observaciones; ?>")
     	$("#input_fecha_viabilidad").val("<?php echo $concepto->Fecha_Viabilidad; ?>")
 
         select_por_defecto("select_viable", <?php echo $concepto->Viable; ?>)

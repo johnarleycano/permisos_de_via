@@ -35,6 +35,10 @@ Class Solicitud_model extends CI_Model{
                 return $this->db->where($datos)->update('listas_chequeo', $id);
             break;
 
+            case 'observacion':
+                return $this->db->where("Pk_Id", $id)->update('observaciones', $datos);
+            break;
+
             case 'solicitud':
                 return $this->db->where("Pk_Id", $id)->update('solicitudes', $datos);
             break;
@@ -107,6 +111,10 @@ Class Solicitud_model extends CI_Model{
                 return $this->db->insert_batch('listas_chequeo_normas', $datos);
             break;
 
+            case "observacion":
+                return $this->db->insert('observaciones', $datos);
+            break;
+
             case "pago":
                 return $this->db->insert('pagos', $datos);
             break;
@@ -142,11 +150,7 @@ Class Solicitud_model extends CI_Model{
             break;
 
             case "concepto":
-                return $this->db->where("Pk_Id", $id)->get("conceptos")->row();
-            break;
-
-            case "conceptos":
-                return $this->db->where("Fk_Id_Solicitud", $id)->get("conceptos")->result();
+                return $this->db->where("Fk_Id_Solicitud", $id)->get("conceptos")->row();
             break;
 
             case "elemento_solicitud":
@@ -165,6 +169,14 @@ Class Solicitud_model extends CI_Model{
                 ;
 
                 return $this->db->get()->result();
+            break;
+
+            case "observacion":
+                return $this->db->where("Pk_Id", $id)->get("observaciones")->row();
+            break;
+
+            case "observaciones":
+                return $this->db->where("Fk_Id_Solicitud", $id)->get("observaciones")->result();
             break;
             
             case "pago":
@@ -251,10 +263,6 @@ Class Solicitud_model extends CI_Model{
 
             case "tipos_documentos":
                 return $this->db->order_by("Orden")->get("tipos_documentos")->result();
-            break;
-
-            case "ultimo_concepto":
-                return $this->db->select("Pk_Id, Viable")->order_by("Pk_Id", "DESC")->where("Fk_Id_Solicitud", $id)->get("conceptos")->row();
             break;
 
             case "valor_lista_chequeo":
