@@ -232,20 +232,10 @@ foreach ($this->solicitud_model->obtener("solicitud_normas", $id_solicitud) as $
 	$fila++;
 }
 
-
-
-
-
-
-
-
-
-
-
 // Se modifican los encabezados del HTTP para indicar que se envia un archivo de Excel.
 header('Cache-Control: max-age=0');
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header("Content-Disposition: attachment; filename='Observaciones $solicitud->Peticionario.xlsx'");
+header("Content-Disposition: attachment; filename=Observaciones $solicitud->Peticionario.xlsx");
 
 //Se genera el excel
 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
