@@ -281,6 +281,7 @@ Class Solicitud_model extends CI_Model{
                             "sv.Pk_Id",
                             "sv.Abscisa_Inicial",
                             "sv.Abscisa_Final",
+                            "sv.Observaciones",
                             "tc.Nombre Costado",
                             "t.Nombre Tramo",
                             "m.Nombre Municipio",

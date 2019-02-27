@@ -16,7 +16,8 @@ if(count($vias) == 0){
                 <th class="uk-text-center">Tramo</th>
             	<th class="uk-text-center">Municipio</th>
             	<th class="uk-text-center">Abscisa Inicial</th>
-            	<th class="uk-text-center">Abscisa Final</th>
+                <th class="uk-text-center">Abscisa Final</th>
+            	<th class="uk-text-center">Observaciones</th>
             	<th class="uk-text-center">Opciones</th>
         	</tr>
         </thead>
@@ -24,9 +25,10 @@ if(count($vias) == 0){
         	<?php foreach ($vias as $via) { ?>
 	        	<tr>
                     <td><?php echo $via->Tramo; ?></td>
-					<td><?php echo $via->Municipio; ?></td>
-					<td class="uk-text-right"><?php echo $via->Abscisa_Inicial; ?></td>
-					<td class="uk-text-right"><?php echo $via->Abscisa_Final; ?></td>
+                    <td><?php echo $via->Municipio; ?></td>
+                    <td class="uk-text-right"><?php echo $via->Abscisa_Inicial; ?></td>
+                    <td class="uk-text-right"><?php echo $via->Abscisa_Final; ?></td>
+					<td><?php echo $via->Observaciones; ?></td>
 					<td>
                         <a onClick="javascript:eliminar(<?php echo $via->Pk_Id; ?>)" class="uk-link-muted">
                             <div uk-tooltip="title: Eliminar <?php echo $via->Tramo; ?>">
